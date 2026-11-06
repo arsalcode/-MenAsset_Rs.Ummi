@@ -24,7 +24,7 @@ class HospitalAssetSeeder extends Seeder
             ],
             [
                 'name' => 'Peralatan Rawat Inap & Fasilitas',
-                'code' => 'RAWAT',
+                'code' => 'RWT',
                 'description' => 'Bed pasien elektrik/manual, meja tindakan, lemari obat, dan fasilitas kamar.'
             ],
             [
@@ -34,7 +34,7 @@ class HospitalAssetSeeder extends Seeder
             ],
             [
                 'name' => 'Perangkat IT & Sistem Informasi RS',
-                'code' => 'IT',
+                'code' => 'ITS',
                 'description' => 'Server SIMRS, workstation perawat, printer barcode, dan switch jaringan.'
             ],
         ];
@@ -102,10 +102,10 @@ class HospitalAssetSeeder extends Seeder
             $locationModels[$loc['code']] = Location::create($loc);
         }
 
-        // 3. Hospital Assets Data (Kode Ringkas 3 Karakter Alfanumerik: M01, R01, L01, I01)
+        // 3. Hospital Assets Data (Opsi A: Standar SIMRS Modern: MED-001, RWT-001, LAB-001, ITS-001)
         $assets = [
             [
-                'asset_code' => 'M01',
+                'asset_code' => 'MED-001',
                 'name' => 'Defibrillator Biphasic & Monitor',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['IGD']->id,
@@ -119,7 +119,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Alat resusitasi jantung darurat di unit triage IGD. Terkalibrasi berkala.'
             ],
             [
-                'asset_code' => 'M02',
+                'asset_code' => 'MED-002',
                 'name' => 'Ventilator Mekanik ICU Dewasa & Anak',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['ICU']->id,
@@ -133,7 +133,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Unit ventilator utama ICU Bed 01. Flow sensor dan baterai backup prima.'
             ],
             [
-                'asset_code' => 'M03',
+                'asset_code' => 'MED-003',
                 'name' => 'USG 4D General Electric Voluson E8',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['RAD']->id,
@@ -147,7 +147,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Dilengkapi probe konveks 3D/4D dan transvaginal.'
             ],
             [
-                'asset_code' => 'M04',
+                'asset_code' => 'MED-004',
                 'name' => 'Bedside Patient Monitor 6 Parameter',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['ICU']->id,
@@ -161,7 +161,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Kabel sensor SpO2 mengalami intermittent signal, sedang dijadwalkan penggantian.'
             ],
             [
-                'asset_code' => 'M05',
+                'asset_code' => 'MED-005',
                 'name' => 'Sistem C-Arm Fluoroscopy Bedah',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['OK']->id,
@@ -175,9 +175,9 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Perangkat pencitraan real-time untuk bedah ortopedi dan vaskular di Kamar Bedah 1.'
             ],
             [
-                'asset_code' => 'R01',
+                'asset_code' => 'RWT-001',
                 'name' => 'Bed Pasien Elektrik 4 Motor ICU/VIP',
-                'category_id' => $categoryModels['RAWAT']->id,
+                'category_id' => $categoryModels['RWT']->id,
                 'location_id' => $locationModels['VIP']->id,
                 'brand' => 'Paramon Medical',
                 'model_type' => 'A5 ICU Electric Bed',
@@ -189,7 +189,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Dilengkapi remote kontrol perawat, fungsi CPR cepat, dan matras anti-dekubitus.'
             ],
             [
-                'asset_code' => 'M06',
+                'asset_code' => 'MED-006',
                 'name' => 'Syringe Infusion Pump Presisi',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['IGD']->id,
@@ -203,7 +203,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Digunakan untuk pemberian obat emergensi dosis ketat di ruang resusitasi IGD.'
             ],
             [
-                'asset_code' => 'M07',
+                'asset_code' => 'MED-007',
                 'name' => 'Surgical Suction Unit High Vacuum',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['OK']->id,
@@ -217,7 +217,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Kapasitas hisap 50 L/min, suction bedah steril.'
             ],
             [
-                'asset_code' => 'L01',
+                'asset_code' => 'LAB-001',
                 'name' => 'Centrifuge Tabung Darah High-Speed',
                 'category_id' => $categoryModels['LAB']->id,
                 'location_id' => $locationModels['LAB']->id,
@@ -231,7 +231,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Motor dynamo terbakar dan getaran melebihi toleransi. Direkomendasikan afkir/ganti baru.'
             ],
             [
-                'asset_code' => 'L02',
+                'asset_code' => 'LAB-002',
                 'name' => 'Automated Hematology Analyzer 5-Diff',
                 'category_id' => $categoryModels['LAB']->id,
                 'location_id' => $locationModels['LAB']->id,
@@ -245,9 +245,9 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Mesin hitung sel darah otomatis 24 parameter. Terhubung interface SIMRS.'
             ],
             [
-                'asset_code' => 'I01',
+                'asset_code' => 'ITS-001',
                 'name' => 'Rackmount Database Server SIMRS',
-                'category_id' => $categoryModels['IT']->id,
+                'category_id' => $categoryModels['ITS']->id,
                 'location_id' => $locationModels['IT']->id,
                 'brand' => 'Dell Technologies',
                 'model_type' => 'PowerEdge R750 2U',
@@ -259,7 +259,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Server database utama rekam medis elektronik RS Ummi dengan RAID 10 SSD.'
             ],
             [
-                'asset_code' => 'M08',
+                'asset_code' => 'MED-008',
                 'name' => 'Volumetric Infusion Pump Digital',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['IGD']->id,
@@ -273,7 +273,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Pengatur infus cairan obat otomatis dengan sensor deteksi gelembung udara.'
             ],
             [
-                'asset_code' => 'M09',
+                'asset_code' => 'MED-009',
                 'name' => 'Mobile Digital X-Ray Portable',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['RAD']->id,
@@ -287,9 +287,9 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Penggantian colimator lamp dan kalibrasi dosis radiasi berkala.'
             ],
             [
-                'asset_code' => 'R02',
+                'asset_code' => 'RWT-002',
                 'name' => 'Hospital Bed Manual 3-Crank Deluxe',
-                'category_id' => $categoryModels['RAWAT']->id,
+                'category_id' => $categoryModels['RWT']->id,
                 'location_id' => $locationModels['VIP']->id,
                 'brand' => 'Acare',
                 'model_type' => 'Deluxe 3 Crank Hospital Bed',
@@ -301,7 +301,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Bed cadangan rawat inap dengan pengatur posisi punggung, lutut, dan ketinggian.'
             ],
             [
-                'asset_code' => 'M10',
+                'asset_code' => 'MED-010',
                 'name' => 'Autoclave Sterilisator Uap Kapasitas Besar',
                 'category_id' => $categoryModels['MED']->id,
                 'location_id' => $locationModels['OK']->id,
@@ -324,7 +324,7 @@ class HospitalAssetSeeder extends Seeder
         // 4. Maintenance Logs (Inovasi: Histori Kalibrasi & Servis)
         $maintenance = [
             [
-                'asset_id' => $createdAssets['M01']->id,
+                'asset_id' => $createdAssets['MED-001']->id,
                 'maintenance_date' => '2026-05-10',
                 'type' => 'kalibrasi',
                 'cost' => 2500000,
@@ -333,7 +333,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Uji akurasi discharge energi joule defibrillator. Dinyatakan LAIK PAKAI hingga Mei 2027.'
             ],
             [
-                'asset_id' => $createdAssets['M02']->id,
+                'asset_id' => $createdAssets['MED-002']->id,
                 'maintenance_date' => '2026-08-14',
                 'type' => 'pemeliharaan_rutin',
                 'cost' => 4200000,
@@ -342,7 +342,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Penggantian filter HEPA intake, kalibrasi flow sensor inspirasi/ekspirasi, dan uji baterai internal.'
             ],
             [
-                'asset_id' => $createdAssets['M04']->id,
+                'asset_id' => $createdAssets['MED-004']->id,
                 'maintenance_date' => '2026-11-02',
                 'type' => 'perbaikan',
                 'cost' => 3800000,
@@ -351,7 +351,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Penggantian connector board sensor SpO2 dan kalibrasi modul NIBP.'
             ],
             [
-                'asset_id' => $createdAssets['M09']->id,
+                'asset_id' => $createdAssets['MED-009']->id,
                 'maintenance_date' => '2026-10-28',
                 'type' => 'perbaikan',
                 'cost' => 12500000,
@@ -360,7 +360,7 @@ class HospitalAssetSeeder extends Seeder
                 'notes' => 'Penggantian lampu collimator dan penyesuaian ketepatan berkas radiasi optik.'
             ],
             [
-                'asset_id' => $createdAssets['L01']->id,
+                'asset_id' => $createdAssets['LAB-001']->id,
                 'maintenance_date' => '2026-04-12',
                 'type' => 'perbaikan',
                 'cost' => 1500000,

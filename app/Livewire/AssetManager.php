@@ -163,9 +163,9 @@ class AssetManager extends Component
     private function suggestCode(): void
     {
         $cat = Category::find($this->category_id);
-        $prefix = $cat ? strtoupper(substr($cat->code, 0, 1)) : 'A';
-        $count = Asset::where('asset_code', 'like', $prefix . '%')->count() + 1;
-        $this->asset_code = $prefix . str_pad($count, 2, '0', STR_PAD_LEFT);
+        $prefix = $cat ? strtoupper($cat->code) : 'MED';
+        $count = Asset::where('asset_code', 'like', $prefix . '-%')->count() + 1;
+        $this->asset_code = $prefix . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
     }
 
     public function openEditModal(int $id): void

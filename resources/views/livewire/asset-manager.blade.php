@@ -126,8 +126,10 @@
                         @php
                             $shortCategoryNames = [
                                 'MED' => 'Alat Medis',
+                                'RWT' => 'Rawat Inap',
                                 'RAWAT' => 'Rawat Inap',
                                 'LAB' => 'Laboratorium',
+                                'ITS' => 'IT & SIMRS',
                                 'IT' => 'IT & SIMRS',
                             ];
                         @endphp
@@ -141,7 +143,7 @@
                             >
                                 @if ($cat->code === 'MED')
                                     <i class="ri-heart-pulse-line"></i>
-                                @elseif ($cat->code === 'RAWAT')
+                                @elseif ($cat->code === 'RWT' || $cat->code === 'RAWAT')
                                     <i class="ri-hotel-bed-line"></i>
                                 @elseif ($cat->code === 'LAB')
                                     <i class="ri-microscope-line"></i>
