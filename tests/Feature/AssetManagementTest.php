@@ -43,7 +43,7 @@ class AssetManagementTest extends TestCase
     {
         Livewire::test(AssetManager::class)
             ->set('search', 'Defibrillator')
-            ->assertSee('MED-IGD-001')
+            ->assertSee('M01')
             ->assertDontSee('Bed Pasien Elektrik');
     }
 
@@ -79,9 +79,9 @@ class AssetManagementTest extends TestCase
     {
         Livewire::test(AssetManager::class)
             ->call('openCreateModal')
+            ->set('category_id', '')
             ->set('asset_code', '')
             ->set('name', '')
-            ->set('category_id', '')
             ->set('location_id', '')
             ->call('save')
             ->assertHasErrors(['asset_code', 'name', 'category_id', 'location_id']);
@@ -89,7 +89,7 @@ class AssetManagementTest extends TestCase
 
     public function test_can_view_detail_modal_with_maintenance_history(): void
     {
-        $asset = Asset::where('asset_code', 'MED-IGD-001')->first();
+        $asset = Asset::where('asset_code', 'M01')->first();
 
         Livewire::test(AssetManager::class)
             ->call('openDetailModal', $asset->id)

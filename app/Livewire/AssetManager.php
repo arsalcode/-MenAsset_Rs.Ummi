@@ -137,14 +137,35 @@ class AssetManager extends Component
         $this->resetForm();
         $this->selectedAssetId = null;
 
-        // Auto suggest code based on count
-        $nextId = Asset::max('id') + 1;
-        $this->asset_code = 'MED-RSU-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+        // Auto suggest kode ringkas 3 karakter alfanumerik (M01, L01, R01, I01)
+        $firstCat = Category::first();
+        if ($firstCat) {
+            $this->category_id = (string) $firstCat->id;
+            $this->suggestCode();
+        } else {
+            $this->asset_code = 'A01';
+        }
+
         $this->purchase_date = date('Y-m-d');
         $this->condition = 'baik';
         $this->status = 'aktif';
 
         $this->isFormOpen = true;
+    }
+
+    public function updatedCategoryId($val): void
+    {
+        if ($this->isFormOpen && empty($this->selectedAssetId) && empty($this->asset_code)) {
+            $this->suggestCode();
+        }
+    }
+
+    private function suggestCode(): void
+    {
+        $cat = Category::find($this->category_id);
+        $prefix = $cat ? strtoupper(substr($cat->code, 0, 1)) : 'A';
+        $count = Asset::where('asset_code', 'like', $prefix . '%')->count() + 1;
+        $this->asset_code = $prefix . str_pad($count, 2, '0', STR_PAD_LEFT);
     }
 
     public function openEditModal(int $id): void
