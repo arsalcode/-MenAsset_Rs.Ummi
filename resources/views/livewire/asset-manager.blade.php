@@ -241,7 +241,6 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="py-3.5 px-4">Kategori</th>
                                 <th class="py-3.5 px-4">Ruangan RS</th>
                                 <th class="py-3.5 px-4 text-center">Jumlah</th>
                                 <th class="py-3.5 px-4">Kondisi</th>
@@ -267,13 +266,6 @@
                                                 <span class="font-mono text-slate-400 dark:text-slate-500">· SN: {{ $asset->serial_number }}</span>
                                             @endif
                                         </div>
-                                    </td>
-
-                                    <!-- Kategori -->
-                                    <td class="py-3.5 px-4 whitespace-nowrap">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                                            {{ $asset->category->name ?? '-' }}
-                                        </span>
                                     </td>
 
                                     <!-- Ruangan Penempatan -->
@@ -349,7 +341,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="py-12 px-4 text-center text-slate-400 dark:text-slate-500">
+                                    <td colspan="6" class="py-12 px-4 text-center text-slate-400 dark:text-slate-500">
                                         <div class="flex flex-col items-center justify-center">
                                             <i class="ri-inbox-line text-4xl text-slate-300 dark:text-slate-600 mb-2"></i>
                                             <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Tidak ada aset rumah sakit yang ditemukan.</p>
