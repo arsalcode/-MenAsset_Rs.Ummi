@@ -34,37 +34,37 @@
             <span class="tab-label">Kelola Aset</span>
         </button>
 
-        <!-- Tab 2: Perlu Servis & Kalibrasi (Ada Badge Alert Count) -->
+        <!-- Tab 2: Servis & Kalibrasi (Ada Badge Alert Count) -->
         <button 
             wire:click="setTab('tabMaintenance')" 
             class="admin-tab-btn {{ $activeTab === 'tabMaintenance' ? 'active' : '' }}" 
-            title="Perlu Servis & Kalibrasi"
+            title="Servis & Kalibrasi Alat Medis"
         >
             <i class="ri-error-warning-line"></i>
-            <span class="tab-label">Servis</span>
+            <span class="tab-label">Servis & Kalibrasi</span>
             @if ($stats['need_attention'] > 0)
                 <span class="badge-alert-count">{{ $stats['need_attention'] }}</span>
             @endif
         </button>
 
-        <!-- Tab 3: Rekapitulasi Nilai Aset -->
+        <!-- Tab 3: Rekap Nilai Aset -->
         <button 
             wire:click="setTab('tabReports')" 
             class="admin-tab-btn {{ $activeTab === 'tabReports' ? 'active' : '' }}" 
-            title="Rekap Pendapatan / Nilai Aset"
+            title="Rekapitulasi Nilai Aset"
         >
             <i class="ri-bar-chart-grouped-line"></i>
-            <span class="tab-label">Rekap Pendapatan</span>
+            <span class="tab-label">Rekap Nilai Aset</span>
         </button>
 
-        <!-- Tab 4: Log Pemeliharaan -->
+        <!-- Tab 4: Log Riwayat Servis -->
         <button 
             wire:click="setTab('tabLogs')" 
             class="admin-tab-btn {{ $activeTab === 'tabLogs' ? 'active' : '' }}" 
             title="Riwayat Servis & Kalibrasi"
         >
             <i class="ri-history-line"></i>
-            <span class="tab-label">Riwayat Transaksi Servis</span>
+            <span class="tab-label">Riwayat Servis</span>
         </button>
     </div>
 
