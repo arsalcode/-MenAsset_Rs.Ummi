@@ -243,6 +243,7 @@
                                 </th>
                                 <th class="py-3.5 px-4">Kategori</th>
                                 <th class="py-3.5 px-4">Ruangan RS</th>
+                                <th class="py-3.5 px-4 text-center">Jumlah</th>
                                 <th class="py-3.5 px-4">Kondisi</th>
                                 <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950" wire:click="sortBy('purchase_cost')">
                                     <div class="flex items-center gap-1">
@@ -287,6 +288,13 @@
                                     <td class="py-3.5 px-4 whitespace-nowrap">
                                         <div class="font-semibold text-slate-800">{{ $asset->location->name ?? '-' }}</div>
                                         <div class="text-[11px] text-slate-400">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
+                                    </td>
+
+                                    <!-- Jumlah Fisik (Kuantitas) -->
+                                    <td class="py-3.5 px-4 whitespace-nowrap text-center">
+                                        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200 inline-flex items-center gap-1 shadow-2xs">
+                                            <i class="ri-stack-line text-emerald-700 text-xs"></i> 1 Unit
+                                        </span>
                                     </td>
 
                                     <!-- Kondisi -->
@@ -354,7 +362,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="py-12 px-4 text-center text-slate-400">
+                                    <td colspan="8" class="py-12 px-4 text-center text-slate-400">
                                         <div class="flex flex-col items-center justify-center">
                                             <i class="ri-inbox-line text-4xl text-slate-300 mb-2"></i>
                                             <p class="text-sm font-semibold text-slate-600">Tidak ada aset rumah sakit yang ditemukan.</p>
@@ -761,6 +769,10 @@
                         <div>
                             <span class="text-slate-400 block font-medium">Penanggung Jawab (PIC)</span>
                             <span class="font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block font-medium">Kuantitas Fisik</span>
+                            <span class="font-bold text-slate-800 mt-0.5 block font-mono">1 Unit (Terserialisasi)</span>
                         </div>
                         <div>
                             <span class="text-slate-400 block font-medium">Harga Perolehan</span>
