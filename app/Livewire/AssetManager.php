@@ -34,6 +34,7 @@ class AssetManager extends Component
     public bool $isDeleteOpen = false;
     public bool $isPrintLabelOpen = false;
     public bool $isLogModalOpen = false;
+    public bool $isClearAllOpen = false;
 
     // Selection & Data
     public ?int $selectedAssetId = null;
@@ -317,7 +318,37 @@ class AssetManager extends Component
         $this->isDeleteOpen = false;
         $this->isPrintLabelOpen = false;
         $this->isLogModalOpen = false;
+        $this->isClearAllOpen = false;
         $this->resetForm();
+    }
+
+    public function handleClearButton(): void
+    {
+        if ($this->search || $this->filterCategory || $this->filterLocation || $this->filterCondition || $this->filterStatus) {
+            $this->resetFilters();
+            $this->feedbackMessage = 'Semua filter pencarian berhasil dibersihkan.';
+            $this->feedbackType = 'info';
+            return;
+        }
+        $this->isClearAllOpen = true;
+    }
+
+    public function clearAllProducts(): void
+    {
+        Asset::truncate();
+        $this->isClearAllOpen = false;
+        $this->feedbackMessage = 'Semua data produk/aset berhasil dikosongkan.';
+        $this->feedbackType = 'danger';
+        $this->resetPage();
+    }
+
+    public function reseedDefaultAssets(): void
+    {
+        \Artisan::call('db:seed', ['--class' => 'HospitalAssetSeeder', '--force' => true]);
+        $this->isClearAllOpen = false;
+        $this->feedbackMessage = 'Data master aset RS Ummi berhasil dimuat ulang ke data bawaan.';
+        $this->feedbackType = 'success';
+        $this->resetPage();
     }
 
     public function resetFilters(): void

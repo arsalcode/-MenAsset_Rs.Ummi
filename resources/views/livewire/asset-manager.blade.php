@@ -101,31 +101,50 @@
                 </div>
             @endif
 
-            <!-- ================= UNIFIED TOOLBAR & FILTERS ================= -->
-            <div class="no-print bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs p-3.5">
-                <div class="flex flex-col lg:flex-row lg:items-center gap-3">
-                    <!-- Search Input Fleksibel (Mengisi Area Kosong Secara Proporsional) -->
+            <!-- ================= ADMIN ACTION BAR (PERSIS GAMBAR 1 ALKAMART) ================= -->
+            <div class="no-print space-y-3">
+                <!-- Baris 1: Stats Mini-Cards & Search Bar (Persis Gambar 1) -->
+                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                    <!-- Stats Mini Cards -->
+                    <div class="flex items-center gap-3 shrink-0">
+                        <!-- Mini Card 1: Total Jenis Produk -->
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 shadow-xs min-w-[135px]">
+                            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Total Jenis Produk</span>
+                            <span class="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 block mt-0.5">{{ $stats['total'] }}</span>
+                        </div>
+
+                        <!-- Mini Card 2: Estimasi Nilai Stok -->
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 shadow-xs min-w-[170px]">
+                            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Estimasi Nilai Stok</span>
+                            <span class="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 block mt-0.5">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Search Input Fleksibel Mengisi Seluruh Sisa Baris (Persis Gambar 1) -->
                     <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                            <i class="ri-search-line"></i>
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                            <i class="ri-search-line text-sm"></i>
                         </span>
                         <input 
                             type="text" 
                             wire:model.live.debounce.300ms="search" 
-                            placeholder="Cari kode aset, nama alat medis, merk, nomor seri..." 
-                            class="w-full pl-9 pr-9 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                            placeholder="Cari barang admin..." 
+                            class="w-full h-full min-h-[48px] pl-10 pr-9 py-2.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
                         />
                         @if ($search)
-                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                                 <i class="ri-close-line"></i>
                             </button>
                         @endif
                     </div>
+                </div>
 
-                    <!-- Filter Dropdowns & Tombol Aksi Tambah Aset -->
-                    <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
+                <!-- Baris 2: Filter Dropdowns di Kiri & Action Buttons di Kanan (Persis Gambar 1) -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <!-- Sisi Kiri: Filter Dropdowns -->
+                    <div class="flex items-center gap-2 flex-wrap">
                         <!-- Dropdown Kategori -->
-                        <select wire:model.live="filterCategory" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[145px]">
+                        <select wire:model.live="filterCategory" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[145px] shadow-xs">
                             <option value="">Semua Kategori</option>
                             @foreach ($categories as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -133,7 +152,7 @@
                         </select>
 
                         <!-- Dropdown Ruangan -->
-                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px]">
+                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px] shadow-xs">
                             <option value="">Semua Ruangan</option>
                             @foreach ($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
@@ -141,30 +160,31 @@
                         </select>
 
                         <!-- Dropdown Kondisi -->
-                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px]">
+                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px] shadow-xs">
                             <option value="">Semua Kondisi</option>
                             <option value="baik">Kondisi Baik</option>
                             <option value="rusak_ringan">Rusak Ringan</option>
                             <option value="rusak_berat">Rusak Berat</option>
                         </select>
+                    </div>
 
-                        <!-- Tombol Reset Filter Bila Ada yang Aktif -->
-                        @if ($search || $filterCategory || $filterLocation || $filterCondition || $filterStatus)
-                            <button 
-                                wire:click="resetFilters" 
-                                class="px-2.5 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg border border-rose-200/60 dark:border-rose-900/60 inline-flex items-center gap-1 transition-all shrink-0"
-                                title="Reset Semua Filter"
-                            >
-                                <i class="ri-refresh-line"></i>
-                                <span class="hidden sm:inline">Reset</span>
-                            </button>
-                        @endif
+                    <!-- Sisi Kanan: Action Buttons (Kosongkan Produk & Tambah Barang) -->
+                    <div class="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
+                        <!-- Tombol Kosongkan Produk (Outline Merah Persis Gambar 1) -->
+                        <button 
+                            wire:click="handleClearButton" 
+                            class="px-3.5 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 bg-white dark:bg-slate-900 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg border border-rose-300 dark:border-rose-900/60 inline-flex items-center gap-1.5 transition-all shadow-xs"
+                            title="Kosongkan semua produk agar bisa input dari awal atau bersihkan filter"
+                        >
+                            <i class="ri-delete-bin-line text-sm"></i>
+                            <span>Kosongkan Produk</span>
+                        </button>
 
-                        <!-- Tombol Tambah Barang (Hanya Tampil di Tab Kelola Aset) -->
+                        <!-- Tombol Tambah Barang (Solid Hijau Persis Gambar 1) -->
                         @if ($activeTab === 'tabAssets')
                             <button wire:click="openCreateModal" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs hover:shadow transition-all shrink-0">
                                 <i class="ri-add-circle-line text-sm"></i>
-                                <span>Tambah Aset</span>
+                                <span>+ Tambah Barang</span>
                             </button>
                         @endif
                     </div>
@@ -934,6 +954,36 @@
                     </button>
                     <button wire:click="delete" class="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-xs">
                         Ya, Hapus Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 5: Konfirmasi Kosongkan Semua Produk / Aset (Clear All Confirmation) -->
+    <!-- ========================================================================= -->
+    @if ($isClearAllOpen)
+        <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 text-center">
+                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3 text-2xl">
+                    <i class="ri-delete-bin-line"></i>
+                </div>
+                <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Kosongkan Semua Produk?</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                    Apakah Anda yakin ingin menghapus semua data inventaris? Katalog akan di-reset menjadi 0 barang agar Anda dapat memasukkan data dari awal.
+                </p>
+                <div class="mt-5 flex flex-col gap-2">
+                    <div class="flex items-center justify-center gap-2">
+                        <button wire:click="closeModal" class="flex-1 px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                            Batal
+                        </button>
+                        <button wire:click="clearAllProducts" class="flex-1 px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-xs">
+                            Ya, Kosongkan
+                        </button>
+                    </div>
+                    <button wire:click="reseedDefaultAssets" class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 hover:underline pt-1">
+                        Atau Muat Ulang Data Bawaan RS Ummi
                     </button>
                 </div>
             </div>
