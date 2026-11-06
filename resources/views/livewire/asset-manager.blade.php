@@ -101,78 +101,9 @@
                 </div>
             @endif
 
-            <!-- ================= UNIFIED TOOLBAR & CATEGORY FILTER (Khas Alkamart) ================= -->
-            <div class="no-print bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs divide-y divide-slate-100 dark:divide-slate-800">
-                <!-- Baris 1: Filter Kategori Cepat (Pills Ringkas & Elegan) -->
-                <div class="px-4 py-3 bg-slate-50/70 dark:bg-slate-850/80 flex items-center justify-between gap-3 flex-wrap">
-                    <div class="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
-                        <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-1 shrink-0">
-                            <i class="ri-filter-3-line text-emerald-700 dark:text-emerald-400"></i> Kategori:
-                        </span>
-
-                        <!-- Pill: Semua -->
-                        <button 
-                            wire:click="selectCategoryPill('')" 
-                            class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 {{ empty($filterCategory) ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40 dark:hover:bg-slate-750' }}"
-                        >
-                            <i class="ri-apps-2-line"></i>
-                            <span>Semua</span>
-                            <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ empty($filterCategory) ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300' }}">
-                                {{ $stats['total'] }}
-                            </span>
-                        </button>
-
-                        <!-- Mapping Nama Kategori Ringkas agar Rapi -->
-                        @php
-                            $shortCategoryNames = [
-                                'MED' => 'Alat Medis',
-                                'RWT' => 'Rawat Inap',
-                                'RAWAT' => 'Rawat Inap',
-                                'LAB' => 'Laboratorium',
-                                'ITS' => 'IT & SIMRS',
-                                'IT' => 'IT & SIMRS',
-                            ];
-                        @endphp
-
-                        <!-- Pills Kategori dari Database -->
-                        @foreach ($categories as $cat)
-                            <button 
-                                wire:click="selectCategoryPill('{{ $cat->id }}')" 
-                                title="{{ $cat->name }}"
-                                class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 whitespace-nowrap {{ $filterCategory == $cat->id ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40 dark:hover:bg-slate-750' }}"
-                            >
-                                @if ($cat->code === 'MED')
-                                    <i class="ri-heart-pulse-line"></i>
-                                @elseif ($cat->code === 'RWT' || $cat->code === 'RAWAT')
-                                    <i class="ri-hotel-bed-line"></i>
-                                @elseif ($cat->code === 'LAB')
-                                    <i class="ri-microscope-line"></i>
-                                @else
-                                    <i class="ri-computer-line"></i>
-                                @endif
-                                <span>{{ $shortCategoryNames[$cat->code] ?? $cat->name }}</span>
-                                <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ $filterCategory == $cat->id ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300' }}">
-                                    {{ $cat->assets_count }}
-                                </span>
-                            </button>
-                        @endforeach
-                    </div>
-
-                    <!-- Tombol Reset Cepat Bila Filter Aktif -->
-                    @if ($search || $filterCategory || $filterLocation || $filterCondition || $filterStatus)
-                        <button 
-                            wire:click="resetFilters" 
-                            class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-2.5 py-1 rounded-lg border border-rose-200/60 dark:border-rose-900/60 inline-flex items-center gap-1 transition-all shrink-0 ml-auto"
-                            title="Reset Semua Filter"
-                        >
-                            <i class="ri-refresh-line"></i>
-                            <span>Reset Filter</span>
-                        </button>
-                    @endif
-                </div>
-
-                <!-- Baris 2: Pencarian Lebar, Filter Ruangan & Kondisi, serta Tambah Aset -->
-                <div class="p-3.5 flex flex-col md:flex-row md:items-center gap-3">
+            <!-- ================= UNIFIED TOOLBAR & FILTERS ================= -->
+            <div class="no-print bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs p-3.5">
+                <div class="flex flex-col lg:flex-row lg:items-center gap-3">
                     <!-- Search Input Fleksibel (Mengisi Area Kosong Secara Proporsional) -->
                     <div class="relative flex-1">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -193,6 +124,15 @@
 
                     <!-- Filter Dropdowns & Tombol Aksi Tambah Aset -->
                     <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
+                        <!-- Dropdown Kategori -->
+                        <select wire:model.live="filterCategory" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[145px]">
+                            <option value="">Semua Kategori</option>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+
+                        <!-- Dropdown Ruangan -->
                         <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px]">
                             <option value="">Semua Ruangan</option>
                             @foreach ($locations as $loc)
@@ -200,12 +140,25 @@
                             @endforeach
                         </select>
 
+                        <!-- Dropdown Kondisi -->
                         <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px]">
                             <option value="">Semua Kondisi</option>
                             <option value="baik">Kondisi Baik</option>
                             <option value="rusak_ringan">Rusak Ringan</option>
                             <option value="rusak_berat">Rusak Berat</option>
                         </select>
+
+                        <!-- Tombol Reset Filter Bila Ada yang Aktif -->
+                        @if ($search || $filterCategory || $filterLocation || $filterCondition || $filterStatus)
+                            <button 
+                                wire:click="resetFilters" 
+                                class="px-2.5 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg border border-rose-200/60 dark:border-rose-900/60 inline-flex items-center gap-1 transition-all shrink-0"
+                                title="Reset Semua Filter"
+                            >
+                                <i class="ri-refresh-line"></i>
+                                <span class="hidden sm:inline">Reset</span>
+                            </button>
+                        @endif
 
                         <!-- Tombol Tambah Barang (Hanya Tampil di Tab Kelola Aset) -->
                         @if ($activeTab === 'tabAssets')
