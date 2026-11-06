@@ -6,11 +6,13 @@ use App\Livewire\AssetManager;
 use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Location;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class AssetManagementTest extends TestCase
 {
+    use DatabaseTransactions;
     public function test_dashboard_page_loads_successfully_and_displays_hospital_branding(): void
     {
         $response = $this->get('/');
