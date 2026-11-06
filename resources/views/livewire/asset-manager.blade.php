@@ -41,7 +41,7 @@
             title="Perlu Servis & Kalibrasi"
         >
             <i class="ri-error-warning-line"></i>
-            <span class="tab-label">Restok & Servis</span>
+            <span class="tab-label">Servis</span>
             @if ($stats['need_attention'] > 0)
                 <span class="badge-alert-count">{{ $stats['need_attention'] }}</span>
             @endif
@@ -205,11 +205,13 @@
                             <option value="rusak_berat">Rusak Berat</option>
                         </select>
 
-                        <!-- Tombol Tambah Barang (Hijau Emerald Khas Alkamart) -->
-                        <button wire:click="openCreateModal" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs hover:shadow transition-all shrink-0">
-                            <i class="ri-add-circle-line text-sm"></i>
-                            <span>Tambah Aset</span>
-                        </button>
+                        <!-- Tombol Tambah Barang (Hanya Tampil di Tab Kelola Aset) -->
+                        @if ($activeTab === 'tabAssets')
+                            <button wire:click="openCreateModal" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs hover:shadow transition-all shrink-0">
+                                <i class="ri-add-circle-line text-sm"></i>
+                                <span>Tambah Aset</span>
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
