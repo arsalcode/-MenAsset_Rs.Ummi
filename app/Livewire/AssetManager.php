@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Location;
+use App\Models\MaintenanceLog;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +13,9 @@ use Livewire\WithPagination;
 class AssetManager extends Component
 {
     use WithPagination;
+
+    // Active Admin Tab (Gaya Alkamart)
+    public string $activeTab = 'tabAssets'; // tabAssets, tabMaintenance, tabReports, tabLogs
 
     // Filter & Search Properties
     public string $search = '';
@@ -27,12 +31,14 @@ class AssetManager extends Component
     public bool $isFormOpen = false;
     public bool $isDetailOpen = false;
     public bool $isDeleteOpen = false;
+    public bool $isPrintLabelOpen = false;
+    public bool $isLogModalOpen = false;
 
     // Selection & Data
     public ?int $selectedAssetId = null;
     public ?Asset $selectedAsset = null;
 
-    // Form Model Fields
+    // Form Model Fields (Aset)
     public string $asset_code = '';
     public string $name = '';
     public string $category_id = '';
@@ -45,6 +51,14 @@ class AssetManager extends Component
     public string $condition = 'baik';
     public string $status = 'aktif';
     public string $notes = '';
+
+    // Form Maintenance Log Fields (Inovasi Input Servis)
+    public string $log_type = 'kalibrasi';
+    public string $log_date = '';
+    public $log_cost = 0;
+    public string $log_technician = '';
+    public string $log_status = 'selesai';
+    public string $log_notes = '';
 
     // Alert Notification Message
     public ?string $feedbackMessage = null;
@@ -83,6 +97,22 @@ class AssetManager extends Component
         'purchase_cost.required' => 'Harga perolehan wajib diisi (bisa 0 jika hibah).',
         'purchase_cost.numeric' => 'Harga perolehan harus berupa angka.',
     ];
+
+    public function setTab(string $tab): void
+    {
+        $this->activeTab = $tab;
+        $this->resetPage();
+    }
+
+    public function selectCategoryPill(string $catId): void
+    {
+        if ($this->filterCategory === $catId) {
+            $this->filterCategory = '';
+        } else {
+            $this->filterCategory = $catId;
+        }
+        $this->resetPage();
+    }
 
     // Reset pagination on filter change
     public function updatingSearch(): void { $this->resetPage(); }
@@ -141,7 +171,7 @@ class AssetManager extends Component
 
     public function save(): void
     {
-        $validated = $this->validate();
+        $this->validate();
 
         Asset::updateOrCreate(
             ['id' => $this->selectedAssetId],
@@ -164,7 +194,7 @@ class AssetManager extends Component
         $isEdit = !is_null($this->selectedAssetId);
         $this->feedbackMessage = $isEdit 
             ? "Data aset '{$this->name}' berhasil diperbarui!" 
-            : "Aset baru '{$this->name}' berhasil ditambahkan ke inventaris RS Ummi!";
+            : "Aset baru '{$this->name}' berhasil didaftarkan ke SIMRS RS Ummi!";
         $this->feedbackType = 'success';
 
         $this->closeModal();
@@ -174,6 +204,12 @@ class AssetManager extends Component
     {
         $this->selectedAsset = Asset::with(['category', 'location', 'maintenanceLogs'])->findOrFail($id);
         $this->isDetailOpen = true;
+    }
+
+    public function openPrintLabelModal(int $id): void
+    {
+        $this->selectedAsset = Asset::with(['category', 'location'])->findOrFail($id);
+        $this->isPrintLabelOpen = true;
     }
 
     public function confirmDelete(int $id): void
@@ -190,11 +226,55 @@ class AssetManager extends Component
             $name = $asset->name;
             $asset->delete();
 
-            $this->feedbackMessage = "Aset '{$name}' telah dihapus dari sistem.";
+            $this->feedbackMessage = "Aset '{$name}' telah dihapus dari inventaris.";
             $this->feedbackType = 'danger';
         }
 
         $this->closeModal();
+    }
+
+    public function openAddLogModal(int $assetId): void
+    {
+        $this->selectedAssetId = $assetId;
+        $this->selectedAsset = Asset::findOrFail($assetId);
+        $this->log_type = 'kalibrasi';
+        $this->log_date = date('Y-m-d');
+        $this->log_cost = 0;
+        $this->log_technician = 'Teknisi Elektromedik RS';
+        $this->log_status = 'selesai';
+        $this->log_notes = '';
+        $this->isLogModalOpen = true;
+    }
+
+    public function saveLog(): void
+    {
+        $this->validate([
+            'log_date' => ['required', 'date'],
+            'log_type' => ['required', 'in:kalibrasi,pemeliharaan_rutin,perbaikan'],
+            'log_cost' => ['required', 'numeric', 'min:0'],
+            'log_technician' => ['nullable', 'string', 'max:150'],
+            'log_status' => ['required', 'in:selesai,dalam_proses'],
+            'log_notes' => ['required', 'string', 'max:500'],
+        ]);
+
+        MaintenanceLog::create([
+            'asset_id' => $this->selectedAssetId,
+            'maintenance_date' => $this->log_date,
+            'type' => $this->log_type,
+            'cost' => $this->log_cost,
+            'vendor_technician' => $this->log_technician,
+            'status' => $this->log_status,
+            'notes' => $this->log_notes,
+        ]);
+
+        $this->feedbackMessage = "Riwayat pemeliharaan/kalibrasi berhasil dicatat!";
+        $this->feedbackType = 'success';
+        $this->isLogModalOpen = false;
+
+        // refresh selected asset if open
+        if ($this->isDetailOpen && $this->selectedAsset) {
+            $this->selectedAsset->load('maintenanceLogs');
+        }
     }
 
     public function closeModal(): void
@@ -202,6 +282,8 @@ class AssetManager extends Component
         $this->isFormOpen = false;
         $this->isDetailOpen = false;
         $this->isDeleteOpen = false;
+        $this->isPrintLabelOpen = false;
+        $this->isLogModalOpen = false;
         $this->resetForm();
     }
 
@@ -236,6 +318,14 @@ class AssetManager extends Component
         // Query Assets with Relations
         $query = Asset::with(['category', 'location']);
 
+        // Tab Filter: Perlu Servis & Kalibrasi
+        if ($this->activeTab === 'tabMaintenance') {
+            $query->where(function ($q) {
+                $q->where('condition', '!=', 'baik')
+                  ->orWhere('status', '!=', 'aktif');
+            });
+        }
+
         // Search Filter
         if (!empty($this->search)) {
             $s = '%' . trim($this->search) . '%';
@@ -248,7 +338,7 @@ class AssetManager extends Component
             });
         }
 
-        // Dropdown Filters
+        // Dropdown & Pill Filters
         if (!empty($this->filterCategory)) {
             $query->where('category_id', $this->filterCategory);
         }
@@ -268,19 +358,30 @@ class AssetManager extends Component
         $assets = $query->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        // Stats Dashboard Metrics
+        // Stats Dashboard Metrics (Alkamart Style)
         $stats = [
             'total' => Asset::count(),
             'good' => Asset::where('condition', 'baik')->where('status', 'aktif')->count(),
-            'need_attention' => Asset::where('condition', '!=', 'baik')->orWhere('status', '!=', 'aktif')->count(),
+            'need_attention' => Asset::where(function ($q) {
+                $q->where('condition', '!=', 'baik')
+                  ->orWhere('status', '!=', 'aktif');
+            })->count(),
             'total_value' => Asset::sum('purchase_cost'),
+            'total_maintenance_cost' => MaintenanceLog::sum('cost'),
+            'total_logs' => MaintenanceLog::count(),
         ];
+
+        // All Logs for Tab 4
+        $logs = MaintenanceLog::with(['asset.location', 'asset.category'])
+            ->orderBy('maintenance_date', 'desc')
+            ->paginate(10, ['*'], 'logsPage');
 
         return view('livewire.asset-manager', [
             'assets' => $assets,
             'stats' => $stats,
-            'categories' => Category::orderBy('name')->get(),
-            'locations' => Location::orderBy('name')->get(),
+            'logs' => $logs,
+            'categories' => Category::withCount('assets')->orderBy('name')->get(),
+            'locations' => Location::withCount('assets')->orderBy('name')->get(),
         ])->layout('layouts.app');
     }
 }
