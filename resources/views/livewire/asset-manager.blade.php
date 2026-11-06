@@ -22,47 +22,49 @@
         </div>
     </div>
 
-    <!-- ================= SUB-NAV ADMIN TABS (Khas Alkamart) ================= -->
-    <div class="no-print bg-white border-b border-slate-200 px-6 py-2.5 flex items-center gap-2.5 overflow-x-auto sticky top-16 z-40 shadow-xs">
+    <!-- ================= SUB-NAV ADMIN TABS (PERSIS SEPERTI GAMBAR 2 ALKAMART) ================= -->
+    <div class="no-print admin-tab-nav">
         <!-- Tab 1: Kelola Aset -->
         <button 
             wire:click="setTab('tabAssets')" 
-            class="h-9 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-2 transition-all {{ $activeTab === 'tabAssets' ? 'bg-emerald-700 text-white shadow-sm shadow-emerald-900/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/50' }}"
+            class="admin-tab-btn {{ $activeTab === 'tabAssets' ? 'active' : '' }}" 
+            title="Kelola Aset"
         >
-            <i class="ri-box-3-line text-sm"></i>
-            <span>Kelola Aset</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] {{ $activeTab === 'tabAssets' ? 'bg-emerald-800 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $stats['total'] }}</span>
+            <i class="ri-box-3-line"></i>
+            <span class="tab-label">Kelola Aset</span>
         </button>
 
-        <!-- Tab 2: Perlu Servis & Kalibrasi -->
+        <!-- Tab 2: Perlu Servis & Kalibrasi (Ada Badge Alert Count) -->
         <button 
             wire:click="setTab('tabMaintenance')" 
-            class="h-9 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-2 transition-all {{ $activeTab === 'tabMaintenance' ? 'bg-emerald-700 text-white shadow-sm shadow-emerald-900/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/50' }}"
+            class="admin-tab-btn {{ $activeTab === 'tabMaintenance' ? 'active' : '' }}" 
+            title="Perlu Servis & Kalibrasi"
         >
-            <i class="ri-error-warning-line text-sm"></i>
-            <span>Perlu Servis & Kalibrasi</span>
+            <i class="ri-error-warning-line"></i>
+            <span class="tab-label">Restok & Servis</span>
             @if ($stats['need_attention'] > 0)
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500 text-white animate-pulse">{{ $stats['need_attention'] }}</span>
+                <span class="badge-alert-count">{{ $stats['need_attention'] }}</span>
             @endif
         </button>
 
-        <!-- Tab 3: Rekapitulasi Keuangan -->
+        <!-- Tab 3: Rekapitulasi Nilai Aset -->
         <button 
             wire:click="setTab('tabReports')" 
-            class="h-9 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-2 transition-all {{ $activeTab === 'tabReports' ? 'bg-emerald-700 text-white shadow-sm shadow-emerald-900/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/50' }}"
+            class="admin-tab-btn {{ $activeTab === 'tabReports' ? 'active' : '' }}" 
+            title="Rekap Pendapatan / Nilai Aset"
         >
-            <i class="ri-bar-chart-grouped-line text-sm"></i>
-            <span>Rekapitulasi Nilai Aset</span>
+            <i class="ri-bar-chart-grouped-line"></i>
+            <span class="tab-label">Rekap Pendapatan</span>
         </button>
 
         <!-- Tab 4: Log Pemeliharaan -->
         <button 
             wire:click="setTab('tabLogs')" 
-            class="h-9 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-2 transition-all {{ $activeTab === 'tabLogs' ? 'bg-emerald-700 text-white shadow-sm shadow-emerald-900/20' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/50' }}"
+            class="admin-tab-btn {{ $activeTab === 'tabLogs' ? 'active' : '' }}" 
+            title="Riwayat Servis & Kalibrasi"
         >
-            <i class="ri-history-line text-sm"></i>
-            <span>Log Pemeliharaan & Kalibrasi</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] {{ $activeTab === 'tabLogs' ? 'bg-emerald-800 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $stats['total_logs'] }}</span>
+            <i class="ri-history-line"></i>
+            <span class="tab-label">Riwayat Transaksi Servis</span>
         </button>
     </div>
 
@@ -81,6 +83,60 @@
             </div>
         @endif
 
+        <!-- ================= 4 REPORT CARDS HIJAU EMERALD (PERSIS GAMBAR 2 ALKAMART) ================= -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1: Total Saldo / Total Inventaris Aset -->
+            <div class="report-card green">
+                <div class="report-icon">
+                    <i class="ri-wallet-3-line"></i>
+                </div>
+                <div class="report-info">
+                    <span class="report-label">Total Inventaris Aset RS</span>
+                    <h3 class="report-amount">{{ $stats['total'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                    <div class="saldo-breakdown-tags">
+                        <span class="tag-cash"><i class="ri-money-dollar-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
+                        <span class="tag-qris"><i class="ri-qr-code-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Omzet / Aset Siap Operasional -->
+            <div class="report-card green">
+                <div class="report-icon">
+                    <i class="ri-calendar-check-line"></i>
+                </div>
+                <div class="report-info">
+                    <span class="report-label">Siap Operasional (Baik)</span>
+                    <h3 class="report-amount" style="color: #047857;">{{ $stats['good'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Alat</span></h3>
+                    <span class="report-sublabel">{{ $stats['total'] > 0 ? round(($stats['good'] / $stats['total']) * 100, 1) : 0 }}% alat laik pakai & prima</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Laba Bersih / Perlu Kalibrasi -->
+            <div class="report-card green">
+                <div class="report-icon">
+                    <i class="ri-funds-line"></i>
+                </div>
+                <div class="report-info">
+                    <span class="report-label">Perlu Servis / Rusak</span>
+                    <h3 class="report-amount" style="color: #d97706;">{{ $stats['need_attention'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                    <span class="report-sublabel">Butuh perhatian teknisi medis</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Total Tarik Uang / Nilai Kapitalisasi Aset -->
+            <div class="report-card green">
+                <div class="report-icon">
+                    <i class="ri-hand-coin-line"></i>
+                </div>
+                <div class="report-info">
+                    <span class="report-label">Estimasi Nilai Inventaris</span>
+                    <h3 class="report-amount" style="font-size: 19px;">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
+                    <span class="report-sublabel">Kapitalisasi aset RS Ummi</span>
+                </div>
+            </div>
+        </div>
+
         <!-- ========================================================================= -->
         <!-- TAB 1 & TAB 2: Kelola Aset & Filter Alat Butuh Servis -->
         <!-- ========================================================================= -->
@@ -96,33 +152,6 @@
                     </div>
                 </div>
             @endif
-
-            <!-- Mini Stats Cards (Persis seperti stats-mini-cards di Alkamart) -->
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Mini Card 1: Total Jenis Aset -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <span class="text-xs font-semibold text-slate-500 block">Total Inventaris</span>
-                    <span class="text-xl font-bold font-mono text-slate-900 block mt-1">{{ $stats['total'] }} <span class="text-xs font-normal text-slate-500 font-sans">Unit</span></span>
-                </div>
-
-                <!-- Mini Card 2: Siap Operasional -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <span class="text-xs font-semibold text-slate-500 block">Siap Operasional (Baik)</span>
-                    <span class="text-xl font-bold font-mono text-emerald-700 block mt-1">{{ $stats['good'] }} <span class="text-xs font-normal text-slate-500 font-sans">Alat</span></span>
-                </div>
-
-                <!-- Mini Card 3: Perlu Servis / Kalibrasi -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <span class="text-xs font-semibold text-slate-500 block">Perlu Servis / Rusak</span>
-                    <span class="text-xl font-bold font-mono text-amber-600 block mt-1">{{ $stats['need_attention'] }} <span class="text-xs font-normal text-slate-500 font-sans">Unit</span></span>
-                </div>
-
-                <!-- Mini Card 4: Estimasi Nilai Stok -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <span class="text-xs font-semibold text-slate-500 block">Estimasi Nilai Inventaris</span>
-                    <span class="text-lg font-bold font-mono text-slate-900 block mt-1">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</span>
-                </div>
-            </div>
 
             <!-- Category Pills Bar (Khas Alkamart) -->
             <div class="no-print space-y-2">
@@ -382,63 +411,6 @@
                         <i class="ri-printer-line text-sm"></i>
                         <span>Cetak Laporan Rekapitulasi</span>
                     </button>
-                </div>
-
-                <!-- 4 Report Cards (Khas Alkamart) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Report Card 1 -->
-                    <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                        <div class="flex items-center gap-3">
-                            <div class="size-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
-                                <i class="ri-wallet-3-line"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-semibold text-slate-500 block">Total Nilai Kapitalisasi Aset</span>
-                                <h3 class="text-lg font-bold font-mono text-slate-900 mt-0.5">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Report Card 2 -->
-                    <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                        <div class="flex items-center gap-3">
-                            <div class="size-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center text-xl">
-                                <i class="ri-tools-line"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-semibold text-slate-500 block">Total Biaya Pemeliharaan/Kalibrasi</span>
-                                <h3 class="text-lg font-bold font-mono text-blue-700 mt-0.5">Rp {{ number_format($stats['total_maintenance_cost'], 0, ',', '.') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Report Card 3 -->
-                    <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                        <div class="flex items-center gap-3">
-                            <div class="size-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl">
-                                <i class="ri-check-double-line"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-semibold text-slate-500 block">Tingkat Kesiapan Operasional</span>
-                                <h3 class="text-lg font-bold font-mono text-emerald-700 mt-0.5">
-                                    {{ $stats['total'] > 0 ? round(($stats['good'] / $stats['total']) * 100, 1) : 0 }}%
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Report Card 4 -->
-                    <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                        <div class="flex items-center gap-3">
-                            <div class="size-10 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-xl">
-                                <i class="ri-history-line"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-semibold text-slate-500 block">Total Aktivitas Kalibrasi/Servis</span>
-                                <h3 class="text-lg font-bold font-mono text-amber-700 mt-0.5">{{ $stats['total_logs'] }} Tindakan</h3>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Rekap Data per Ruangan & Kategori -->
