@@ -83,59 +83,7 @@
             </div>
         @endif
 
-        <!-- ================= 4 REPORT CARDS HIJAU EMERALD (PERSIS GAMBAR 2 ALKAMART) ================= -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- Card 1: Total Saldo / Total Inventaris Aset -->
-            <div class="report-card green">
-                <div class="report-icon">
-                    <i class="ri-wallet-3-line"></i>
-                </div>
-                <div class="report-info">
-                    <span class="report-label">Total Inventaris Aset RS</span>
-                    <h3 class="report-amount">{{ $stats['total'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
-                    <div class="saldo-breakdown-tags">
-                        <span class="tag-cash"><i class="ri-money-dollar-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
-                        <span class="tag-qris"><i class="ri-qr-code-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Card 2: Omzet / Aset Siap Operasional -->
-            <div class="report-card green">
-                <div class="report-icon">
-                    <i class="ri-calendar-check-line"></i>
-                </div>
-                <div class="report-info">
-                    <span class="report-label">Siap Operasional (Baik)</span>
-                    <h3 class="report-amount" style="color: #047857;">{{ $stats['good'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Alat</span></h3>
-                    <span class="report-sublabel">{{ $stats['total'] > 0 ? round(($stats['good'] / $stats['total']) * 100, 1) : 0 }}% alat laik pakai & prima</span>
-                </div>
-            </div>
-
-            <!-- Card 3: Laba Bersih / Perlu Kalibrasi -->
-            <div class="report-card green">
-                <div class="report-icon">
-                    <i class="ri-funds-line"></i>
-                </div>
-                <div class="report-info">
-                    <span class="report-label">Perlu Servis / Rusak</span>
-                    <h3 class="report-amount" style="color: #d97706;">{{ $stats['need_attention'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
-                    <span class="report-sublabel">Butuh perhatian teknisi medis</span>
-                </div>
-            </div>
-
-            <!-- Card 4: Total Tarik Uang / Nilai Kapitalisasi Aset -->
-            <div class="report-card green">
-                <div class="report-icon">
-                    <i class="ri-hand-coin-line"></i>
-                </div>
-                <div class="report-info">
-                    <span class="report-label">Estimasi Nilai Inventaris</span>
-                    <h3 class="report-amount" style="font-size: 19px;">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
-                    <span class="report-sublabel">Kapitalisasi aset RS Ummi</span>
-                </div>
-            </div>
-        </div>
 
         <!-- ========================================================================= -->
         <!-- TAB 1 & TAB 2: Kelola Aset & Filter Alat Butuh Servis -->
@@ -411,6 +359,60 @@
                         <i class="ri-printer-line text-sm"></i>
                         <span>Cetak Laporan Rekapitulasi</span>
                     </button>
+                </div>
+
+                <!-- ================= 4 REPORT CARDS HIJAU EMERALD (PERSIS GAMBAR 2 ALKAMART) ================= -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Card 1: Total Saldo / Total Inventaris Aset -->
+                    <div class="report-card green">
+                        <div class="report-icon">
+                            <i class="ri-wallet-3-line"></i>
+                        </div>
+                        <div class="report-info">
+                            <span class="report-label">Total Inventaris Aset RS</span>
+                            <h3 class="report-amount">{{ $stats['total'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                            <div class="saldo-breakdown-tags">
+                                <span class="tag-cash"><i class="ri-money-dollar-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
+                                <span class="tag-qris"><i class="ri-qr-code-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Omzet / Aset Siap Operasional -->
+                    <div class="report-card green">
+                        <div class="report-icon">
+                            <i class="ri-calendar-check-line"></i>
+                        </div>
+                        <div class="report-info">
+                            <span class="report-label">Siap Operasional (Baik)</span>
+                            <h3 class="report-amount" style="color: #047857;">{{ $stats['good'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Alat</span></h3>
+                            <span class="report-sublabel">{{ $stats['total'] > 0 ? round(($stats['good'] / $stats['total']) * 100, 1) : 0 }}% alat laik pakai & prima</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Laba Bersih / Perlu Kalibrasi -->
+                    <div class="report-card green">
+                        <div class="report-icon">
+                            <i class="ri-funds-line"></i>
+                        </div>
+                        <div class="report-info">
+                            <span class="report-label">Perlu Servis / Rusak</span>
+                            <h3 class="report-amount" style="color: #d97706;">{{ $stats['need_attention'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                            <span class="report-sublabel">Butuh perhatian teknisi medis</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Total Tarik Uang / Nilai Kapitalisasi Aset -->
+                    <div class="report-card green">
+                        <div class="report-icon">
+                            <i class="ri-hand-coin-line"></i>
+                        </div>
+                        <div class="report-info">
+                            <span class="report-label">Estimasi Nilai Inventaris</span>
+                            <h3 class="report-amount" style="font-size: 19px;">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
+                            <span class="report-sublabel">Kapitalisasi aset RS Ummi</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Rekap Data per Ruangan & Kategori -->

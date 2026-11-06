@@ -17,8 +17,16 @@ class AssetManagementTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('RS UMMI BOGOR');
-        $response->assertSee('Sistem Manajemen Aset Rumah Sakit');
-        $response->assertSee('Total Inventaris');
+        $response->assertSee('Sistem Manajemen Aset');
+        $response->assertSee('Kelola Aset');
+    }
+
+    public function test_report_tab_displays_financial_cards(): void
+    {
+        Livewire::test(AssetManager::class)
+            ->call('setTab', 'tabReports')
+            ->assertSee('Total Inventaris Aset RS')
+            ->assertSee('Estimasi Nilai Inventaris');
     }
 
     public function test_livewire_component_renders_and_lists_assets(): void
