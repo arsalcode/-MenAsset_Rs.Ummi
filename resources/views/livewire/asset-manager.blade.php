@@ -675,6 +675,21 @@
                             </select>
                         </div>
 
+                        <!-- Foto Fisik Alat Medis -->
+                        <div class="sm:col-span-2">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Foto Fisik Alat Medis</label>
+                            <div class="flex items-center gap-3">
+                                <input type="file" wire:model="image" accept="image/*" class="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 dark:file:bg-emerald-950/60 file:text-emerald-700 dark:file:text-emerald-300 hover:file:bg-emerald-100 border border-slate-300 dark:border-slate-700 rounded-lg p-1 bg-white dark:bg-slate-800" />
+                                @if ($image)
+                                    <img src="{{ $image->temporaryUrl() }}" class="size-12 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs" />
+                                @elseif ($image_path)
+                                    <img src="{{ asset($image_path) }}" class="size-12 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs" />
+                                @endif
+                            </div>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-1 block">Format: JPG, PNG, WEBP (Maksimal 5MB). Foto akan tampil pada detail aset.</span>
+                            @error('image') <span class="text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
                         <!-- Catatan -->
                         <div class="sm:col-span-2">
                             <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Catatan Tambahan Spesifikasi</label>
@@ -734,21 +749,69 @@
                 </div>
 
                 <!-- Detail Body -->
-                <div class="p-6 space-y-6 text-xs">
-                    <!-- Grid Spesifikasi Lengkap -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                        <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Kategori Aset</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->category->name ?? '-' }}</span>
+                <div class="p-6 space-y-5 text-xs">
+                    <!-- Showcase Foto Alat Medis & Quick Highlight -->
+                    <div class="flex flex-col sm:flex-row gap-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                        <!-- Frame Foto Fisik Alat Medis -->
+                        <div class="relative w-full sm:w-64 h-48 rounded-xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shrink-0 shadow-xs group">
+                            @if ($selectedAsset->image_url)
+                                <img 
+                                    src="{{ $selectedAsset->image_url }}" 
+                                    alt="{{ $selectedAsset->name }}" 
+                                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-xs text-[10px] text-white font-medium flex items-center gap-1.5 shadow-xs">
+                                    <i class="ri-camera-3-fill text-emerald-400"></i>
+                                    <span>Foto Fisik Alat</span>
+                                </div>
+                            @else
+                                <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-4 text-center bg-slate-100/60 dark:bg-slate-850">
+                                    <i class="ri-image-2-line text-4xl mb-1 text-slate-300 dark:text-slate-600"></i>
+                                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Foto Belum Tersedia</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Unggah melalui tombol sunting alat</span>
+                                </div>
+                            @endif
                         </div>
-                        <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Nomor Seri (Serial Number)</span>
-                            <span class="font-mono font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->serial_number ?? '-' }}</span>
+
+                        <!-- Ringkasan Spesifikasi di Sebelah Foto -->
+                        <div class="flex-1 flex flex-col justify-between space-y-3">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300">
+                                        {{ $selectedAsset->category->name ?? 'Aset RS' }}
+                                    </span>
+                                    <span class="font-mono text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                                        SN: {{ $selectedAsset->serial_number ?? '-' }}
+                                    </span>
+                                </div>
+                                <h3 class="text-base font-extrabold text-slate-900 dark:text-slate-100 leading-snug">
+                                    {{ $selectedAsset->name }}
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                    Merk: <strong class="text-slate-800 dark:text-slate-200">{{ $selectedAsset->brand ?? '-' }}</strong> &nbsp;·&nbsp; Model: <strong class="text-slate-800 dark:text-slate-200">{{ $selectedAsset->model_type ?? '-' }}</strong>
+                                </p>
+                            </div>
+
+                            <!-- 2 Info Card Penempatan & Status -->
+                            <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-200 dark:border-slate-700">
+                                <div class="bg-white dark:bg-slate-850 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-medium">Ruangan</span>
+                                    <span class="font-bold text-slate-800 dark:text-slate-200 text-xs block truncate">{{ $selectedAsset->location->name ?? '-' }}</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block truncate">{{ $selectedAsset->location->building ?? '' }}</span>
+                                </div>
+                                <div class="bg-white dark:bg-slate-850 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-medium">Status Operasional</span>
+                                    <span class="font-bold text-xs capitalize {{ $selectedAsset->status === 'aktif' ? 'text-emerald-700 dark:text-emerald-400' : ($selectedAsset->status === 'pemeliharaan' ? 'text-amber-700 dark:text-amber-400' : 'text-rose-700 dark:text-rose-400') }}">
+                                        {{ $selectedAsset->status === 'aktif' ? 'Aktif Digunakan' : ($selectedAsset->status === 'pemeliharaan' ? 'Dalam Pemeliharaan' : 'Afkir / Dihapus') }}
+                                    </span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block capitalize">Kondisi {{ str_replace('_', ' ', $selectedAsset->condition) }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Ruangan Penempatan</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->name ?? '-' }}</span>
-                        </div>
+                    </div>
+
+                    <!-- Grid Spesifikasi Lengkap Tambahan -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
                         <div>
                             <span class="text-slate-400 dark:text-slate-500 block font-medium">Gedung & Lantai</span>
                             <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->building ?? '-' }} ({{ $selectedAsset->location->floor ?? '-' }})</span>

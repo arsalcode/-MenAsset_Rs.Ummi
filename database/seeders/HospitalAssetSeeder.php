@@ -116,6 +116,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 125000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/defibrillator.jpg',
                 'notes' => 'Alat resusitasi jantung darurat di unit triage IGD. Terkalibrasi berkala.'
             ],
             [
@@ -130,6 +131,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 485000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/ventilator.jpg',
                 'notes' => 'Unit ventilator utama ICU Bed 01. Flow sensor dan baterai backup prima.'
             ],
             [
@@ -144,6 +146,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 750000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/ultrasound.jpg',
                 'notes' => 'Dilengkapi probe konveks 3D/4D dan transvaginal.'
             ],
             [
@@ -158,6 +161,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 45000000,
                 'condition' => 'rusak_ringan',
                 'status' => 'pemeliharaan',
+                'image_path' => 'images/assets/monitor.jpg',
                 'notes' => 'Kabel sensor SpO2 mengalami intermittent signal, sedang dijadwalkan penggantian.'
             ],
             [
@@ -172,6 +176,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 1200000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/c-arm.jpg',
                 'notes' => 'Perangkat pencitraan real-time untuk bedah ortopedi dan vaskular di Kamar Bedah 1.'
             ],
             [
@@ -186,6 +191,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 38000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/electric-bed.jpg',
                 'notes' => 'Dilengkapi remote kontrol perawat, fungsi CPR cepat, dan matras anti-dekubitus.'
             ],
             [
@@ -200,6 +206,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 22500000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/syringe-pump.jpg',
                 'notes' => 'Digunakan untuk pemberian obat emergensi dosis ketat di ruang resusitasi IGD.'
             ],
             [
@@ -214,6 +221,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 18500000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/suction-unit.jpg',
                 'notes' => 'Kapasitas hisap 50 L/min, suction bedah steril.'
             ],
             [
@@ -228,6 +236,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 32000000,
                 'condition' => 'rusak_berat',
                 'status' => 'afkir',
+                'image_path' => 'images/assets/centrifuge.jpg',
                 'notes' => 'Motor dynamo terbakar dan getaran melebihi toleransi. Direkomendasikan afkir/ganti baru.'
             ],
             [
@@ -242,6 +251,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 310000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/analyzer.jpg',
                 'notes' => 'Mesin hitung sel darah otomatis 24 parameter. Terhubung interface SIMRS.'
             ],
             [
@@ -256,6 +266,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 95000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/server-rack.jpg',
                 'notes' => 'Server database utama rekam medis elektronik RS Ummi dengan RAID 10 SSD.'
             ],
             [
@@ -270,6 +281,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 24000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/infusion-pump.jpg',
                 'notes' => 'Pengatur infus cairan obat otomatis dengan sensor deteksi gelembung udara.'
             ],
             [
@@ -284,6 +296,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 620000000,
                 'condition' => 'rusak_ringan',
                 'status' => 'pemeliharaan',
+                'image_path' => 'images/assets/mobile-xray.jpg',
                 'notes' => 'Penggantian colimator lamp dan kalibrasi dosis radiasi berkala.'
             ],
             [
@@ -298,6 +311,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 14500000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/hospital-bed.jpg',
                 'notes' => 'Bed cadangan rawat inap dengan pengatur posisi punggung, lutut, dan ketinggian.'
             ],
             [
@@ -312,6 +326,7 @@ class HospitalAssetSeeder extends Seeder
                 'purchase_cost' => 85000000,
                 'condition' => 'baik',
                 'status' => 'aktif',
+                'image_path' => 'images/assets/autoclave.jpg',
                 'notes' => 'Sterilisasi instrumen bedah kamar operasi dengan sistem vacuum drying.'
             ],
         ];

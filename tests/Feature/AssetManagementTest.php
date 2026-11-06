@@ -96,6 +96,8 @@ class AssetManagementTest extends TestCase
         Livewire::test(AssetManager::class)
             ->call('openDetailModal', $asset->id)
             ->assertSet('isDetailOpen', true)
-            ->assertSee('Histori Kalibrasi');
+            ->assertSee('Histori Kalibrasi')
+            ->assertSee('Foto Fisik Alat')
+            ->assertSee($asset->image_url);
     }
 }

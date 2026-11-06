@@ -8,11 +8,12 @@ use App\Models\Location;
 use App\Models\MaintenanceLog;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class AssetManager extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     // Active Admin Tab (Gaya Alkamart)
     public string $activeTab = 'tabAssets'; // tabAssets, tabMaintenance, tabReports, tabLogs
@@ -51,6 +52,8 @@ class AssetManager extends Component
     public string $condition = 'baik';
     public string $status = 'aktif';
     public string $notes = '';
+    public $image = null;
+    public ?string $image_path = null;
 
     // Form Maintenance Log Fields (Inovasi Input Servis)
     public string $log_type = 'kalibrasi';
@@ -84,6 +87,7 @@ class AssetManager extends Component
             'purchase_cost' => ['required', 'numeric', 'min:0'],
             'condition' => ['required', 'in:baik,rusak_ringan,rusak_berat'],
             'status' => ['required', 'in:aktif,pemeliharaan,afkir'],
+            'image' => ['nullable', 'image', 'max:5120'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
@@ -185,6 +189,8 @@ class AssetManager extends Component
         $this->purchase_cost = (float) $asset->purchase_cost;
         $this->condition = $asset->condition;
         $this->status = $asset->status;
+        $this->image = null;
+        $this->image_path = $asset->image_path;
         $this->notes = $asset->notes ?? '';
 
         $this->isFormOpen = true;
@@ -193,6 +199,11 @@ class AssetManager extends Component
     public function save(): void
     {
         $this->validate();
+
+        $imagePath = $this->image_path;
+        if ($this->image) {
+            $imagePath = 'storage/' . $this->image->store('assets', 'public');
+        }
 
         Asset::updateOrCreate(
             ['id' => $this->selectedAssetId],
@@ -208,6 +219,7 @@ class AssetManager extends Component
                 'purchase_cost' => $this->purchase_cost,
                 'condition' => $this->condition,
                 'status' => $this->status,
+                'image_path' => $imagePath,
                 'notes' => $this->notes ?: null,
             ]
         );
@@ -331,6 +343,8 @@ class AssetManager extends Component
         $this->purchase_cost = 0;
         $this->condition = 'baik';
         $this->status = 'aktif';
+        $this->image = null;
+        $this->image_path = null;
         $this->notes = '';
     }
 

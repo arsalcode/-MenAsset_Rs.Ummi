@@ -46,4 +46,17 @@ class Asset extends Model
     {
         return $this->hasMany(MaintenanceLog::class)->orderBy('maintenance_date', 'desc');
     }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if ($this->image_path) {
+            if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+                return $this->image_path;
+            }
+            if (file_exists(public_path($this->image_path))) {
+                return asset($this->image_path);
+            }
+        }
+        return null;
+    }
 }
