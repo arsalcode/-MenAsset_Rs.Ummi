@@ -101,88 +101,116 @@
                 </div>
             @endif
 
-            <!-- Category Pills Bar (Khas Alkamart) -->
-            <div class="no-print space-y-2">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Kategori Inventaris:</span>
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                    <!-- Pill: Semua -->
-                    <button 
-                        wire:click="selectCategoryPill('')" 
-                        class="h-8.5 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all {{ empty($filterCategory) ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
-                    >
-                        <i class="ri-apps-2-line"></i>
-                        <span>Semua Kategori</span>
-                    </button>
+            <!-- ================= UNIFIED TOOLBAR & CATEGORY FILTER (Khas Alkamart) ================= -->
+            <div class="no-print bg-white rounded-xl border border-slate-200 shadow-xs divide-y divide-slate-100">
+                <!-- Baris 1: Filter Kategori Cepat (Pills Ringkas & Elegan) -->
+                <div class="px-4 py-3 bg-slate-50/70 flex items-center justify-between gap-3 flex-wrap">
+                    <div class="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
+                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mr-1 shrink-0">
+                            <i class="ri-filter-3-line text-emerald-700"></i> Kategori:
+                        </span>
 
-                    <!-- Pill: Kategori Riil dari Database -->
-                    @foreach ($categories as $cat)
+                        <!-- Pill: Semua -->
                         <button 
-                            wire:click="selectCategoryPill('{{ $cat->id }}')" 
-                            class="h-8.5 px-4 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all whitespace-nowrap {{ $filterCategory == $cat->id ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
+                            wire:click="selectCategoryPill('')" 
+                            class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 {{ empty($filterCategory) ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
                         >
-                            @if ($cat->code === 'MED')
-                                <i class="ri-heart-pulse-line"></i>
-                            @elseif ($cat->code === 'RAWAT')
-                                <i class="ri-hotel-bed-line"></i>
-                            @elseif ($cat->code === 'LAB')
-                                <i class="ri-microscope-line"></i>
-                            @else
-                                <i class="ri-computer-line"></i>
-                            @endif
-                            <span>{{ $cat->name }}</span>
-                            <span class="ml-1 text-[10px] opacity-80">({{ $cat->assets_count }})</span>
+                            <i class="ri-apps-2-line"></i>
+                            <span>Semua</span>
+                            <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ empty($filterCategory) ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-600' }}">
+                                {{ $stats['total'] }}
+                            </span>
                         </button>
-                    @endforeach
-                </div>
-            </div>
 
-            <!-- Controls & Action Toolbar (Alkamart admin-controls-wrapper) -->
-            <div class="no-print bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
-                <!-- Search Box -->
-                <div class="relative flex-1 max-w-md">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                        <i class="ri-search-line"></i>
-                    </span>
-                    <input 
-                        type="text" 
-                        wire:model.live.debounce.300ms="search" 
-                        placeholder="Cari kode aset, nama alat medis, merk, nomor seri..." 
-                        class="w-full pl-9 pr-9 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all"
-                    />
-                    @if ($search)
-                        <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
-                            <i class="ri-close-line"></i>
-                        </button>
-                    @endif
-                </div>
+                        <!-- Mapping Nama Kategori Ringkas agar Rapi -->
+                        @php
+                            $shortCategoryNames = [
+                                'MED' => 'Alat Medis',
+                                'RAWAT' => 'Rawat Inap',
+                                'LAB' => 'Laboratorium',
+                                'IT' => 'IT & SIMRS',
+                            ];
+                        @endphp
 
-                <!-- Dropdown Filter Ruangan & Kondisi -->
-                <div class="flex items-center gap-2">
-                    <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:bg-white focus:outline-none focus:border-emerald-700">
-                        <option value="">Semua Ruangan</option>
-                        @foreach ($locations as $loc)
-                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                        <!-- Pills Kategori dari Database -->
+                        @foreach ($categories as $cat)
+                            <button 
+                                wire:click="selectCategoryPill('{{ $cat->id }}')" 
+                                title="{{ $cat->name }}"
+                                class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 whitespace-nowrap {{ $filterCategory == $cat->id ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
+                            >
+                                @if ($cat->code === 'MED')
+                                    <i class="ri-heart-pulse-line"></i>
+                                @elseif ($cat->code === 'RAWAT')
+                                    <i class="ri-hotel-bed-line"></i>
+                                @elseif ($cat->code === 'LAB')
+                                    <i class="ri-microscope-line"></i>
+                                @else
+                                    <i class="ri-computer-line"></i>
+                                @endif
+                                <span>{{ $shortCategoryNames[$cat->code] ?? $cat->name }}</span>
+                                <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ $filterCategory == $cat->id ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-600' }}">
+                                    {{ $cat->assets_count }}
+                                </span>
+                            </button>
                         @endforeach
-                    </select>
+                    </div>
 
-                    <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:bg-white focus:outline-none focus:border-emerald-700">
-                        <option value="">Semua Kondisi</option>
-                        <option value="baik">Kondisi Baik</option>
-                        <option value="rusak_ringan">Rusak Ringan</option>
-                        <option value="rusak_berat">Rusak Berat</option>
-                    </select>
-
+                    <!-- Tombol Reset Cepat Bila Filter Aktif -->
                     @if ($search || $filterCategory || $filterLocation || $filterCondition || $filterStatus)
-                        <button wire:click="resetFilters" title="Reset Filter" class="p-2 text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg border border-slate-200">
-                            <i class="ri-refresh-line text-base"></i>
+                        <button 
+                            wire:click="resetFilters" 
+                            class="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200/60 inline-flex items-center gap-1 transition-all shrink-0 ml-auto"
+                            title="Reset Semua Filter"
+                        >
+                            <i class="ri-refresh-line"></i>
+                            <span>Reset Filter</span>
                         </button>
                     @endif
+                </div>
 
-                    <!-- Tombol Tambah Barang (Hijau Emerald Khas Alkamart) -->
-                    <button wire:click="openCreateModal" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs transition-colors shrink-0">
-                        <i class="ri-add-circle-line text-sm"></i>
-                        <span>Tambah Aset</span>
-                    </button>
+                <!-- Baris 2: Pencarian Lebar, Filter Ruangan & Kondisi, serta Tambah Aset -->
+                <div class="p-3.5 flex flex-col md:flex-row md:items-center gap-3">
+                    <!-- Search Input Fleksibel (Mengisi Area Kosong Secara Proporsional) -->
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="ri-search-line"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            wire:model.live.debounce.300ms="search" 
+                            placeholder="Cari kode aset, nama alat medis, merk, nomor seri..." 
+                            class="w-full pl-9 pr-9 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 placeholder:text-slate-400"
+                        />
+                        @if ($search)
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        @endif
+                    </div>
+
+                    <!-- Filter Dropdowns & Tombol Aksi Tambah Aset -->
+                    <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
+                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg text-slate-700 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px]">
+                            <option value="">Semua Ruangan</option>
+                            @foreach ($locations as $loc)
+                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                            @endforeach
+                        </select>
+
+                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg text-slate-700 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px]">
+                            <option value="">Semua Kondisi</option>
+                            <option value="baik">Kondisi Baik</option>
+                            <option value="rusak_ringan">Rusak Ringan</option>
+                            <option value="rusak_berat">Rusak Berat</option>
+                        </select>
+
+                        <!-- Tombol Tambah Barang (Hijau Emerald Khas Alkamart) -->
+                        <button wire:click="openCreateModal" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs hover:shadow transition-all shrink-0">
+                            <i class="ri-add-circle-line text-sm"></i>
+                            <span>Tambah Aset</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

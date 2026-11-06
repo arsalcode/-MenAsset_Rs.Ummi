@@ -31,10 +31,12 @@ class AssetManagementTest extends TestCase
 
     public function test_livewire_component_renders_and_lists_assets(): void
     {
+        $latestAsset = Asset::orderBy('created_at', 'desc')->first();
+
         Livewire::test(AssetManager::class)
             ->assertStatus(200)
-            ->assertSee('MED-IGD-001')
-            ->assertSee('Defibrillator Biphasic & Monitor');
+            ->assertSee($latestAsset->asset_code)
+            ->assertSee($latestAsset->name);
     }
 
     public function test_search_filter_narrows_down_results(): void
