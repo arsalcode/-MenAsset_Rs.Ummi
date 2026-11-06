@@ -714,173 +714,133 @@
     @endif
 
     <!-- ========================================================================= -->
-    <!-- MODAL 2: Detail Kelengkapan Aset & Histori Kalibrasi (Read Detail) -->
+    <!-- MODAL 2: Popup Ringkas Detail Alat Medis (Compact Pop-up Card - No Scroll) -->
     <!-- ========================================================================= -->
     @if ($isDetailOpen && $selectedAsset)
-        <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-3xl w-full overflow-hidden">
-                <!-- Detail Header Hijau Emerald -->
-                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-800 text-white">
-                                {{ $selectedAsset->asset_code }}
-                            </span>
-                            @if ($selectedAsset->condition === 'baik')
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">Kondisi Baik</span>
-                            @elseif ($selectedAsset->condition === 'rusak_ringan')
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300">Rusak Ringan</span>
-                            @else
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300">Rusak Berat</span>
-                            @endif
-                        </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 mt-1">{{ $selectedAsset->name }}</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">{{ $selectedAsset->brand ?? '-' }} · Model: {{ $selectedAsset->model_type ?? '-' }}</p>
-                    </div>
+        <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg w-full overflow-hidden">
+                <!-- Popup Header: Kompak & Elegan -->
+                <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                        <button wire:click="openPrintLabelModal({{ $selectedAsset->id }})" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 shadow-xs">
-                            <i class="ri-qr-code-line text-sm"></i>
-                            <span>Cetak Label Stiker</span>
-                        </button>
-                        <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
-                            <i class="ri-close-line text-xl"></i>
-                        </button>
+                        <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-800 text-white shadow-2xs">
+                            {{ $selectedAsset->asset_code }}
+                        </span>
+                        @if ($selectedAsset->condition === 'baik')
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300">
+                                Kondisi Baik
+                            </span>
+                        @elseif ($selectedAsset->condition === 'rusak_ringan')
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300">
+                                Rusak Ringan
+                            </span>
+                        @else
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300">
+                                Rusak Berat
+                            </span>
+                        @endif
                     </div>
+                    <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg transition-colors">
+                        <i class="ri-close-line text-lg"></i>
+                    </button>
                 </div>
 
-                <!-- Detail Body -->
-                <div class="p-6 space-y-5 text-xs">
-                    <!-- Showcase Foto Alat Medis & Quick Highlight -->
-                    <div class="flex flex-col sm:flex-row gap-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                        <!-- Frame Foto Fisik Alat Medis -->
-                        <div class="relative w-full sm:w-64 h-48 rounded-xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shrink-0 shadow-xs group">
+                <!-- Popup Body: Pas Satu Tampilan (Tidak Perlu Scroll) -->
+                <div class="p-5 space-y-3.5 text-xs">
+                    <!-- Baris 1: Foto Fisik Kiri + Info Identitas Kanan -->
+                    <div class="flex gap-4 items-stretch">
+                        <!-- Foto Fisik Alat Medis (Kompak & Proporsional) -->
+                        <div class="relative w-44 h-36 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs">
                             @if ($selectedAsset->image_url)
                                 <img 
                                     src="{{ $selectedAsset->image_url }}" 
                                     alt="{{ $selectedAsset->name }}" 
-                                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    class="w-full h-full object-cover"
                                 />
-                                <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-xs text-[10px] text-white font-medium flex items-center gap-1.5 shadow-xs">
-                                    <i class="ri-camera-3-fill text-emerald-400"></i>
-                                    <span>Foto Fisik Alat</span>
-                                </div>
                             @else
-                                <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-4 text-center bg-slate-100/60 dark:bg-slate-850">
-                                    <i class="ri-image-2-line text-4xl mb-1 text-slate-300 dark:text-slate-600"></i>
-                                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Foto Belum Tersedia</span>
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Unggah melalui tombol sunting alat</span>
+                                <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-2 text-center">
+                                    <i class="ri-image-2-line text-3xl mb-1 text-slate-300 dark:text-slate-600"></i>
+                                    <span class="text-[10px] font-semibold">Foto Belum Tersedia</span>
                                 </div>
                             @endif
+                            <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded bg-slate-900/80 backdrop-blur-xs text-[9px] text-white font-medium flex items-center gap-1 shadow-2xs">
+                                <i class="ri-camera-3-fill text-emerald-400"></i>
+                                <span>Foto Fisik Alat</span>
+                            </div>
                         </div>
 
-                        <!-- Ringkasan Spesifikasi di Sebelah Foto -->
-                        <div class="flex-1 flex flex-col justify-between space-y-3">
+                        <!-- Data Identitas Alat Medis -->
+                        <div class="flex-1 flex flex-col justify-between min-w-0">
                             <div>
-                                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300">
-                                        {{ $selectedAsset->category->name ?? 'Aset RS' }}
-                                    </span>
-                                    <span class="font-mono text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                                        SN: {{ $selectedAsset->serial_number ?? '-' }}
-                                    </span>
-                                </div>
-                                <h3 class="text-base font-extrabold text-slate-900 dark:text-slate-100 leading-snug">
+                                <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide block truncate">
+                                    {{ $selectedAsset->category->name ?? '-' }}
+                                </span>
+                                <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug line-clamp-2 mt-0.5">
                                     {{ $selectedAsset->name }}
                                 </h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                                    Merk: <strong class="text-slate-800 dark:text-slate-200">{{ $selectedAsset->brand ?? '-' }}</strong> &nbsp;·&nbsp; Model: <strong class="text-slate-800 dark:text-slate-200">{{ $selectedAsset->model_type ?? '-' }}</strong>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 truncate">
+                                    {{ $selectedAsset->brand ?? '-' }} {{ $selectedAsset->model_type ? '· ' . $selectedAsset->model_type : '' }}
+                                </p>
+                                <p class="text-[11px] font-mono text-slate-400 dark:text-slate-500 mt-0.5 truncate">
+                                    SN: {{ $selectedAsset->serial_number ?? '-' }}
                                 </p>
                             </div>
 
-                            <!-- 2 Info Card Penempatan & Status -->
-                            <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-200 dark:border-slate-700">
-                                <div class="bg-white dark:bg-slate-850 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-medium">Ruangan</span>
-                                    <span class="font-bold text-slate-800 dark:text-slate-200 text-xs block truncate">{{ $selectedAsset->location->name ?? '-' }}</span>
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block truncate">{{ $selectedAsset->location->building ?? '' }}</span>
-                                </div>
-                                <div class="bg-white dark:bg-slate-850 p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-medium">Status Operasional</span>
-                                    <span class="font-bold text-xs capitalize {{ $selectedAsset->status === 'aktif' ? 'text-emerald-700 dark:text-emerald-400' : ($selectedAsset->status === 'pemeliharaan' ? 'text-amber-700 dark:text-amber-400' : 'text-rose-700 dark:text-rose-400') }}">
-                                        {{ $selectedAsset->status === 'aktif' ? 'Aktif Digunakan' : ($selectedAsset->status === 'pemeliharaan' ? 'Dalam Pemeliharaan' : 'Afkir / Dihapus') }}
-                                    </span>
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 block capitalize">Kondisi {{ str_replace('_', ' ', $selectedAsset->condition) }}</span>
-                                </div>
+                            <!-- Status Operasional Badge -->
+                            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
+                                <span class="text-slate-400 dark:text-slate-500">Status Operasional:</span>
+                                <span class="font-bold capitalize {{ $selectedAsset->status === 'aktif' ? 'text-emerald-700 dark:text-emerald-400' : ($selectedAsset->status === 'pemeliharaan' ? 'text-amber-700 dark:text-amber-400' : 'text-rose-700 dark:text-rose-400') }}">
+                                    {{ $selectedAsset->status === 'aktif' ? 'Aktif Digunakan' : ($selectedAsset->status === 'pemeliharaan' ? 'Pemeliharaan' : 'Afkir') }}
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Grid Spesifikasi Lengkap Tambahan -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                    <!-- Baris 2: Parameter Penempatan, PIC, Kuantitas, & Harga -->
+                    <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-[11px]">
                         <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Gedung & Lantai</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->building ?? '-' }} ({{ $selectedAsset->location->floor ?? '-' }})</span>
+                            <span class="text-slate-400 dark:text-slate-500 block text-[10px] uppercase font-medium">Ruangan & Gedung</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">{{ $selectedAsset->location->name ?? '-' }}</span>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block truncate">{{ $selectedAsset->location->building ?? '' }} ({{ $selectedAsset->location->floor ?? '-' }})</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Penanggung Jawab (PIC)</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block text-[10px] uppercase font-medium">Penanggung Jawab (PIC)</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
+                            <span class="text-[10px] text-emerald-700 dark:text-emerald-400 block font-medium">IPSRS RS Ummi</span>
                         </div>
-                        <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Kuantitas Fisik</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block font-mono">1 Unit (Terserialisasi)</span>
+                        <div class="pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                            <span class="text-slate-400 dark:text-slate-500 block text-[10px] uppercase font-medium">Jumlah Fisik</span>
+                            <span class="font-mono font-bold text-slate-800 dark:text-slate-200">1 Unit (Terserialisasi)</span>
                         </div>
-                        <div>
-                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Harga Perolehan</span>
-                            <span class="font-mono font-bold text-slate-900 dark:text-slate-100 mt-0.5 block">Rp {{ number_format($selectedAsset->purchase_cost, 0, ',', '.') }}</span>
+                        <div class="pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                            <span class="text-slate-400 dark:text-slate-500 block text-[10px] uppercase font-medium">Harga Perolehan</span>
+                            <span class="font-mono font-bold text-slate-900 dark:text-slate-100">Rp {{ number_format($selectedAsset->purchase_cost, 0, ',', '.') }}</span>
                         </div>
                     </div>
 
-                    @if ($selectedAsset->notes)
-                        <div class="p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-blue-900 dark:text-blue-200">
-                            <span class="font-bold block mb-1">Catatan Spesifikasi:</span>
-                            <p>{{ $selectedAsset->notes }}</p>
+                    <!-- Baris 3: Ringkasan Histori Kalibrasi / Servis (1 Baris Ringkas) -->
+                    @if ($selectedAsset->maintenanceLogs->isNotEmpty())
+                        @php $latestLog = $selectedAsset->maintenanceLogs->first(); @endphp
+                        <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-[11px]">
+                            <div class="flex items-center gap-1.5 truncate">
+                                <i class="ri-history-line text-emerald-700 dark:text-emerald-400"></i>
+                                <span class="text-slate-600 dark:text-slate-300 truncate">
+                                    Histori Kalibrasi Terakhir: <strong class="capitalize">{{ str_replace('_', ' ', $latestLog->type) }}</strong> ({{ $latestLog->maintenance_date->format('d M Y') }})
+                                </span>
+                            </div>
+                            <span class="font-mono font-bold text-slate-700 dark:text-slate-300 shrink-0 ml-2">
+                                {{ $selectedAsset->maintenanceLogs->count() }}x Servis
+                            </span>
                         </div>
                     @endif
-
-                    <!-- Maintenance History Section -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2.5">
-                            <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                                <i class="ri-history-line text-emerald-700 dark:text-emerald-400 text-sm"></i>
-                                <span>Histori Kalibrasi & Servis Terjadwal</span>
-                            </h4>
-                            <button wire:click="openAddLogModal({{ $selectedAsset->id }})" class="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 hover:underline inline-flex items-center gap-1">
-                                <i class="ri-add-line"></i>
-                                <span>+ Catat Servis / Kalibrasi</span>
-                            </button>
-                        </div>
-
-                        @if ($selectedAsset->maintenanceLogs->isNotEmpty())
-                            <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
-                                @foreach ($selectedAsset->maintenanceLogs as $log)
-                                    <div class="p-3 bg-white dark:bg-slate-850 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-between gap-3">
-                                        <div>
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900 dark:text-slate-100 capitalize">{{ str_replace('_', ' ', $log->type) }}</span>
-                                                <span class="font-mono text-slate-400 dark:text-slate-500">· {{ $log->maintenance_date->format('d M Y') }}</span>
-                                            </div>
-                                            <p class="text-slate-600 dark:text-slate-300 mt-0.5">{{ $log->notes }}</p>
-                                            <span class="text-[11px] text-slate-400 dark:text-slate-500">Teknisi: {{ $log->vendor_technician ?? 'Internal RS' }}</span>
-                                        </div>
-                                        <div class="text-right shrink-0">
-                                            <span class="font-mono font-bold text-slate-900 dark:text-slate-100">Rp {{ number_format($log->cost, 0, ',', '.') }}</span>
-                                            <span class="block text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400' }}">
-                                                {{ $log->status }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="p-4 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 text-center text-slate-400 dark:text-slate-500">
-                                Belum ada riwayat kalibrasi atau pemeliharaan yang tercatat.
-                            </div>
-                        @endif
-                    </div>
                 </div>
 
-                <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 flex justify-end">
-                    <button wire:click="closeModal" class="px-4 py-2 font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-lg">
+                <!-- Popup Footer Action -->
+                <div class="px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900 flex items-center justify-between">
+                    <button wire:click="openPrintLabelModal({{ $selectedAsset->id }})" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 transition-colors shadow-2xs">
+                        <i class="ri-qr-code-line text-sm"></i>
+                        <span>Cetak Label QR</span>
+                    </button>
+                    <button wire:click="closeModal" class="px-4 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition-colors">
                         Tutup
                     </button>
                 </div>
