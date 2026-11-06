@@ -245,14 +245,6 @@
                                 <th class="py-3.5 px-4">Ruangan RS</th>
                                 <th class="py-3.5 px-4 text-center">Jumlah</th>
                                 <th class="py-3.5 px-4">Kondisi</th>
-                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950" wire:click="sortBy('purchase_cost')">
-                                    <div class="flex items-center gap-1">
-                                        <span>Harga Perolehan</span>
-                                        @if ($sortField === 'purchase_cost')
-                                            <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                                        @endif
-                                    </div>
-                                </th>
                                 <th class="py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
@@ -314,11 +306,6 @@
                                         @endif
                                     </td>
 
-                                    <!-- Harga Perolehan -->
-                                    <td class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">
-                                        Rp {{ number_format($asset->purchase_cost, 0, ',', '.') }}
-                                    </td>
-
                                     <!-- Aksi Tombol -->
                                     <td class="py-3.5 px-4 text-right whitespace-nowrap no-print">
                                         <div class="inline-flex items-center gap-1">
@@ -362,7 +349,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="py-12 px-4 text-center text-slate-400">
+                                    <td colspan="7" class="py-12 px-4 text-center text-slate-400">
                                         <div class="flex flex-col items-center justify-center">
                                             <i class="ri-inbox-line text-4xl text-slate-300 mb-2"></i>
                                             <p class="text-sm font-semibold text-slate-600">Tidak ada aset rumah sakit yang ditemukan.</p>
