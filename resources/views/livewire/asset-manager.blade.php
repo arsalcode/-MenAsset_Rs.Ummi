@@ -72,12 +72,12 @@
     <div class="p-6 space-y-6">
         <!-- Flash Alert Notification -->
         @if ($feedbackMessage)
-            <div class="p-4 rounded-xl flex items-center justify-between border shadow-xs transition-all {{ $feedbackType === 'danger' ? 'bg-rose-50 border-rose-200 text-rose-800' : 'bg-emerald-50 border-emerald-200 text-emerald-900' }}">
+            <div class="p-4 rounded-xl flex items-center justify-between border shadow-xs transition-all {{ $feedbackType === 'danger' ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-200' : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200' }}">
                 <div class="flex items-center gap-3">
-                    <i class="{{ $feedbackType === 'danger' ? 'ri-error-warning-fill text-rose-600' : 'ri-checkbox-circle-fill text-emerald-600' }} text-xl"></i>
+                    <i class="{{ $feedbackType === 'danger' ? 'ri-error-warning-fill text-rose-600 dark:text-rose-400' : 'ri-checkbox-circle-fill text-emerald-600 dark:text-emerald-400' }} text-xl"></i>
                     <span class="text-sm font-semibold">{{ $feedbackMessage }}</span>
                 </div>
-                <button wire:click="$set('feedbackMessage', null)" class="text-slate-400 hover:text-slate-600 p-1">
+                <button wire:click="$set('feedbackMessage', null)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
                     <i class="ri-close-line text-lg"></i>
                 </button>
             </div>
@@ -92,8 +92,8 @@
 
             @if ($activeTab === 'tabMaintenance')
                 <!-- Alert Box Khusus Tab Restok / Perlu Kalibrasi (Khas Alkamart) -->
-                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-900 flex items-start gap-3">
-                    <i class="ri-error-warning-fill text-amber-600 text-xl shrink-0 mt-0.5"></i>
+                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-start gap-3">
+                    <i class="ri-error-warning-fill text-amber-600 dark:text-amber-400 text-xl shrink-0 mt-0.5"></i>
                     <div class="text-xs">
                         <strong class="font-bold block text-sm">Pemberitahuan Kalibrasi & Pemeliharaan Alat Medis:</strong>
                         Daftar di bawah menyaring alat kesehatan dan peralatan rumah sakit yang berstatus <strong>Perlu Kalibrasi</strong>, <strong>Rusak Ringan</strong>, atau <strong>Rusak Berat</strong>. Segera jadwalkan teknisi IPSRS atau pihak BPFK agar alat siap operasional kembali.
@@ -102,22 +102,22 @@
             @endif
 
             <!-- ================= UNIFIED TOOLBAR & CATEGORY FILTER (Khas Alkamart) ================= -->
-            <div class="no-print bg-white rounded-xl border border-slate-200 shadow-xs divide-y divide-slate-100">
+            <div class="no-print bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs divide-y divide-slate-100 dark:divide-slate-800">
                 <!-- Baris 1: Filter Kategori Cepat (Pills Ringkas & Elegan) -->
-                <div class="px-4 py-3 bg-slate-50/70 flex items-center justify-between gap-3 flex-wrap">
+                <div class="px-4 py-3 bg-slate-50/70 dark:bg-slate-850/80 flex items-center justify-between gap-3 flex-wrap">
                     <div class="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
-                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mr-1 shrink-0">
-                            <i class="ri-filter-3-line text-emerald-700"></i> Kategori:
+                        <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-1 shrink-0">
+                            <i class="ri-filter-3-line text-emerald-700 dark:text-emerald-400"></i> Kategori:
                         </span>
 
                         <!-- Pill: Semua -->
                         <button 
                             wire:click="selectCategoryPill('')" 
-                            class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 {{ empty($filterCategory) ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
+                            class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 {{ empty($filterCategory) ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40 dark:hover:bg-slate-750' }}"
                         >
                             <i class="ri-apps-2-line"></i>
                             <span>Semua</span>
-                            <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ empty($filterCategory) ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-600' }}">
+                            <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ empty($filterCategory) ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300' }}">
                                 {{ $stats['total'] }}
                             </span>
                         </button>
@@ -139,7 +139,7 @@
                             <button 
                                 wire:click="selectCategoryPill('{{ $cat->id }}')" 
                                 title="{{ $cat->name }}"
-                                class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 whitespace-nowrap {{ $filterCategory == $cat->id ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white text-slate-700 border border-slate-200 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40' }}"
+                                class="h-8 px-3.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 transition-all shrink-0 whitespace-nowrap {{ $filterCategory == $cat->id ? 'bg-emerald-700 text-white shadow-xs' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-emerald-700 hover:text-emerald-700 hover:bg-emerald-50/40 dark:hover:bg-slate-750' }}"
                             >
                                 @if ($cat->code === 'MED')
                                     <i class="ri-heart-pulse-line"></i>
@@ -151,7 +151,7 @@
                                     <i class="ri-computer-line"></i>
                                 @endif
                                 <span>{{ $shortCategoryNames[$cat->code] ?? $cat->name }}</span>
-                                <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ $filterCategory == $cat->id ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-600' }}">
+                                <span class="ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-mono {{ $filterCategory == $cat->id ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300' }}">
                                     {{ $cat->assets_count }}
                                 </span>
                             </button>
@@ -162,7 +162,7 @@
                     @if ($search || $filterCategory || $filterLocation || $filterCondition || $filterStatus)
                         <button 
                             wire:click="resetFilters" 
-                            class="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200/60 inline-flex items-center gap-1 transition-all shrink-0 ml-auto"
+                            class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-2.5 py-1 rounded-lg border border-rose-200/60 dark:border-rose-900/60 inline-flex items-center gap-1 transition-all shrink-0 ml-auto"
                             title="Reset Semua Filter"
                         >
                             <i class="ri-refresh-line"></i>
@@ -175,17 +175,17 @@
                 <div class="p-3.5 flex flex-col md:flex-row md:items-center gap-3">
                     <!-- Search Input Fleksibel (Mengisi Area Kosong Secara Proporsional) -->
                     <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
                             <i class="ri-search-line"></i>
                         </span>
                         <input 
                             type="text" 
                             wire:model.live.debounce.300ms="search" 
                             placeholder="Cari kode aset, nama alat medis, merk, nomor seri..." 
-                            class="w-full pl-9 pr-9 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 placeholder:text-slate-400"
+                            class="w-full pl-9 pr-9 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                         />
                         @if ($search)
-                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                                 <i class="ri-close-line"></i>
                             </button>
                         @endif
@@ -193,14 +193,14 @@
 
                     <!-- Filter Dropdowns & Tombol Aksi Tambah Aset -->
                     <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
-                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg text-slate-700 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px]">
+                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px]">
                             <option value="">Semua Ruangan</option>
                             @foreach ($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                             @endforeach
                         </select>
 
-                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-lg text-slate-700 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px]">
+                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px]">
                             <option value="">Semua Kondisi</option>
                             <option value="baik">Kondisi Baik</option>
                             <option value="rusak_ringan">Rusak Ringan</option>
@@ -219,13 +219,13 @@
             </div>
 
             <!-- Custom Data Table (Identik .custom-table Alkamart) -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <!-- Table Header Hijau Lembut (#E9FAF3) Khas Alkamart -->
-                        <thead class="bg-[#E9FAF3] border-b border-[#c7f0db] text-xs font-bold text-[#064E3B] uppercase tracking-wider">
+                        <thead class="bg-[#E9FAF3] dark:bg-slate-800/90 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase tracking-wider">
                             <tr>
-                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950" wire:click="sortBy('asset_code')">
+                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
                                     <div class="flex items-center gap-1">
                                         <span>Kode Aset</span>
                                         @if ($sortField === 'asset_code')
@@ -233,7 +233,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950" wire:click="sortBy('name')">
+                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -248,60 +248,60 @@
                                 <th class="py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300">
                             @forelse ($assets as $asset)
-                                <tr class="hover:bg-[#F8FAF8] transition-colors">
+                                <tr class="hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
                                     <!-- Kode Aset -->
                                     <td class="py-3.5 px-4 font-mono font-semibold whitespace-nowrap">
-                                        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 border border-slate-200">
+                                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
                                             {{ $asset->asset_code }}
                                         </span>
                                     </td>
 
                                     <!-- Nama Alat & Spesifikasi -->
                                     <td class="py-3.5 px-4">
-                                        <div class="font-bold text-slate-900 text-[13px]">{{ $asset->name }}</div>
-                                        <div class="text-[11px] text-slate-500 mt-0.5">
+                                        <div class="font-bold text-slate-900 dark:text-slate-100 text-[13px]">{{ $asset->name }}</div>
+                                        <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                                             {{ $asset->brand ?? '-' }} {{ $asset->model_type ? '· ' . $asset->model_type : '' }}
                                             @if ($asset->serial_number)
-                                                <span class="font-mono text-slate-400">· SN: {{ $asset->serial_number }}</span>
+                                                <span class="font-mono text-slate-400 dark:text-slate-500">· SN: {{ $asset->serial_number }}</span>
                                             @endif
                                         </div>
                                     </td>
 
                                     <!-- Kategori -->
                                     <td class="py-3.5 px-4 whitespace-nowrap">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                                             {{ $asset->category->name ?? '-' }}
                                         </span>
                                     </td>
 
                                     <!-- Ruangan Penempatan -->
                                     <td class="py-3.5 px-4 whitespace-nowrap">
-                                        <div class="font-semibold text-slate-800">{{ $asset->location->name ?? '-' }}</div>
-                                        <div class="text-[11px] text-slate-400">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
+                                        <div class="font-semibold text-slate-800 dark:text-slate-200">{{ $asset->location->name ?? '-' }}</div>
+                                        <div class="text-[11px] text-slate-400 dark:text-slate-500">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
                                     </td>
 
                                     <!-- Jumlah Fisik (Kuantitas) -->
                                     <td class="py-3.5 px-4 whitespace-nowrap text-center">
-                                        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200 inline-flex items-center gap-1 shadow-2xs">
-                                            <i class="ri-stack-line text-emerald-700 text-xs"></i> 1 Unit
+                                        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1 shadow-2xs">
+                                            <i class="ri-stack-line text-emerald-700 dark:text-emerald-400 text-xs"></i> 1 Unit
                                         </span>
                                     </td>
 
                                     <!-- Kondisi -->
                                     <td class="py-3.5 px-4 whitespace-nowrap">
                                         @if ($asset->condition === 'baik')
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-emerald-600"></span> Baik
+                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 inline-flex items-center gap-1">
+                                                <span class="size-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span> Baik
                                             </span>
                                         @elseif ($asset->condition === 'rusak_ringan')
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-amber-600"></span> Rusak Ringan
+                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 inline-flex items-center gap-1">
+                                                <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span> Rusak Ringan
                                             </span>
                                         @else
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-800 border border-rose-200 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-rose-600"></span> Rusak Berat
+                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800 inline-flex items-center gap-1">
+                                                <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span> Rusak Berat
                                             </span>
                                         @endif
                                     </td>
@@ -312,7 +312,7 @@
                                             <!-- Detail Button -->
                                             <button 
                                                 wire:click="openDetailModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 transition-colors inline-flex items-center justify-center"
+                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-200 transition-colors inline-flex items-center justify-center"
                                                 title="Lihat Detail & Histori Kalibrasi"
                                             >
                                                 <i class="ri-eye-line text-sm"></i>
@@ -321,7 +321,7 @@
                                             <!-- Cetak Label QR Button -->
                                             <button 
                                                 wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-colors inline-flex items-center justify-center"
+                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-200 transition-colors inline-flex items-center justify-center"
                                                 title="Cetak Stiker Label QR Aset"
                                             >
                                                 <i class="ri-qr-code-line text-sm"></i>
@@ -330,7 +330,7 @@
                                             <!-- Sunting Button -->
                                             <button 
                                                 wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 hover:text-amber-700 hover:bg-amber-50 border border-slate-200 hover:border-amber-200 transition-colors inline-flex items-center justify-center"
+                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-200 transition-colors inline-flex items-center justify-center"
                                                 title="Sunting Data Aset"
                                             >
                                                 <i class="ri-edit-line text-sm"></i>
@@ -339,7 +339,7 @@
                                             <!-- Hapus Button -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 hover:text-rose-700 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 transition-colors inline-flex items-center justify-center"
+                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-rose-700 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-rose-200 transition-colors inline-flex items-center justify-center"
                                                 title="Hapus Aset"
                                             >
                                                 <i class="ri-delete-bin-line text-sm"></i>
@@ -349,12 +349,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="py-12 px-4 text-center text-slate-400">
+                                    <td colspan="7" class="py-12 px-4 text-center text-slate-400 dark:text-slate-500">
                                         <div class="flex flex-col items-center justify-center">
-                                            <i class="ri-inbox-line text-4xl text-slate-300 mb-2"></i>
-                                            <p class="text-sm font-semibold text-slate-600">Tidak ada aset rumah sakit yang ditemukan.</p>
-                                            <p class="text-xs text-slate-400 mt-0.5">Silakan sesuaikan kata kunci atau bersihkan filter.</p>
-                                            <button wire:click="resetFilters" class="mt-3 text-xs font-bold text-emerald-700 hover:underline">
+                                            <i class="ri-inbox-line text-4xl text-slate-300 dark:text-slate-600 mb-2"></i>
+                                            <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Tidak ada aset rumah sakit yang ditemukan.</p>
+                                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Silakan sesuaikan kata kunci atau bersihkan filter.</p>
+                                            <button wire:click="resetFilters" class="mt-3 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline">
                                                 Bersihkan Filter
                                             </button>
                                         </div>
@@ -366,7 +366,7 @@
                 </div>
 
                 <!-- Table Pagination Footer -->
-                <div class="p-4 border-t border-slate-100 bg-slate-50/50 no-print">
+                <div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 no-print">
                     {{ $assets->links() }}
                 </div>
             </div>
@@ -379,8 +379,8 @@
                 <!-- Action Row -->
                 <div class="flex items-center justify-between">
                     <div>
-                        <h2 class="text-base font-bold text-slate-900">Rekapitulasi Nilai Aset & Beban Pemeliharaan RS</h2>
-                        <p class="text-xs text-slate-500">Ringkasan finansial inventaris dan kapitalisasi alat kesehatan RS Ummi.</p>
+                        <h2 class="text-base font-bold text-slate-900 dark:text-slate-100">Rekapitulasi Nilai Aset & Beban Pemeliharaan RS</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Ringkasan finansial inventaris dan kapitalisasi alat kesehatan RS Ummi.</p>
                     </div>
                     <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs">
                         <i class="ri-printer-line text-sm"></i>
@@ -445,35 +445,35 @@
                 <!-- Rekap Data per Ruangan & Kategori -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Tabel Sebaran per Kategori -->
-                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <i class="ri-pie-chart-line text-emerald-700"></i>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+                        <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <i class="ri-pie-chart-line text-emerald-700 dark:text-emerald-400"></i>
                             <span>Distribusi Aset Menurut Kategori</span>
                         </h4>
                         <div class="space-y-3">
                             @foreach ($categories as $c)
-                                <div class="flex items-center justify-between text-xs border-b border-slate-100 pb-2">
-                                    <span class="font-medium text-slate-700">{{ $c->name }}</span>
-                                    <span class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{{ $c->assets_count }} Unit</span>
+                                <div class="flex items-center justify-between text-xs border-b border-slate-100 dark:border-slate-800 pb-2">
+                                    <span class="font-medium text-slate-700 dark:text-slate-300">{{ $c->name }}</span>
+                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">{{ $c->assets_count }} Unit</span>
                                 </div>
                             @endforeach
                         </div>
                     </div>
 
                     <!-- Tabel Sebaran per Ruangan RS -->
-                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <i class="ri-hospital-line text-emerald-700"></i>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+                        <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <i class="ri-hospital-line text-emerald-700 dark:text-emerald-400"></i>
                             <span>Sebaran Alat di Ruangan RS Ummi</span>
                         </h4>
                         <div class="space-y-3">
                             @foreach ($locations as $l)
-                                <div class="flex items-center justify-between text-xs border-b border-slate-100 pb-2">
+                                <div class="flex items-center justify-between text-xs border-b border-slate-100 dark:border-slate-800 pb-2">
                                     <div>
-                                        <span class="font-medium text-slate-700 block">{{ $l->name }}</span>
-                                        <span class="text-[10px] text-slate-400">{{ $l->building }}</span>
+                                        <span class="font-medium text-slate-700 dark:text-slate-300 block">{{ $l->name }}</span>
+                                        <span class="text-[10px] text-slate-400 dark:text-slate-500">{{ $l->building }}</span>
                                     </div>
-                                    <span class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{{ $l->assets_count }} Unit</span>
+                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">{{ $l->assets_count }} Unit</span>
                                 </div>
                             @endforeach
                         </div>
@@ -488,14 +488,14 @@
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h2 class="text-base font-bold text-slate-900">Histori Lengkap Pemeliharaan & Kalibrasi Alat Medis</h2>
-                        <p class="text-xs text-slate-500">Catatan riwayat uji fungsi berkala, kalibrasi BPFK, dan perbaikan perangkat.</p>
+                        <h2 class="text-base font-bold text-slate-900 dark:text-slate-100">Histori Lengkap Pemeliharaan & Kalibrasi Alat Medis</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Catatan riwayat uji fungsi berkala, kalibrasi BPFK, dan perbaikan perangkat.</p>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+                <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-[#E9FAF3] border-b border-[#c7f0db] text-xs font-bold text-[#064E3B] uppercase">
+                        <thead class="bg-[#E9FAF3] dark:bg-slate-800 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase">
                             <tr>
                                 <th class="py-3.5 px-4">Tanggal Servis</th>
                                 <th class="py-3.5 px-4">Alat & Kode Aset</th>
@@ -506,30 +506,30 @@
                                 <th class="py-3.5 px-4">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                             @forelse ($logs as $log)
-                                <tr class="hover:bg-[#F8FAF8]">
+                                <tr class="hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60">
                                     <td class="py-3 px-4 font-mono font-medium">{{ $log->maintenance_date->format('d M Y') }}</td>
                                     <td class="py-3 px-4">
-                                        <div class="font-bold text-slate-900">{{ $log->asset->name }}</div>
-                                        <span class="font-mono text-[11px] text-slate-500">{{ $log->asset->asset_code }}</span>
+                                        <div class="font-bold text-slate-900 dark:text-slate-100">{{ $log->asset->name }}</div>
+                                        <span class="font-mono text-[11px] text-slate-500 dark:text-slate-400">{{ $log->asset->asset_code }}</span>
                                     </td>
                                     <td class="py-3 px-4">{{ $log->asset->location->name ?? '-' }}</td>
                                     <td class="py-3 px-4">
                                         <span class="font-semibold capitalize">{{ str_replace('_', ' ', $log->type) }}</span>
-                                        <p class="text-[11px] text-slate-500 mt-0.5">{{ $log->notes }}</p>
+                                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{{ $log->notes }}</p>
                                     </td>
                                     <td class="py-3 px-4">{{ $log->vendor_technician ?? 'Internal RS' }}</td>
-                                    <td class="py-3 px-4 font-mono font-bold text-slate-900">Rp {{ number_format($log->cost, 0, ',', '.') }}</td>
+                                    <td class="py-3 px-4 font-mono font-bold text-slate-900 dark:text-slate-100">Rp {{ number_format($log->cost, 0, ',', '.') }}</td>
                                     <td class="py-3 px-4">
-                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300' }}">
                                             {{ $log->status }}
                                         </span>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="py-8 text-center text-slate-400">Belum ada riwayat servis yang tercatat.</td>
+                                    <td colspan="7" class="py-8 text-center text-slate-400 dark:text-slate-500">Belum ada riwayat servis yang tercatat.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -564,21 +564,21 @@
     <!-- ========================================================================= -->
     @if ($isFormOpen)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-2xl w-full overflow-hidden">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-2xl w-full overflow-hidden">
                 <!-- Modal Header Hijau Emerald -->
-                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-[#E9FAF3]">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850">
                     <div class="flex items-center gap-2.5">
                         <div class="size-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-base">
                             <i class="{{ $selectedAssetId ? 'ri-edit-line' : 'ri-add-circle-line' }}"></i>
                         </div>
                         <div>
-                            <h3 class="text-sm font-bold text-[#064E3B]">
+                            <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">
                                 {{ $selectedAssetId ? 'Sunting Data Aset Rumah Sakit' : 'Pendaftaran Aset Rumah Sakit Baru' }}
                             </h3>
-                            <p class="text-[11px] text-emerald-800">Isi formulir kelengkapan inventaris aset RS Ummi dengan valid.</p>
+                            <p class="text-[11px] text-emerald-800 dark:text-slate-400">Isi formulir kelengkapan inventaris aset RS Ummi dengan valid.</p>
                         </div>
                     </div>
-                    <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                    <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg">
                         <i class="ri-close-line text-xl"></i>
                     </button>
                 </div>
@@ -588,22 +588,22 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- Kode Aset -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Kode Aset RS <span class="text-rose-500">*</span></label>
-                            <input type="text" wire:model="asset_code" placeholder="Contoh: MED-IGD-001" class="w-full px-3 py-2 border rounded-lg font-mono uppercase focus:outline-none focus:border-emerald-700 {{ $errors->has('asset_code') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300' }}" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kode Aset RS <span class="text-rose-500">*</span></label>
+                            <input type="text" wire:model="asset_code" placeholder="Contoh: MED-001" class="w-full px-3 py-2 border rounded-lg font-mono uppercase bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 {{ $errors->has('asset_code') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300 dark:border-slate-700' }}" />
                             @error('asset_code') <span class="text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <!-- Nama Aset -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Nama Alat / Aset <span class="text-rose-500">*</span></label>
-                            <input type="text" wire:model="name" placeholder="Contoh: Defibrillator Mindray D3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 {{ $errors->has('name') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300' }}" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Alat / Aset <span class="text-rose-500">*</span></label>
+                            <input type="text" wire:model="name" placeholder="Contoh: Defibrillator Mindray D3" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 {{ $errors->has('name') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300 dark:border-slate-700' }}" />
                             @error('name') <span class="text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <!-- Kategori -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Kategori Aset <span class="text-rose-500">*</span></label>
-                            <select wire:model="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 {{ $errors->has('category_id') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300' }}">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kategori Aset <span class="text-rose-500">*</span></label>
+                            <select wire:model="category_id" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 {{ $errors->has('category_id') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300 dark:border-slate-700' }}">
                                 <option value="">Pilih Kategori...</option>
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -614,8 +614,8 @@
 
                         <!-- Ruangan Penempatan -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Ruangan Penempatan RS <span class="text-rose-500">*</span></label>
-                            <select wire:model="location_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 {{ $errors->has('location_id') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300' }}">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ruangan Penempatan RS <span class="text-rose-500">*</span></label>
+                            <select wire:model="location_id" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 {{ $errors->has('location_id') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300 dark:border-slate-700' }}">
                                 <option value="">Pilih Ruangan...</option>
                                 @foreach ($locations as $loc)
                                     <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->building }})</option>
@@ -626,39 +626,39 @@
 
                         <!-- Merk -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Merk / Brand</label>
-                            <input type="text" wire:model="brand" placeholder="Contoh: Mindray, GE, Siemens" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Merk / Brand</label>
+                            <input type="text" wire:model="brand" placeholder="Contoh: Mindray, GE, Siemens" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500" />
                         </div>
 
                         <!-- Tipe / Model -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Tipe / Model</label>
-                            <input type="text" wire:model="model_type" placeholder="Contoh: BeneHeart D3" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tipe / Model</label>
+                            <input type="text" wire:model="model_type" placeholder="Contoh: BeneHeart D3" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500" />
                         </div>
 
                         <!-- Serial Number -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Nomor Seri (Serial Number)</label>
-                            <input type="text" wire:model="serial_number" placeholder="Contoh: MR-DF-2023-091" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-mono focus:outline-none focus:border-emerald-700" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nomor Seri (Serial Number)</label>
+                            <input type="text" wire:model="serial_number" placeholder="Contoh: MR-DF-2023-091" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg font-mono focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500" />
                         </div>
 
                         <!-- Tanggal Pengadaan -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Tanggal Pengadaan</label>
-                            <input type="date" wire:model="purchase_date" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tanggal Pengadaan</label>
+                            <input type="date" wire:model="purchase_date" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500" />
                         </div>
 
                         <!-- Harga Perolehan -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Harga Perolehan (Rp) <span class="text-rose-500">*</span></label>
-                            <input type="number" wire:model="purchase_cost" class="w-full px-3 py-2 border rounded-lg font-mono focus:outline-none focus:border-emerald-700 {{ $errors->has('purchase_cost') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300' }}" />
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Harga Perolehan (Rp) <span class="text-rose-500">*</span></label>
+                            <input type="number" wire:model="purchase_cost" class="w-full px-3 py-2 border rounded-lg font-mono bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 {{ $errors->has('purchase_cost') ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300 dark:border-slate-700' }}" />
                             @error('purchase_cost') <span class="text-rose-500 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <!-- Kondisi -->
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Kondisi Fisik & Fungsi <span class="text-rose-500">*</span></label>
-                            <select wire:model="condition" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kondisi Fisik & Fungsi <span class="text-rose-500">*</span></label>
+                            <select wire:model="condition" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500">
                                 <option value="baik">Baik (Siap Operasional)</option>
                                 <option value="rusak_ringan">Rusak Ringan (Perlu Kalibrasi/Perbaikan)</option>
                                 <option value="rusak_berat">Rusak Berat (Tidak Berfungsi)</option>
@@ -667,8 +667,8 @@
 
                         <!-- Status Operasional -->
                         <div class="sm:col-span-2">
-                            <label class="block font-semibold text-slate-700 mb-1">Status Operasional <span class="text-rose-500">*</span></label>
-                            <select wire:model="status" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Operasional <span class="text-rose-500">*</span></label>
+                            <select wire:model="status" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500">
                                 <option value="aktif">Aktif Digunakan</option>
                                 <option value="pemeliharaan">Dalam Perbaikan / Kalibrasi</option>
                                 <option value="afkir">Afkir / Dihapuskan</option>
@@ -677,14 +677,14 @@
 
                         <!-- Catatan -->
                         <div class="sm:col-span-2">
-                            <label class="block font-semibold text-slate-700 mb-1">Catatan Tambahan Spesifikasi</label>
-                            <textarea wire:model="notes" rows="2" placeholder="Catatan teknis alat atau petunjuk khusus..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-700"></textarea>
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Catatan Tambahan Spesifikasi</label>
+                            <textarea wire:model="notes" rows="2" placeholder="Catatan teknis alat atau petunjuk khusus..." class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500"></textarea>
                         </div>
                     </div>
 
                     <!-- Footer Action Buttons -->
-                    <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100">
-                        <button type="button" wire:click="closeModal" class="px-4 py-2 font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">
+                    <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <button type="button" wire:click="closeModal" class="px-4 py-2 font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
                             Batal
                         </button>
                         <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs">
@@ -703,31 +703,31 @@
     <!-- ========================================================================= -->
     @if ($isDetailOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-3xl w-full overflow-hidden">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-3xl w-full overflow-hidden">
                 <!-- Detail Header Hijau Emerald -->
-                <div class="px-6 py-4 border-b border-slate-200 bg-[#E9FAF3] flex items-center justify-between">
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-800 text-white">
                                 {{ $selectedAsset->asset_code }}
                             </span>
                             @if ($selectedAsset->condition === 'baik')
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">Kondisi Baik</span>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">Kondisi Baik</span>
                             @elseif ($selectedAsset->condition === 'rusak_ringan')
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800">Rusak Ringan</span>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300">Rusak Ringan</span>
                             @else
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">Rusak Berat</span>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300">Rusak Berat</span>
                             @endif
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 mt-1">{{ $selectedAsset->name }}</h3>
-                        <p class="text-xs text-slate-500">{{ $selectedAsset->brand ?? '-' }} · Model: {{ $selectedAsset->model_type ?? '-' }}</p>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 mt-1">{{ $selectedAsset->name }}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">{{ $selectedAsset->brand ?? '-' }} · Model: {{ $selectedAsset->model_type ?? '-' }}</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button wire:click="openPrintLabelModal({{ $selectedAsset->id }})" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 bg-white border border-emerald-300 hover:bg-emerald-50 shadow-xs">
+                        <button wire:click="openPrintLabelModal({{ $selectedAsset->id }})" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 shadow-xs">
                             <i class="ri-qr-code-line text-sm"></i>
                             <span>Cetak Label Stiker</span>
                         </button>
-                        <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 p-1">
+                        <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
                             <i class="ri-close-line text-xl"></i>
                         </button>
                     </div>
@@ -736,39 +736,39 @@
                 <!-- Detail Body -->
                 <div class="p-6 space-y-6 text-xs">
                     <!-- Grid Spesifikasi Lengkap -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
                         <div>
-                            <span class="text-slate-400 block font-medium">Kategori Aset</span>
-                            <span class="font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->category->name ?? '-' }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Kategori Aset</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->category->name ?? '-' }}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Nomor Seri (Serial Number)</span>
-                            <span class="font-mono font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->serial_number ?? '-' }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Nomor Seri (Serial Number)</span>
+                            <span class="font-mono font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->serial_number ?? '-' }}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Ruangan Penempatan</span>
-                            <span class="font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->location->name ?? '-' }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Ruangan Penempatan</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->name ?? '-' }}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Gedung & Lantai</span>
-                            <span class="font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->location->building ?? '-' }} ({{ $selectedAsset->location->floor ?? '-' }})</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Gedung & Lantai</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->building ?? '-' }} ({{ $selectedAsset->location->floor ?? '-' }})</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Penanggung Jawab (PIC)</span>
-                            <span class="font-bold text-slate-800 mt-0.5 block">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Penanggung Jawab (PIC)</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Kuantitas Fisik</span>
-                            <span class="font-bold text-slate-800 mt-0.5 block font-mono">1 Unit (Terserialisasi)</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Kuantitas Fisik</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200 mt-0.5 block font-mono">1 Unit (Terserialisasi)</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block font-medium">Harga Perolehan</span>
-                            <span class="font-mono font-bold text-slate-900 mt-0.5 block">Rp {{ number_format($selectedAsset->purchase_cost, 0, ',', '.') }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 block font-medium">Harga Perolehan</span>
+                            <span class="font-mono font-bold text-slate-900 dark:text-slate-100 mt-0.5 block">Rp {{ number_format($selectedAsset->purchase_cost, 0, ',', '.') }}</span>
                         </div>
                     </div>
 
                     @if ($selectedAsset->notes)
-                        <div class="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200 text-blue-900">
+                        <div class="p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-blue-900 dark:text-blue-200">
                             <span class="font-bold block mb-1">Catatan Spesifikasi:</span>
                             <p>{{ $selectedAsset->notes }}</p>
                         </div>
@@ -777,31 +777,31 @@
                     <!-- Maintenance History Section -->
                     <div>
                         <div class="flex items-center justify-between mb-2.5">
-                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                                <i class="ri-history-line text-emerald-700 text-sm"></i>
+                            <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="ri-history-line text-emerald-700 dark:text-emerald-400 text-sm"></i>
                                 <span>Histori Kalibrasi & Servis Terjadwal</span>
                             </h4>
-                            <button wire:click="openAddLogModal({{ $selectedAsset->id }})" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline inline-flex items-center gap-1">
+                            <button wire:click="openAddLogModal({{ $selectedAsset->id }})" class="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 hover:underline inline-flex items-center gap-1">
                                 <i class="ri-add-line"></i>
                                 <span>+ Catat Servis / Kalibrasi</span>
                             </button>
                         </div>
 
                         @if ($selectedAsset->maintenanceLogs->isNotEmpty())
-                            <div class="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100">
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
                                 @foreach ($selectedAsset->maintenanceLogs as $log)
-                                    <div class="p-3 bg-white hover:bg-slate-50 flex items-center justify-between gap-3">
+                                    <div class="p-3 bg-white dark:bg-slate-850 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-between gap-3">
                                         <div>
                                             <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900 capitalize">{{ str_replace('_', ' ', $log->type) }}</span>
-                                                <span class="font-mono text-slate-400">· {{ $log->maintenance_date->format('d M Y') }}</span>
+                                                <span class="font-bold text-slate-900 dark:text-slate-100 capitalize">{{ str_replace('_', ' ', $log->type) }}</span>
+                                                <span class="font-mono text-slate-400 dark:text-slate-500">· {{ $log->maintenance_date->format('d M Y') }}</span>
                                             </div>
-                                            <p class="text-slate-600 mt-0.5">{{ $log->notes }}</p>
-                                            <span class="text-[11px] text-slate-400">Teknisi: {{ $log->vendor_technician ?? 'Internal RS' }}</span>
+                                            <p class="text-slate-600 dark:text-slate-300 mt-0.5">{{ $log->notes }}</p>
+                                            <span class="text-[11px] text-slate-400 dark:text-slate-500">Teknisi: {{ $log->vendor_technician ?? 'Internal RS' }}</span>
                                         </div>
                                         <div class="text-right shrink-0">
-                                            <span class="font-mono font-bold text-slate-900">Rp {{ number_format($log->cost, 0, ',', '.') }}</span>
-                                            <span class="block text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'text-emerald-700' : 'text-amber-700' }}">
+                                            <span class="font-mono font-bold text-slate-900 dark:text-slate-100">Rp {{ number_format($log->cost, 0, ',', '.') }}</span>
+                                            <span class="block text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400' }}">
                                                 {{ $log->status }}
                                             </span>
                                         </div>
@@ -809,15 +809,15 @@
                                 @endforeach
                             </div>
                         @else
-                            <div class="p-4 rounded-xl border border-dashed border-slate-200 text-center text-slate-400">
+                            <div class="p-4 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 text-center text-slate-400 dark:text-slate-500">
                                 Belum ada riwayat kalibrasi atau pemeliharaan yang tercatat.
                             </div>
                         @endif
                     </div>
                 </div>
 
-                <div class="px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex justify-end">
-                    <button wire:click="closeModal" class="px-4 py-2 font-semibold text-slate-600 hover:bg-slate-200/60 rounded-lg">
+                <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 flex justify-end">
+                    <button wire:click="closeModal" class="px-4 py-2 font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-lg">
                         Tutup
                     </button>
                 </div>
@@ -830,26 +830,26 @@
     <!-- ========================================================================= -->
     @if ($isLogModalOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-200 bg-[#E9FAF3] flex items-center justify-between">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
                     <div>
-                        <h3 class="text-sm font-bold text-[#064E3B]">Catat Servis / Kalibrasi Baru</h3>
-                        <p class="text-[11px] text-emerald-800">{{ $selectedAsset->name }} ({{ $selectedAsset->asset_code }})</p>
+                        <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">Catat Servis / Kalibrasi Baru</h3>
+                        <p class="text-[11px] text-emerald-800 dark:text-slate-400">{{ $selectedAsset->name }} ({{ $selectedAsset->asset_code }})</p>
                     </div>
-                    <button wire:click="$set('isLogModalOpen', false)" class="text-slate-400 hover:text-slate-600">
+                    <button wire:click="$set('isLogModalOpen', false)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                         <i class="ri-close-line text-lg"></i>
                     </button>
                 </div>
 
                 <form wire:submit.prevent="saveLog" class="p-6 space-y-3 text-xs">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Tanggal Tindakan</label>
-                        <input type="date" wire:model="log_date" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 border-slate-300" />
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tanggal Tindakan</label>
+                        <input type="date" wire:model="log_date" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700" />
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Jenis Tindakan</label>
-                        <select wire:model="log_type" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 border-slate-300">
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Tindakan</label>
+                        <select wire:model="log_type" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700">
                             <option value="kalibrasi">Uji Kalibrasi Berkala</option>
                             <option value="pemeliharaan_rutin">Pemeliharaan Rutin / Servis Ringan</option>
                             <option value="perbaikan">Perbaikan Kerusakan Alat</option>
@@ -857,30 +857,30 @@
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Biaya Pemeliharaan (Rp)</label>
-                        <input type="number" wire:model="log_cost" class="w-full px-3 py-2 border rounded-lg font-mono focus:outline-none focus:border-emerald-700 border-slate-300" />
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Biaya Pemeliharaan (Rp)</label>
+                        <input type="number" wire:model="log_cost" class="w-full px-3 py-2 border rounded-lg font-mono bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700" />
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Teknisi / Lembaga Penguji (BPFK)</label>
-                        <input type="text" wire:model="log_technician" placeholder="Contoh: Balai Pengujian Fasilitas Kesehatan (BPFK)" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 border-slate-300" />
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Teknisi / Lembaga Penguji (BPFK)</label>
+                        <input type="text" wire:model="log_technician" placeholder="Contoh: Balai Pengujian Fasilitas Kesehatan (BPFK)" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700" />
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Status Tindakan</label>
-                        <select wire:model="log_status" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 border-slate-300">
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Tindakan</label>
+                        <select wire:model="log_status" class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700">
                             <option value="selesai">Selesai (Laik Pakai)</option>
                             <option value="dalam_proses">Dalam Proses Tindakan</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Catatan Hasil Pemeriksaan</label>
-                        <textarea wire:model="log_notes" rows="2" placeholder="Hasil pengujian toleransi atau suku cadang yang diganti..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-700 border-slate-300"></textarea>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Catatan Hasil Pemeriksaan</label>
+                        <textarea wire:model="log_notes" rows="2" placeholder="Hasil pengujian toleransi atau suku cadang yang diganti..." class="w-full px-3 py-2 border rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-700 dark:focus:border-emerald-500 border-slate-300 dark:border-slate-700"></textarea>
                     </div>
 
-                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-                        <button type="button" wire:click="$set('isLogModalOpen', false)" class="px-3 py-1.5 font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Batal</button>
+                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                        <button type="button" wire:click="$set('isLogModalOpen', false)" class="px-3 py-1.5 font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">Batal</button>
                         <button type="submit" class="px-4 py-1.5 font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs">Simpan Catatan Servis</button>
                     </div>
                 </form>
@@ -893,16 +893,16 @@
     <!-- ========================================================================= -->
     @if ($isPrintLabelOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full overflow-hidden text-center">
-                <div class="px-6 py-4 border-b border-slate-200 bg-[#E9FAF3] flex items-center justify-between">
-                    <h3 class="text-sm font-bold text-[#064E3B]">Stiker Label Inventaris RS</h3>
-                    <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full overflow-hidden text-center">
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">Stiker Label Inventaris RS</h3>
+                    <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                         <i class="ri-close-line text-lg"></i>
                     </button>
                 </div>
 
                 <div class="p-6">
-                    <!-- Template Stiker Fisik RS Ummi -->
+                    <!-- Template Stiker Fisik RS Ummi (Selalu Background Putih agar Siap Cetak Stiker) -->
                     <div id="printableAssetTag" class="p-4 border-2 border-dashed border-emerald-800 rounded-xl bg-white text-left shadow-xs space-y-3">
                         <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
                             <div class="size-8 rounded-md bg-emerald-800 text-white flex items-center justify-center text-lg">
@@ -936,8 +936,8 @@
                     </div>
                 </div>
 
-                <div class="px-6 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-end gap-2">
-                    <button wire:click="closeModal" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-200/60 rounded-lg">Tutup</button>
+                <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-end gap-2">
+                    <button wire:click="closeModal" class="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-lg">Tutup</button>
                     <button onclick="window.print()" class="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs">
                         <i class="ri-printer-line"></i>
                         <span>Cetak Stiker</span>
@@ -952,16 +952,16 @@
     <!-- ========================================================================= -->
     @if ($isDeleteOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full p-6 text-center">
-                <div class="size-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3 text-2xl">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 text-center">
+                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3 text-2xl">
                     <i class="ri-delete-bin-line"></i>
                 </div>
-                <h3 class="text-sm font-bold text-slate-900">Hapus Data Aset Ini?</h3>
-                <p class="text-xs text-slate-500 mt-1.5">
-                    Data alat medis <strong class="text-slate-800">{{ $selectedAsset->name }}</strong> ({{ $selectedAsset->asset_code }}) akan dihapus permanen dari inventaris.
+                <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Hapus Data Aset Ini?</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+                    Data alat medis <strong class="text-slate-800 dark:text-slate-200">{{ $selectedAsset->name }}</strong> ({{ $selectedAsset->asset_code }}) akan dihapus permanen dari inventaris.
                 </p>
                 <div class="mt-5 flex items-center justify-center gap-2">
-                    <button wire:click="closeModal" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">
+                    <button wire:click="closeModal" class="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
                         Batal
                     </button>
                     <button wire:click="delete" class="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-xs">
