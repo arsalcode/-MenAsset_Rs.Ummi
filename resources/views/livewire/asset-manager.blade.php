@@ -148,18 +148,18 @@
                     @endif
                 </div>
 
-                <!-- Group 3 (Kanan): Tombol Aksi Icon Saja (Muncul Tulisan Saat di-Hover) -->
-                <div class="flex items-center gap-2 shrink-0">
+                <!-- Group 3 (Kanan): Tombol Aksi Icon Murni Tanpa Kotak Background (Muncul Tulisan Saat di-Hover) -->
+                <div class="flex items-center gap-1 shrink-0">
                     <!-- Tombol Tambah Barang -->
                     @if ($activeTab === 'tabAssets')
                         <div class="relative group">
                             <button 
                                 wire:click="openCreateModal" 
-                                class="size-10 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white inline-flex items-center justify-center transition-all shadow-xs hover:shadow cursor-pointer shrink-0"
+                                class="p-2 text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-xl inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                                 title="Tambah Barang"
                                 aria-label="Tambah Barang"
                             >
-                                <i class="ri-add-circle-line text-lg"></i>
+                                <i class="ri-add-circle-line text-2xl"></i>
                             </button>
                             <!-- Tooltip Text saat di-Hover -->
                             <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30">
@@ -173,11 +173,11 @@
                     <div class="relative group">
                         <button 
                             wire:click="handleClearButton" 
-                            class="size-10 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-400 dark:hover:border-rose-700 inline-flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
+                            class="p-2 text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                             title="Hapus"
                             aria-label="Hapus"
                         >
-                            <i class="ri-delete-bin-line text-lg"></i>
+                            <i class="ri-delete-bin-line text-2xl"></i>
                         </button>
                         <!-- Tooltip Text saat di-Hover -->
                         <div class="pointer-events-none absolute bottom-full right-0 mb-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30">
@@ -268,43 +268,17 @@
                                         @endif
                                     </td>
 
-                                    <!-- Aksi Tombol -->
+                                    <!-- Aksi Tombol (Hanya Icon Hapus, Tanpa Kotak Border/Background) -->
                                     <td class="py-3 px-4 text-right whitespace-nowrap no-print">
-                                        <div class="inline-flex items-center gap-1">
-                                            <!-- Detail Button -->
-                                            <button 
-                                                wire:click="openDetailModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-200 transition-colors inline-flex items-center justify-center"
-                                                title="Lihat Detail & Histori Kalibrasi"
-                                            >
-                                                <i class="ri-eye-line text-sm"></i>
-                                            </button>
-
-                                            <!-- Cetak Label QR Button -->
-                                            <button 
-                                                wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-200 transition-colors inline-flex items-center justify-center"
-                                                title="Cetak Stiker Label QR Aset"
-                                            >
-                                                <i class="ri-qr-code-line text-sm"></i>
-                                            </button>
-
-                                            <!-- Sunting Button -->
-                                            <button 
-                                                wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-200 transition-colors inline-flex items-center justify-center"
-                                                title="Sunting Data Aset"
-                                            >
-                                                <i class="ri-edit-line text-sm"></i>
-                                            </button>
-
+                                        <div class="inline-flex items-center justify-end">
                                             <!-- Hapus Button -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-600 dark:text-slate-300 hover:text-rose-700 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-rose-200 transition-colors inline-flex items-center justify-center"
+                                                class="size-8 rounded-lg text-slate-400 hover:text-rose-600 dark:text-slate-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Hapus Aset"
+                                                aria-label="Hapus Aset"
                                             >
-                                                <i class="ri-delete-bin-line text-sm"></i>
+                                                <i class="ri-delete-bin-line text-base"></i>
                                             </button>
                                         </div>
                                     </td>
