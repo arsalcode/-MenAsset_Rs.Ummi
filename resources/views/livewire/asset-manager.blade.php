@@ -113,7 +113,8 @@
                         <button 
                             type="button" 
                             @click="open = !open" 
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
+                            :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-500' : ''"
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
                             <span class="truncate max-w-[150px]">{{ $selectedCategoryName }}</span>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
@@ -139,7 +140,7 @@
                                 type="button" 
                                 wire:click="$set('filterCategory', '')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCategory === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCategory === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <span>Semua Kategori</span>
                                 @if ($filterCategory === '')
@@ -152,7 +153,7 @@
                                     type="button" 
                                     wire:click="$set('filterCategory', '{{ $cat->id }}')" 
                                     @click="open = false" 
-                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCategory === (string)$cat->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCategory === (string)$cat->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                                 >
                                     <span class="truncate pr-2">{{ $cat->name }}</span>
                                     <div class="flex items-center gap-1.5 shrink-0">
@@ -174,7 +175,8 @@
                         <button 
                             type="button" 
                             @click="open = !open" 
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
+                            :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-500' : ''"
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
                             <span class="truncate max-w-[150px]">{{ $selectedLocationName }}</span>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
@@ -200,7 +202,7 @@
                                 type="button" 
                                 wire:click="$set('filterLocation', '')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterLocation === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterLocation === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <span>Semua Ruangan</span>
                                 @if ($filterLocation === '')
@@ -213,7 +215,7 @@
                                     type="button" 
                                     wire:click="$set('filterLocation', '{{ $loc->id }}')" 
                                     @click="open = false" 
-                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterLocation === (string)$loc->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterLocation === (string)$loc->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                                 >
                                     <div class="pr-2 min-w-0">
                                         <span class="block truncate">{{ $loc->name }}</span>
@@ -244,7 +246,8 @@
                         <button 
                             type="button" 
                             @click="open = !open" 
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
+                            :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-500' : ''"
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
                             @if ($filterCondition === 'baik')
                                 <span class="size-2 rounded-full bg-emerald-500"></span>
@@ -277,7 +280,7 @@
                                 type="button" 
                                 wire:click="$set('filterCondition', '')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <span>Semua Kondisi</span>
                                 @if ($filterCondition === '')
@@ -289,7 +292,7 @@
                                 type="button" 
                                 wire:click="$set('filterCondition', 'baik')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'baik' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'baik' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <div class="flex items-center gap-2">
                                     <span class="size-2 rounded-full bg-emerald-500"></span>
@@ -304,7 +307,7 @@
                                 type="button" 
                                 wire:click="$set('filterCondition', 'rusak_ringan')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_ringan' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_ringan' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <div class="flex items-center gap-2">
                                     <span class="size-2 rounded-full bg-amber-500"></span>
@@ -319,7 +322,7 @@
                                 type="button" 
                                 wire:click="$set('filterCondition', 'rusak_berat')" 
                                 @click="open = false" 
-                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_berat' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_berat' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
                             >
                                 <div class="flex items-center gap-2">
                                     <span class="size-2 rounded-full bg-rose-500"></span>
@@ -342,7 +345,7 @@
                         type="text" 
                         wire:model.live.debounce.300ms="search" 
                         placeholder="Cari barang admin atau alat medis RS Ummi..." 
-                        class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
+                        class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
                     />
                     @if ($search)
                         <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -931,7 +934,7 @@
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-2xl w-full overflow-hidden">
                 <!-- Modal Header Hijau Emerald -->
-                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800">
                     <div class="flex items-center gap-2.5">
                         <div class="size-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-base">
                             <i class="{{ $selectedAssetId ? 'ri-edit-line' : 'ri-add-circle-line' }}"></i>
@@ -1085,7 +1088,7 @@
         <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg w-full overflow-hidden">
                 <!-- Popup Header: Kompak & Elegan -->
-                <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
+                <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-800 text-white shadow-2xs">
                             {{ $selectedAsset->asset_code }}
@@ -1219,7 +1222,7 @@
     @if ($isLogModalOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800 flex items-center justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">Catat Servis / Kalibrasi Baru</h3>
                         <p class="text-[11px] text-emerald-800 dark:text-slate-400">{{ $selectedAsset->name }} ({{ $selectedAsset->asset_code }})</p>
@@ -1282,7 +1285,7 @@
     @if ($isPrintLabelOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full overflow-hidden text-center">
-                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-850 flex items-center justify-between">
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800 flex items-center justify-between">
                     <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">Stiker Label Inventaris RS</h3>
                     <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                         <i class="ri-close-line text-lg"></i>
