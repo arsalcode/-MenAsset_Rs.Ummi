@@ -351,6 +351,13 @@ class AssetManager extends Component
         $this->resetPage();
     }
 
+    public function refreshData(): void
+    {
+        $this->resetFilters();
+        $this->feedbackMessage = 'Data inventaris aset rumah sakit berhasil dimuat ulang.';
+        $this->feedbackType = 'info';
+    }
+
     public function resetFilters(): void
     {
         $this->search = '';

@@ -174,6 +174,23 @@
 
                 <!-- Group 3 (Kanan): Tombol Aksi Icon Murni Tanpa Kotak Background (Muncul Tulisan Saat di-Hover) -->
                 <div class="flex items-center gap-1 shrink-0">
+                    <!-- Tombol Refresh / Segarkan Data -->
+                    <div class="relative group z-20 hover:z-50">
+                        <button 
+                            wire:click="refreshData" 
+                            class="size-10 rounded-xl text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/40 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                            title="Segarkan Data"
+                            aria-label="Segarkan Data"
+                        >
+                            <i class="ri-refresh-line text-2xl transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
+                        </button>
+                        <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah) -->
+                        <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                            Segarkan Data
+                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                        </div>
+                    </div>
+
                     <!-- Tombol Tambah Barang -->
                     @if ($activeTab === 'tabAssets')
                         <div class="relative group z-20 hover:z-50">
