@@ -52,6 +52,33 @@
             color-scheme: dark;
         }
 
+        /* ================= SELECT & DROPDOWN STYLING ================= */
+        select {
+            color-scheme: light;
+        }
+
+        html.dark select {
+            color-scheme: dark !important;
+            background-color: #0F172A !important;
+            color: #F1F5F9 !important;
+        }
+
+        html.dark select:focus,
+        html.dark select:active {
+            background-color: #0F172A !important;
+            color: #FFFFFF !important;
+        }
+
+        select option {
+            background-color: #FFFFFF;
+            color: #0F172A;
+        }
+
+        html.dark select option {
+            background-color: #0F172A !important;
+            color: #F1F5F9 !important;
+        }
+
         html, body {
             max-width: 100vw;
             overflow-x: hidden;

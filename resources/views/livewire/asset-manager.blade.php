@@ -106,28 +106,52 @@
                 <!-- Group 1 (Kiri): 3 Dropdown Filter Sesuai Gambar -->
                 <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                     <!-- Dropdown Kategori -->
-                    <select wire:model.live="filterCategory" class="h-10 px-3 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[140px] shadow-xs">
-                        <option value="">Semua Kategori</option>
-                        @foreach ($categories as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
+                    <div class="relative">
+                        <select 
+                            wire:model.live="filterCategory" 
+                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[135px] shadow-xs appearance-none"
+                        >
+                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Kategori</option>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                            <i class="ri-arrow-down-s-line text-sm"></i>
+                        </div>
+                    </div>
 
                     <!-- Dropdown Ruangan -->
-                    <select wire:model.live="filterLocation" class="h-10 px-3 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px] shadow-xs">
-                        <option value="">Semua Ruangan</option>
-                        @foreach ($locations as $loc)
-                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                        @endforeach
-                    </select>
+                    <div class="relative">
+                        <select 
+                            wire:model.live="filterLocation" 
+                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[135px] shadow-xs appearance-none"
+                        >
+                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Ruangan</option>
+                            @foreach ($locations as $loc)
+                                <option value="{{ $loc->id }}" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">{{ $loc->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                            <i class="ri-arrow-down-s-line text-sm"></i>
+                        </div>
+                    </div>
 
                     <!-- Dropdown Kondisi -->
-                    <select wire:model.live="filterCondition" class="h-10 px-3 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[125px] shadow-xs">
-                        <option value="">Semua Kondisi</option>
-                        <option value="baik">Kondisi Baik</option>
-                        <option value="rusak_ringan">Rusak Ringan</option>
-                        <option value="rusak_berat">Rusak Berat</option>
-                    </select>
+                    <div class="relative">
+                        <select 
+                            wire:model.live="filterCondition" 
+                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[125px] shadow-xs appearance-none"
+                        >
+                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Kondisi</option>
+                            <option value="baik" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Kondisi Baik</option>
+                            <option value="rusak_ringan" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Rusak Ringan</option>
+                            <option value="rusak_berat" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Rusak Berat</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                            <i class="ri-arrow-down-s-line text-sm"></i>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Group 2 (Tengah): Search Input Fleksibel -->
