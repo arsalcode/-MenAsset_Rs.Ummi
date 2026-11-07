@@ -103,53 +103,226 @@
 
             <!-- ================= ADMIN ACTION BAR (SEJAJAR 1 BARIS) ================= -->
             <div class="no-print mb-4 flex flex-col xl:flex-row xl:items-center gap-2.5">
-                <!-- Group 1 (Kiri): 3 Dropdown Filter Sesuai Gambar -->
+                <!-- Group 1 (Kiri): 3 Dropdown Filter Modern (Custom Alpine.js Popover) -->
                 <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                     <!-- Dropdown Kategori -->
-                    <div class="relative">
-                        <select 
-                            wire:model.live="filterCategory" 
-                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[135px] shadow-xs appearance-none"
+                    @php
+                        $selectedCategoryName = $categories->firstWhere('id', $filterCategory)?->name ?? 'Semua Kategori';
+                    @endphp
+                    <div x-data="{ open: false }" class="relative" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <button 
+                            type="button" 
+                            @click="open = !open" 
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
                         >
-                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Kategori</option>
+                            <span class="truncate max-w-[150px]">{{ $selectedCategoryName }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
+                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            </div>
+                        </button>
+
+                        <!-- Custom Popover Menu -->
+                        <div 
+                            x-show="open" 
+                            x-cloak
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                            class="absolute left-0 top-full mt-1.5 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 max-h-72 overflow-y-auto"
+                        >
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterCategory', '')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCategory === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <span>Semua Kategori</span>
+                                @if ($filterCategory === '')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
+
                             @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">{{ $cat->name }}</option>
+                                <button 
+                                    type="button" 
+                                    wire:click="$set('filterCategory', '{{ $cat->id }}')" 
+                                    @click="open = false" 
+                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCategory === (string)$cat->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                >
+                                    <span class="truncate pr-2">{{ $cat->name }}</span>
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{{ $cat->assets_count }} Unit</span>
+                                        @if ((string)$filterCategory === (string)$cat->id)
+                                            <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                        @endif
+                                    </div>
+                                </button>
                             @endforeach
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                            <i class="ri-arrow-down-s-line text-sm"></i>
                         </div>
                     </div>
 
                     <!-- Dropdown Ruangan -->
-                    <div class="relative">
-                        <select 
-                            wire:model.live="filterLocation" 
-                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[135px] shadow-xs appearance-none"
+                    @php
+                        $selectedLocationName = $locations->firstWhere('id', $filterLocation)?->name ?? 'Semua Ruangan';
+                    @endphp
+                    <div x-data="{ open: false }" class="relative" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <button 
+                            type="button" 
+                            @click="open = !open" 
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
                         >
-                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Ruangan</option>
+                            <span class="truncate max-w-[150px]">{{ $selectedLocationName }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
+                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            </div>
+                        </button>
+
+                        <!-- Custom Popover Menu -->
+                        <div 
+                            x-show="open" 
+                            x-cloak
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                            class="absolute left-0 top-full mt-1.5 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 max-h-72 overflow-y-auto"
+                        >
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterLocation', '')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterLocation === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <span>Semua Ruangan</span>
+                                @if ($filterLocation === '')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
+
                             @foreach ($locations as $loc)
-                                <option value="{{ $loc->id }}" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">{{ $loc->name }}</option>
+                                <button 
+                                    type="button" 
+                                    wire:click="$set('filterLocation', '{{ $loc->id }}')" 
+                                    @click="open = false" 
+                                    class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterLocation === (string)$loc->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                >
+                                    <div class="pr-2 min-w-0">
+                                        <span class="block truncate">{{ $loc->name }}</span>
+                                        <span class="text-[10px] text-slate-400 dark:text-slate-500 block -mt-0.5">{{ $loc->building }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{{ $loc->assets_count }} Unit</span>
+                                        @if ((string)$filterLocation === (string)$loc->id)
+                                            <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                        @endif
+                                    </div>
+                                </button>
                             @endforeach
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                            <i class="ri-arrow-down-s-line text-sm"></i>
                         </div>
                     </div>
 
                     <!-- Dropdown Kondisi -->
-                    <div class="relative">
-                        <select 
-                            wire:model.live="filterCondition" 
-                            class="h-10 pl-3.5 pr-8.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 active:bg-white dark:active:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all cursor-pointer min-w-[125px] shadow-xs appearance-none"
+                    @php
+                        $conditionOptions = [
+                            '' => 'Semua Kondisi',
+                            'baik' => 'Kondisi Baik',
+                            'rusak_ringan' => 'Rusak Ringan',
+                            'rusak_berat' => 'Rusak Berat'
+                        ];
+                        $selectedConditionLabel = $conditionOptions[$filterCondition] ?? 'Semua Kondisi';
+                    @endphp
+                    <div x-data="{ open: false }" class="relative" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <button 
+                            type="button" 
+                            @click="open = !open" 
+                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
                         >
-                            <option value="" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Semua Kondisi</option>
-                            <option value="baik" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Kondisi Baik</option>
-                            <option value="rusak_ringan" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Rusak Ringan</option>
-                            <option value="rusak_berat" class="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">Rusak Berat</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                            <i class="ri-arrow-down-s-line text-sm"></i>
+                            @if ($filterCondition === 'baik')
+                                <span class="size-2 rounded-full bg-emerald-500"></span>
+                            @elseif ($filterCondition === 'rusak_ringan')
+                                <span class="size-2 rounded-full bg-amber-500"></span>
+                            @elseif ($filterCondition === 'rusak_berat')
+                                <span class="size-2 rounded-full bg-rose-500"></span>
+                            @endif
+                            <span class="truncate max-w-[130px]">{{ $selectedConditionLabel }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
+                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            </div>
+                        </button>
+
+                        <!-- Custom Popover Menu -->
+                        <div 
+                            x-show="open" 
+                            x-cloak
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                            class="absolute left-0 top-full mt-1.5 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
+                        >
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterCondition', '')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === '' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <span>Semua Kondisi</span>
+                                @if ($filterCondition === '')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
+
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterCondition', 'baik')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'baik' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-emerald-500"></span>
+                                    <span>Kondisi Baik</span>
+                                </div>
+                                @if ($filterCondition === 'baik')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
+
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterCondition', 'rusak_ringan')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_ringan' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-amber-500"></span>
+                                    <span>Rusak Ringan</span>
+                                </div>
+                                @if ($filterCondition === 'rusak_ringan')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
+
+                            <button 
+                                type="button" 
+                                wire:click="$set('filterCondition', 'rusak_berat')" 
+                                @click="open = false" 
+                                class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ $filterCondition === 'rusak_berat' ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                            >
+                                <div class="flex items-center gap-2">
+                                    <span class="size-2 rounded-full bg-rose-500"></span>
+                                    <span>Rusak Berat</span>
+                                </div>
+                                @if ($filterCondition === 'rusak_berat')
+                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                @endif
+                            </button>
                         </div>
                     </div>
                 </div>

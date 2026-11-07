@@ -29,6 +29,10 @@
     @livewireStyles
 
     <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
         :root {
             --primary: #047857;         /* Emerald 700 */
             --primary-light: #10B981;   /* Emerald 500 */
