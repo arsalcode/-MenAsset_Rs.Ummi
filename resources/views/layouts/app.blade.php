@@ -491,6 +491,7 @@
             const html = document.documentElement;
             const isDark = html.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
         }
     </script>
 </body>

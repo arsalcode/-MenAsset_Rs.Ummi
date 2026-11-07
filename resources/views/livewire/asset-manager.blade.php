@@ -449,40 +449,222 @@
                     </div>
                 </div>
 
-                <!-- Rekap Data per Ruangan & Kategori -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Tabel Sebaran per Kategori -->
-                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
-                        <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <i class="ri-pie-chart-line text-emerald-700 dark:text-emerald-400"></i>
-                            <span>Distribusi Aset Menurut Kategori</span>
-                        </h4>
-                        <div class="space-y-3">
-                            @foreach ($categories as $c)
-                                <div class="flex items-center justify-between text-xs border-b border-slate-100 dark:border-slate-800 pb-2">
-                                    <span class="font-medium text-slate-700 dark:text-slate-300">{{ $c->name }}</span>
-                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">{{ $c->assets_count }} Unit</span>
+                <!-- Rekap Data per Ruangan & Kategori dengan Visual Grafik Interaktif (Chart.js + Alpine) -->
+                <div 
+                    x-data="{
+                        categoryChart: null,
+                        locationChart: null,
+                        initCharts() {
+                            this.$nextTick(() => {
+                                if (typeof Chart === 'undefined') return;
+
+                                const isDark = document.documentElement.classList.contains('dark');
+                                const textColor = isDark ? '#94A3B8' : '#475569';
+                                const gridColor = isDark ? 'rgba(51, 65, 85, 0.35)' : 'rgba(226, 232, 240, 0.7)';
+                                const borderColor = isDark ? '#0F172A' : '#FFFFFF';
+
+                                // 1. Donut Chart: Distribusi Kategori
+                                const catCanvas = document.getElementById('categoryDonutChart');
+                                if (catCanvas) {
+                                    if (this.categoryChart) {
+                                        this.categoryChart.destroy();
+                                    }
+                                    this.categoryChart = new Chart(catCanvas, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: {{ Js::from($categories->pluck('name')) }},
+                                            datasets: [{
+                                                data: {{ Js::from($categories->pluck('assets_count')) }},
+                                                backgroundColor: [
+                                                    '#10B981',
+                                                    '#0EA5E9',
+                                                    '#F59E0B',
+                                                    '#8B5CF6',
+                                                    '#EC4899',
+                                                    '#14B8A6',
+                                                ],
+                                                borderWidth: 2,
+                                                borderColor: borderColor,
+                                                hoverOffset: 6
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: { display: false },
+                                                tooltip: {
+                                                    backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                                                    titleColor: '#FFFFFF',
+                                                    bodyColor: '#E2E8F0',
+                                                    padding: 10,
+                                                    cornerRadius: 8,
+                                                    callbacks: {
+                                                        label: function(context) {
+                                                            const val = context.raw || 0;
+                                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                            const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                                                            return ` ${context.label}: ${val} Unit (${pct}%)`;
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            cutout: '72%'
+                                        }
+                                    });
+                                }
+
+                                // 2. Horizontal Bar Chart: Sebaran Ruangan
+                                const locCanvas = document.getElementById('locationBarChart');
+                                if (locCanvas) {
+                                    if (this.locationChart) {
+                                        this.locationChart.destroy();
+                                    }
+                                    this.locationChart = new Chart(locCanvas, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: {{ Js::from($locations->pluck('name')) }},
+                                            datasets: [{
+                                                label: 'Jumlah Unit',
+                                                data: {{ Js::from($locations->pluck('assets_count')) }},
+                                                backgroundColor: isDark ? 'rgba(16, 185, 129, 0.85)' : 'rgba(4, 120, 87, 0.85)',
+                                                hoverBackgroundColor: '#10B981',
+                                                borderRadius: 6,
+                                                borderSkipped: false,
+                                                barThickness: 16
+                                            }]
+                                        },
+                                        options: {
+                                            indexAxis: 'y',
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: { display: false },
+                                                tooltip: {
+                                                    backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                                                    titleColor: '#FFFFFF',
+                                                    bodyColor: '#E2E8F0',
+                                                    padding: 10,
+                                                    cornerRadius: 8,
+                                                    callbacks: {
+                                                        label: function(context) {
+                                                            return ` ${context.raw} Unit Alat Medis`;
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            scales: {
+                                                x: {
+                                                    beginAtZero: true,
+                                                    ticks: {
+                                                        stepSize: 1,
+                                                        color: textColor,
+                                                        font: { size: 11, family: 'Inter' }
+                                                    },
+                                                    grid: { color: gridColor }
+                                                },
+                                                y: {
+                                                    ticks: {
+                                                        color: textColor,
+                                                        font: { size: 11, family: 'Inter', weight: '500' }
+                                                    },
+                                                    grid: { display: false }
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }"
+                    x-init="initCharts()"
+                    @theme-changed.window="initCharts()"
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch"
+                >
+                    <!-- Card 1: Distribusi Aset Menurut Kategori (Donut Chart + List Progress) -->
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="ri-pie-chart-2-line text-emerald-600 dark:text-emerald-400 text-base"></i>
+                                    <span>Distribusi Aset Menurut Kategori</span>
+                                </h4>
+                                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                                    {{ $stats['total'] }} Total Unit
+                                </span>
+                            </div>
+
+                            <!-- Visual Donut Chart + Center Label -->
+                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center my-2">
+                                <div class="sm:col-span-5 relative flex items-center justify-center h-48">
+                                    <canvas id="categoryDonutChart"></canvas>
+                                    <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
+                                        <span class="text-2xl font-extrabold text-slate-900 dark:text-slate-100 leading-none">{{ $stats['total'] }}</span>
+                                        <span class="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-wider">Unit Aset</span>
+                                    </div>
                                 </div>
-                            @endforeach
+                                <div class="sm:col-span-7 space-y-3">
+                                    @php
+                                        $catColors = ['#10B981', '#0EA5E9', '#F59E0B', '#8B5CF6', '#EC4899', '#14B8A6'];
+                                    @endphp
+                                    @foreach ($categories as $index => $c)
+                                        @php
+                                            $pct = $stats['total'] > 0 ? round(($c->assets_count / $stats['total']) * 100, 1) : 0;
+                                            $color = $catColors[$index % count($catColors)];
+                                        @endphp
+                                        <div>
+                                            <div class="flex items-center justify-between text-xs mb-1">
+                                                <div class="flex items-center gap-1.5 min-w-0 pr-2">
+                                                    <span class="size-2 rounded-full shrink-0" style="background-color: {{ $color }};"></span>
+                                                    <span class="font-medium text-slate-700 dark:text-slate-300 truncate">{{ $c->name }}</span>
+                                                </div>
+                                                <div class="flex items-center gap-1.5 shrink-0">
+                                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100">{{ $c->assets_count }} Unit</span>
+                                                    <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 w-11 text-right">({{ $pct }}%)</span>
+                                                </div>
+                                            </div>
+                                            <!-- Progress Bar Proporsional -->
+                                            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                                                <div class="h-full rounded-full transition-all duration-500" style="width: {{ $pct }}%; background-color: {{ $color }};"></div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
+                            <span>Dominasi Kategori Terbesar:</span>
+                            <span class="font-semibold text-emerald-600 dark:text-emerald-400">
+                                {{ $categories->sortByDesc('assets_count')->first()->name ?? '-' }} ({{ $categories->sortByDesc('assets_count')->first()->assets_count ?? 0 }} Unit)
+                            </span>
                         </div>
                     </div>
 
-                    <!-- Tabel Sebaran per Ruangan RS -->
-                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
-                        <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <i class="ri-hospital-line text-emerald-700 dark:text-emerald-400"></i>
-                            <span>Sebaran Alat di Ruangan RS Ummi</span>
-                        </h4>
-                        <div class="space-y-3">
-                            @foreach ($locations as $l)
-                                <div class="flex items-center justify-between text-xs border-b border-slate-100 dark:border-slate-800 pb-2">
-                                    <div>
-                                        <span class="font-medium text-slate-700 dark:text-slate-300 block">{{ $l->name }}</span>
-                                        <span class="text-[10px] text-slate-400 dark:text-slate-500">{{ $l->building }}</span>
-                                    </div>
-                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">{{ $l->assets_count }} Unit</span>
-                                </div>
-                            @endforeach
+                    <!-- Card 2: Sebaran Alat di Ruangan RS Ummi (Horizontal Bar Chart + Ringkasan) -->
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="ri-hospital-line text-emerald-600 dark:text-emerald-400 text-base"></i>
+                                    <span>Sebaran Alat di Ruangan RS Ummi</span>
+                                </h4>
+                                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                                    {{ $locations->count() }} Ruangan Aktif
+                                </span>
+                            </div>
+
+                            <!-- Visual Horizontal Bar Chart -->
+                            <div class="h-60 relative w-full">
+                                <canvas id="locationBarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
+                            <span>Kepadatan Aset Tertinggi:</span>
+                            <span class="font-semibold text-emerald-600 dark:text-emerald-400">
+                                {{ $locations->sortByDesc('assets_count')->first()->name ?? '-' }} ({{ $locations->sortByDesc('assets_count')->first()->assets_count ?? 0 }} Unit)
+                            </span>
                         </div>
                     </div>
                 </div>
