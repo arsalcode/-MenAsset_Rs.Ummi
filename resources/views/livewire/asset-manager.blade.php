@@ -91,13 +91,13 @@
         @if ($activeTab === 'tabAssets' || $activeTab === 'tabMaintenance')
 
             @if ($activeTab === 'tabMaintenance')
-                <!-- Alert Banner Khusus Tab Servis & Kalibrasi (Kompak & Elegan 1 Baris) -->
-                <div class="mb-4 px-4 py-3 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-center justify-between gap-3 text-xs shadow-2xs">
-                    <div class="flex items-center gap-2.5">
-                        <i data-lucide="triangle-alert" class="size-4 text-amber-600 dark:text-amber-400 shrink-0"></i>
+                <!-- Alert Banner Khusus Tab Servis & Kalibrasi (Kompak & Elegan 1 Baris Slim) -->
+                <div class="mb-3.5 px-3 py-1.5 rounded-lg bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-center justify-between gap-2.5 text-[11px] shadow-2xs">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="triangle-alert" class="size-3.5 text-amber-600 dark:text-amber-400 shrink-0"></i>
                         <span><strong>Perhatian:</strong> Menampilkan alat medis butuh kalibrasi atau perbaikan segera.</span>
                     </div>
-                    <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 shrink-0">
+                    <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 shrink-0">
                         {{ $stats['need_attention'] }} Alat
                     </span>
                 </div>
