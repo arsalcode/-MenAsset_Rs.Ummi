@@ -102,74 +102,78 @@
             @endif
 
             <!-- ================= ADMIN ACTION BAR ================= -->
-            <div class="no-print space-y-3">
-                <!-- Baris 1: Search Bar Luas -->
-                <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                        <i class="ri-search-line text-sm"></i>
-                    </span>
-                    <input 
-                        type="text" 
-                        wire:model.live.debounce.300ms="search" 
-                        placeholder="Cari barang admin atau alat medis RS Ummi..." 
-                        class="w-full pl-10 pr-9 py-2.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
-                    />
-                    @if ($search)
-                        <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            <i class="ri-close-line"></i>
-                        </button>
-                    @endif
-                </div>
-
-                <!-- Baris 2: Filter Dropdowns di Kiri & Action Buttons di Kanan (Persis Gambar 1) -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <!-- Sisi Kiri: Filter Dropdowns -->
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <!-- Dropdown Kategori -->
-                        <select wire:model.live="filterCategory" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[145px] shadow-xs">
-                            <option value="">Semua Kategori</option>
-                            @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <!-- Dropdown Ruangan -->
-                        <select wire:model.live="filterLocation" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px] shadow-xs">
-                            <option value="">Semua Ruangan</option>
-                            @foreach ($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <!-- Dropdown Kondisi -->
-                        <select wire:model.live="filterCondition" class="px-3 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[130px] shadow-xs">
-                            <option value="">Semua Kondisi</option>
-                            <option value="baik">Kondisi Baik</option>
-                            <option value="rusak_ringan">Rusak Ringan</option>
-                            <option value="rusak_berat">Rusak Berat</option>
-                        </select>
-                    </div>
-
-                    <!-- Sisi Kanan: Action Buttons (Kosongkan Produk & Tambah Barang) -->
-                    <div class="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
-                        <!-- Tombol Kosongkan Produk (Outline Merah Persis Gambar 1) -->
-                        <button 
-                            wire:click="handleClearButton" 
-                            class="px-3.5 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 bg-white dark:bg-slate-900 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg border border-rose-300 dark:border-rose-900/60 inline-flex items-center gap-1.5 transition-all shadow-xs"
-                            title="Kosongkan semua produk agar bisa input dari awal atau bersihkan filter"
-                        >
-                            <i class="ri-delete-bin-line text-sm"></i>
-                            <span>Kosongkan Produk</span>
-                        </button>
-
-                        <!-- Tombol Tambah Barang (Solid Hijau Persis Gambar 1) -->
-                        @if ($activeTab === 'tabAssets')
-                            <button wire:click="openCreateModal" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs hover:shadow transition-all shrink-0">
-                                <i class="ri-add-circle-line text-sm"></i>
-                                <span>+ Tambah Barang</span>
+            <div class="no-print mb-4 space-y-3">
+                <!-- Baris 1: [ Cari barang admin atau alat medis RS Ummi... ]  [+ Tambah Barang]  [ 🗑️ Hapus ] -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                    <!-- Search Input Lebar -->
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                            <i class="ri-search-line text-sm"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            wire:model.live.debounce.300ms="search" 
+                            placeholder="Cari barang admin atau alat medis RS Ummi..." 
+                            class="w-full pl-10 pr-9 py-2.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
+                        />
+                        @if ($search)
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                <i class="ri-close-line"></i>
                             </button>
                         @endif
                     </div>
+
+                    <!-- Tombol Aksi Kanan: [+ Tambah Barang] dan [ 🗑️ Hapus ] -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <!-- Tombol Tambah Barang -->
+                        @if ($activeTab === 'tabAssets')
+                            <button 
+                                wire:click="openCreateModal" 
+                                class="h-10 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-xs hover:shadow cursor-pointer shrink-0"
+                                title="Tambah Barang / Aset Baru"
+                            >
+                                <i class="ri-add-circle-line text-base"></i>
+                                <span>+ Tambah Barang</span>
+                            </button>
+                        @endif
+
+                        <!-- Tombol Hapus -->
+                        <button 
+                            wire:click="handleClearButton" 
+                            class="h-10 px-3.5 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-400 dark:hover:border-rose-700 text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer shrink-0"
+                            title="Kosongkan Produk atau Bersihkan Filter"
+                        >
+                            <i class="ri-delete-bin-line text-base"></i>
+                            <span>Hapus</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Baris 2: [ Semua Kategori ▾ ]   [ Semua Ruangan ▾ ]   [ Semua Kondisi ▾ ] -->
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <!-- Dropdown Kategori -->
+                    <select wire:model.live="filterCategory" class="px-3.5 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[155px] shadow-xs">
+                        <option value="">Semua Kategori</option>
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <!-- Dropdown Ruangan -->
+                    <select wire:model.live="filterLocation" class="px-3.5 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[145px] shadow-xs">
+                        <option value="">Semua Ruangan</option>
+                        @foreach ($locations as $loc)
+                            <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <!-- Dropdown Kondisi -->
+                    <select wire:model.live="filterCondition" class="px-3.5 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:border-emerald-700 transition-colors cursor-pointer min-w-[135px] shadow-xs">
+                        <option value="">Semua Kondisi</option>
+                        <option value="baik">Kondisi Baik</option>
+                        <option value="rusak_ringan">Rusak Ringan</option>
+                        <option value="rusak_berat">Rusak Berat</option>
+                    </select>
                 </div>
             </div>
 
