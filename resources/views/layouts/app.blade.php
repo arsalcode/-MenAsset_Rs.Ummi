@@ -450,7 +450,7 @@
                     type="button" 
                     id="themeToggleBtn"
                     onclick="toggleAppTheme()" 
-                    class="no-print p-2 rounded-xl text-amber-500 hover:text-amber-600 dark:text-amber-300 dark:hover:text-amber-200 hover:bg-amber-50/70 dark:hover:bg-slate-800/60 flex items-center justify-center transition-all cursor-pointer select-none"
+                    class="no-print p-2 text-amber-500 hover:text-amber-600 dark:text-amber-300 dark:hover:text-amber-200 flex items-center justify-center transition-colors cursor-pointer select-none"
                     title="Ganti Mode Tampilan (Terang / Gelap)"
                     aria-label="Ganti Mode Tampilan (Terang / Gelap)"
                 >

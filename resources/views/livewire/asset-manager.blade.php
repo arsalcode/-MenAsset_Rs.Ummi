@@ -178,7 +178,7 @@
                     <div class="relative group z-20 hover:z-50">
                         <button 
                             wire:click="refreshData" 
-                            class="size-10 rounded-xl text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/40 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                            class="size-10 rounded-xl text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                             title="Segarkan Data"
                             aria-label="Segarkan Data"
                         >
@@ -196,7 +196,7 @@
                         <div class="relative group z-20 hover:z-50">
                             <button 
                                 wire:click="openCreateModal" 
-                                class="size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                                class="size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                                 title="Tambah Barang"
                                 aria-label="Tambah Barang"
                             >
@@ -214,7 +214,7 @@
                     <div class="relative group z-20 hover:z-50">
                         <button 
                             wire:click="handleClearButton" 
-                            class="size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                            class="size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                             title="Hapus"
                             aria-label="Hapus"
                         >
@@ -309,13 +309,13 @@
                                         @endif
                                     </td>
 
-                                    <!-- Aksi Tombol: Icon Murni dengan Warna Semantik yang Jelas & Harmonis -->
+                                    <!-- Aksi Tombol: Icon Murni dengan Warna Semantik yang Jelas & Harmonis (Tanpa Background Saat Hover) -->
                                     <td class="py-3 px-4 text-right whitespace-nowrap no-print">
                                         <div class="inline-flex items-center justify-end gap-1">
                                             <!-- Detail Button (Hijau Emerald RS Ummi) -->
                                             <button 
                                                 wire:click="openDetailModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-8 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Lihat Detail & Histori Kalibrasi"
                                                 aria-label="Lihat Detail & Histori Kalibrasi"
                                             >
@@ -325,7 +325,7 @@
                                             <!-- Cetak Label QR Button (Biru Scan/Teknologi) -->
                                             <button 
                                                 wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-8 rounded-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Cetak Stiker Label QR Aset"
                                                 aria-label="Cetak Stiker Label QR Aset"
                                             >
@@ -335,7 +335,7 @@
                                             <!-- Sunting Button (Kuning/Amber) -->
                                             <button 
                                                 wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-amber-500 hover:text-amber-600 dark:text-amber-400 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-8 rounded-lg text-amber-500 hover:text-amber-600 dark:text-amber-400 dark:hover:text-amber-300 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Sunting Data Aset"
                                                 aria-label="Sunting Data Aset"
                                             >
@@ -345,7 +345,7 @@
                                             <!-- Hapus Button (Merah/Rose) -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-8 rounded-lg text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Hapus Aset"
                                                 aria-label="Hapus Aset"
                                             >
