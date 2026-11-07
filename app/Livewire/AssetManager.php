@@ -24,7 +24,7 @@ class AssetManager extends Component
     public string $filterLocation = '';
     public string $filterCondition = '';
     public string $filterStatus = '';
-    public int $perPage = 8;
+    public int $perPage = 5;
     public string $sortField = 'created_at';
     public string $sortDirection = 'desc';
 

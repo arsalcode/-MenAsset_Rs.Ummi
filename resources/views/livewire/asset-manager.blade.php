@@ -191,11 +191,11 @@
             <!-- Custom Data Table (Identik .custom-table Alkamart) -->
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse table-fixed">
                         <!-- Table Header Hijau Lembut (#E9FAF3) Khas Alkamart -->
                         <thead class="bg-[#E9FAF3] dark:bg-slate-800/90 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase tracking-wider">
                             <tr>
-                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
+                                <th class="w-36 py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
                                     <div class="flex items-center gap-1">
                                         <span>Kode Aset</span>
                                         @if ($sortField === 'asset_code')
@@ -203,7 +203,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
+                                <th class="w-auto py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -211,15 +211,15 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="py-3.5 px-4">Ruangan RS</th>
-                                <th class="py-3.5 px-4 text-center">Jumlah</th>
-                                <th class="py-3.5 px-4">Kondisi</th>
-                                <th class="py-3.5 px-4 text-right no-print">Aksi</th>
+                                <th class="w-56 py-3.5 px-4">Ruangan RS</th>
+                                <th class="w-24 py-3.5 px-4 text-center">Jumlah</th>
+                                <th class="w-32 py-3.5 px-4">Kondisi</th>
+                                <th class="w-36 py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                        <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
                             @forelse ($assets as $asset)
-                                <tr class="hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
+                                <tr wire:key="asset-row-{{ $asset->id }}" class="h-[64px] hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
                                     <!-- Kode Aset -->
                                     <td class="py-3.5 px-4 font-mono font-semibold whitespace-nowrap">
                                         <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
@@ -311,7 +311,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="py-12 px-4 text-center text-slate-400 dark:text-slate-500">
+                                    <td colspan="6" class="h-[320px] py-12 px-4 text-center text-slate-400 dark:text-slate-500">
                                         <div class="flex flex-col items-center justify-center">
                                             <i class="ri-inbox-line text-4xl text-slate-300 dark:text-slate-600 mb-2"></i>
                                             <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Tidak ada aset rumah sakit yang ditemukan.</p>
