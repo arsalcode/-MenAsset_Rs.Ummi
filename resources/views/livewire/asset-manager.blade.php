@@ -91,13 +91,15 @@
         @if ($activeTab === 'tabAssets' || $activeTab === 'tabMaintenance')
 
             @if ($activeTab === 'tabMaintenance')
-                <!-- Alert Box Khusus Tab Restok / Perlu Kalibrasi (Khas Alkamart) -->
-                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-start gap-3">
-                    <i class="ri-error-warning-fill text-amber-600 dark:text-amber-400 text-xl shrink-0 mt-0.5"></i>
-                    <div class="text-xs">
-                        <strong class="font-bold block text-sm">Pemberitahuan Kalibrasi & Pemeliharaan Alat Medis:</strong>
-                        Daftar di bawah menyaring alat kesehatan dan peralatan rumah sakit yang berstatus <strong>Perlu Kalibrasi</strong>, <strong>Rusak Ringan</strong>, atau <strong>Rusak Berat</strong>. Segera jadwalkan teknisi IPSRS atau pihak BPFK agar alat siap operasional kembali.
+                <!-- Alert Banner Khusus Tab Servis & Kalibrasi (Kompak & Elegan 1 Baris) -->
+                <div class="mb-4 px-4 py-3 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-center justify-between gap-3 text-xs shadow-2xs">
+                    <div class="flex items-center gap-2.5">
+                        <i class="ri-error-warning-line text-amber-600 dark:text-amber-400 text-lg shrink-0"></i>
+                        <span><strong>Perhatian:</strong> Menampilkan alat medis butuh kalibrasi atau perbaikan segera.</span>
                     </div>
+                    <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 shrink-0">
+                        {{ $stats['need_attention'] }} Alat
+                    </span>
                 </div>
             @endif
 
