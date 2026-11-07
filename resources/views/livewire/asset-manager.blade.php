@@ -203,7 +203,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-[34%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
+                                <th class="w-[32%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -214,7 +214,7 @@
                                 <th class="w-[22%] py-3.5 px-4">Ruangan RS</th>
                                 <th class="w-[10%] py-3.5 px-4 text-center">Jumlah</th>
                                 <th class="w-[10%] py-3.5 px-4">Kondisi</th>
-                                <th class="w-[10%] py-3.5 px-4 text-right no-print">Aksi</th>
+                                <th class="w-[12%] py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
                         <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
@@ -268,17 +268,47 @@
                                         @endif
                                     </td>
 
-                                    <!-- Aksi Tombol (Hanya Icon Hapus, Tanpa Kotak Border/Background) -->
+                                    <!-- Aksi Tombol: Icon Murni Tanpa Kotak Border/Background -->
                                     <td class="py-3 px-4 text-right whitespace-nowrap no-print">
-                                        <div class="inline-flex items-center justify-end">
+                                        <div class="inline-flex items-center justify-end gap-1">
+                                            <!-- Detail Button -->
+                                            <button 
+                                                wire:click="openDetailModal({{ $asset->id }})" 
+                                                class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 hover:bg-emerald-50/60 dark:hover:bg-emerald-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                title="Lihat Detail & Histori Kalibrasi"
+                                                aria-label="Lihat Detail & Histori Kalibrasi"
+                                            >
+                                                <i class="ri-eye-line text-lg"></i>
+                                            </button>
+
+                                            <!-- Cetak Label QR Button -->
+                                            <button 
+                                                wire:click="openPrintLabelModal({{ $asset->id }})" 
+                                                class="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 hover:bg-blue-50/60 dark:hover:bg-blue-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                title="Cetak Stiker Label QR Aset"
+                                                aria-label="Cetak Stiker Label QR Aset"
+                                            >
+                                                <i class="ri-qr-code-line text-lg"></i>
+                                            </button>
+
+                                            <!-- Sunting Button -->
+                                            <button 
+                                                wire:click="openEditModal({{ $asset->id }})" 
+                                                class="p-1.5 rounded-lg text-slate-500 hover:text-amber-600 dark:text-slate-400 dark:hover:text-amber-400 hover:bg-amber-50/60 dark:hover:bg-amber-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                title="Sunting Data Aset"
+                                                aria-label="Sunting Data Aset"
+                                            >
+                                                <i class="ri-edit-line text-lg"></i>
+                                            </button>
+
                                             <!-- Hapus Button -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-slate-400 hover:text-rose-600 dark:text-slate-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50/60 dark:hover:bg-rose-950/40 transition-colors inline-flex items-center justify-center cursor-pointer"
                                                 title="Hapus Aset"
                                                 aria-label="Hapus Aset"
                                             >
-                                                <i class="ri-delete-bin-line text-base"></i>
+                                                <i class="ri-delete-bin-line text-lg"></i>
                                             </button>
                                         </div>
                                     </td>
