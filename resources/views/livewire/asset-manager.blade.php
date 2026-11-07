@@ -116,8 +116,10 @@
                             class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
                         >
                             <span class="truncate max-w-[150px]">{{ $selectedCategoryName }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
-                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                </span>
                             </div>
                         </button>
 
@@ -175,8 +177,10 @@
                             class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-850' }}"
                         >
                             <span class="truncate max-w-[150px]">{{ $selectedLocationName }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
-                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                </span>
                             </div>
                         </button>
 
@@ -250,8 +254,10 @@
                                 <span class="size-2 rounded-full bg-rose-500"></span>
                             @endif
                             <span class="truncate max-w-[130px]">{{ $selectedConditionLabel }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
-                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                </span>
                             </div>
                         </button>
 
