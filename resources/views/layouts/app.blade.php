@@ -442,36 +442,31 @@
 
     <!-- ================= TOP NAVIGATION (Khas Alkamart) ================= -->
     <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
-        <!-- Nav Left: Brand & Badge -->
+        <!-- Nav Left: Brand & Title -->
         <div class="flex items-center gap-3.5">
             <div class="flex items-center justify-center size-11 rounded-lg bg-emerald-700 text-white shadow-md shadow-emerald-900/20">
                 <i data-lucide="hospital" class="size-6 text-white"></i>
             </div>
             <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight">RS UMMI BOGOR</span>
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-700/20 dark:border-emerald-800">
-                        Admin SIMRS
-                    </span>
-                </div>
+                <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
                 <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Sistem Manajemen Aset & Peralatan Medis</span>
             </div>
         </div>
 
         <!-- Nav Right: Theme Toggle Icon Only -->
         <div class="flex items-center">
-            <!-- Saklar Mode Terang / Gelap (Icon Matahari & Bulan Dual Theme - Tanpa Kotak Background) -->
+            <!-- Saklar Mode Terang / Gelap (Warna Hijau Emerald Sesuai RS Ummi - Tanpa Kotak Background) -->
             <div class="relative group">
                 <button 
                     type="button" 
                     id="themeToggleBtn"
                     onclick="toggleAppTheme()" 
-                    class="no-print p-2 text-amber-500 hover:text-amber-600 dark:text-amber-300 dark:hover:text-amber-200 flex items-center justify-center transition-colors cursor-pointer select-none"
+                    class="no-print p-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none"
                     title="Ganti Mode Tampilan (Terang / Gelap)"
                     aria-label="Ganti Mode Tampilan (Terang / Gelap)"
                 >
-                    <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User -->
-                    <svg class="size-6 text-amber-500 dark:text-amber-300 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User (Warna Hijau Emerald) -->
+                    <svg class="size-6 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
                         <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
