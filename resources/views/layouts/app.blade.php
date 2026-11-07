@@ -423,12 +423,12 @@
                     type="button" 
                     id="themeToggleBtn"
                     onclick="toggleAppTheme()" 
-                    class="no-print p-2 rounded-xl text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-amber-300 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 flex items-center justify-center transition-all cursor-pointer select-none"
+                    class="no-print p-2 rounded-xl text-amber-500 hover:text-amber-600 dark:text-amber-300 dark:hover:text-amber-200 hover:bg-amber-50/70 dark:hover:bg-slate-800/60 flex items-center justify-center transition-all cursor-pointer select-none"
                     title="Ganti Mode Tampilan (Terang / Gelap)"
                     aria-label="Ganti Mode Tampilan (Terang / Gelap)"
                 >
                     <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User -->
-                    <svg class="size-6 text-slate-700 dark:text-amber-300 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="size-6 text-amber-500 dark:text-amber-300 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
                         <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
