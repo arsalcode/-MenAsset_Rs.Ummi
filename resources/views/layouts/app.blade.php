@@ -415,38 +415,39 @@
             </div>
         </div>
 
-        <!-- Nav Right: Status Indicator & Info -->
-        <div class="flex items-center gap-4">
-            <!-- Saklar Mode Terang / Gelap (Desain Lampu Bohlam) -->
-            <button 
-                type="button" 
-                id="themeToggleBtn"
-                onclick="toggleAppTheme()" 
-                class="no-print relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-all cursor-pointer shadow-xs select-none group"
-                title="Ganti Mode Tampilan (Terang / Gelap)"
-            >
-                <!-- Bohlam Lampu (Menyala di Mode Terang, Redup di Mode Gelap) -->
-                <span class="flex items-center justify-center size-5.5 rounded-full bg-amber-100 text-amber-600 dark:bg-amber-400/20 dark:text-amber-300 transition-transform group-hover:scale-110 shadow-2xs">
-                    <i class="ri-lightbulb-fill text-sm dark:hidden text-amber-500"></i>
-                    <i class="ri-lightbulb-line text-sm hidden dark:inline text-amber-300"></i>
-                </span>
-                <span class="font-medium text-xs">
-                    <span class="dark:hidden">Mode Terang</span>
-                    <span class="hidden dark:inline">Mode Gelap</span>
-                </span>
-            </button>
-
-            <!-- Tanggal Hari Ini -->
-            <div class="hidden md:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium pl-3 border-l border-slate-200 dark:border-slate-800">
-                <i class="ri-calendar-line text-emerald-700 dark:text-emerald-400"></i>
-                <span class="font-mono text-slate-700 dark:text-slate-300 font-semibold">{{ now()->format('d M Y') }}</span>
+        <!-- Nav Right: Theme Toggle Icon Only -->
+        <div class="flex items-center">
+            <!-- Saklar Mode Terang / Gelap (Icon Matahari & Bulan Dual Theme) -->
+            <div class="relative group">
+                <button 
+                    type="button" 
+                    id="themeToggleBtn"
+                    onclick="toggleAppTheme()" 
+                    class="no-print size-10 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition-all cursor-pointer shadow-xs select-none"
+                    title="Ganti Mode Tampilan (Terang / Gelap)"
+                    aria-label="Ganti Mode Tampilan (Terang / Gelap)"
+                >
+                    <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User -->
+                    <svg class="size-5 text-slate-700 dark:text-amber-300 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        <circle cx="12" cy="12" r="6" stroke-width="2"></circle>
+                        <path d="M12 6a6 6 0 0 0 6 6 6 6 0 0 1-6-6z" fill="currentColor" stroke="none"></path>
+                    </svg>
+                </button>
+                <!-- Tooltip Floating Text yang Muncul Saat di-Hover -->
+                <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                    <span class="dark:hidden">Mode Gelap</span>
+                    <span class="hidden dark:inline">Mode Terang</span>
+                    <span class="absolute bottom-full right-3.5 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                </div>
             </div>
-
-            <!-- Tombol Cetak Cepat -->
-            <button onclick="window.print()" class="no-print hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors">
-                <i class="ri-printer-line text-slate-600 dark:text-slate-400"></i>
-                <span>Cetak Rekap</span>
-            </button>
         </div>
     </header>
 
