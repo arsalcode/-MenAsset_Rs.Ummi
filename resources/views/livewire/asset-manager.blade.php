@@ -584,10 +584,10 @@
                         </div>
                         <div class="report-info">
                             <span class="report-label">Total Inventaris Aset RS</span>
-                            <h3 class="report-amount">{{ $stats['total'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                            <h3 class="report-amount">{{ $stats['total'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
                             <div class="saldo-breakdown-tags">
-                                <span class="tag-cash"><i class="ri-money-dollar-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
-                                <span class="tag-qris"><i class="ri-qr-code-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
+                                <span class="tag-cash"><i class="ri-checkbox-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
+                                <span class="tag-qris"><i class="ri-tools-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
                             </div>
                         </div>
                     </div>
@@ -599,7 +599,7 @@
                         </div>
                         <div class="report-info">
                             <span class="report-label">Siap Operasional (Baik)</span>
-                            <h3 class="report-amount" style="color: #047857;">{{ $stats['good'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Alat</span></h3>
+                            <h3 class="report-amount text-emerald-700 dark:text-emerald-400">{{ $stats['good'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Alat</span></h3>
                             <span class="report-sublabel">{{ $stats['total'] > 0 ? round(($stats['good'] / $stats['total']) * 100, 1) : 0 }}% alat laik pakai & prima</span>
                         </div>
                     </div>
@@ -611,7 +611,7 @@
                         </div>
                         <div class="report-info">
                             <span class="report-label">Perlu Servis / Rusak</span>
-                            <h3 class="report-amount" style="color: #d97706;">{{ $stats['need_attention'] }} <span style="font-size: 13px; font-weight: 500; color: #64748B;">Unit</span></h3>
+                            <h3 class="report-amount text-amber-600 dark:text-amber-400">{{ $stats['need_attention'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
                             <span class="report-sublabel">Butuh perhatian teknisi medis</span>
                         </div>
                     </div>
@@ -623,7 +623,7 @@
                         </div>
                         <div class="report-info">
                             <span class="report-label">Estimasi Nilai Inventaris</span>
-                            <h3 class="report-amount" style="font-size: 19px;">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
+                            <h3 class="report-amount text-[19px]">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</h3>
                             <span class="report-sublabel">Kapitalisasi aset RS Ummi</span>
                         </div>
                     </div>
@@ -639,8 +639,9 @@
                                 if (typeof Chart === 'undefined') return;
 
                                 const isDark = document.documentElement.classList.contains('dark');
-                                const textColor = isDark ? '#94A3B8' : '#475569';
-                                const gridColor = isDark ? 'rgba(51, 65, 85, 0.35)' : 'rgba(226, 232, 240, 0.7)';
+                                const textColor = isDark ? '#F1F5F9' : '#0F172A';
+                                const subTextColor = isDark ? '#CBD5E1' : '#475569';
+                                const gridColor = isDark ? 'rgba(51, 65, 85, 0.45)' : 'rgba(226, 232, 240, 0.8)';
                                 const borderColor = isDark ? '#0F172A' : '#FFFFFF';
 
                                 // 1. Donut Chart: Distribusi Kategori
@@ -700,6 +701,7 @@
                                     if (this.locationChart) {
                                         this.locationChart.destroy();
                                     }
+                                    const maxVal = Math.max(...{{ Js::from($locations->pluck('assets_count')) }}, 1);
                                     this.locationChart = new Chart(locCanvas, {
                                         type: 'bar',
                                         data: {
@@ -707,8 +709,8 @@
                                             datasets: [{
                                                 label: 'Jumlah Unit',
                                                 data: {{ Js::from($locations->pluck('assets_count')) }},
-                                                backgroundColor: isDark ? 'rgba(16, 185, 129, 0.85)' : 'rgba(4, 120, 87, 0.85)',
-                                                hoverBackgroundColor: '#10B981',
+                                                backgroundColor: isDark ? 'rgba(16, 185, 129, 0.95)' : 'rgba(4, 120, 87, 0.9)',
+                                                hoverBackgroundColor: '#34D399',
                                                 borderRadius: 6,
                                                 borderSkipped: false,
                                                 barThickness: 16
@@ -718,6 +720,9 @@
                                             indexAxis: 'y',
                                             responsive: true,
                                             maintainAspectRatio: false,
+                                            layout: {
+                                                padding: { right: 50 }
+                                            },
                                             plugins: {
                                                 legend: { display: false },
                                                 tooltip: {
@@ -736,22 +741,39 @@
                                             scales: {
                                                 x: {
                                                     beginAtZero: true,
+                                                    suggestedMax: maxVal + 0.6,
                                                     ticks: {
                                                         stepSize: 1,
-                                                        color: textColor,
-                                                        font: { size: 11, family: 'Inter' }
+                                                        color: subTextColor,
+                                                        font: { size: 11, family: 'Inter', weight: '600' }
                                                     },
                                                     grid: { color: gridColor }
                                                 },
                                                 y: {
                                                     ticks: {
                                                         color: textColor,
-                                                        font: { size: 11, family: 'Inter', weight: '500' }
+                                                        font: { size: 12, family: 'Inter', weight: '600' }
                                                     },
                                                     grid: { display: false }
                                                 }
                                             }
-                                        }
+                                        },
+                                        plugins: [{
+                                            id: 'barValueLabels',
+                                            afterDatasetsDraw(chart) {
+                                                const { ctx, data } = chart;
+                                                ctx.save();
+                                                ctx.font = 'bold 11px Inter, sans-serif';
+                                                ctx.fillStyle = isDark ? '#34D399' : '#047857';
+                                                ctx.textAlign = 'left';
+                                                ctx.textBaseline = 'middle';
+                                                chart.getDatasetMeta(0).data.forEach((bar, index) => {
+                                                    const value = data.datasets[0].data[index];
+                                                    ctx.fillText(`${value} Unit`, bar.x + 8, bar.y);
+                                                });
+                                                ctx.restore();
+                                            }
+                                        }]
                                     });
                                 }
                             });
@@ -769,7 +791,7 @@
                                     <i class="ri-pie-chart-2-line text-emerald-600 dark:text-emerald-400 text-base"></i>
                                     <span>Distribusi Aset Menurut Kategori</span>
                                 </h4>
-                                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                                     {{ $stats['total'] }} Total Unit
                                 </span>
                             </div>
@@ -779,8 +801,8 @@
                                 <div class="sm:col-span-5 relative flex items-center justify-center h-48">
                                     <canvas id="categoryDonutChart"></canvas>
                                     <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-                                        <span class="text-2xl font-extrabold text-slate-900 dark:text-slate-100 leading-none">{{ $stats['total'] }}</span>
-                                        <span class="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-wider">Unit Aset</span>
+                                        <span class="text-3xl font-extrabold text-slate-900 dark:text-white leading-none">{{ $stats['total'] }}</span>
+                                        <span class="text-[11px] font-bold text-slate-600 dark:text-slate-300 mt-1 uppercase tracking-wider">Unit Aset</span>
                                     </div>
                                 </div>
                                 <div class="sm:col-span-7 space-y-3">
@@ -793,18 +815,18 @@
                                             $color = $catColors[$index % count($catColors)];
                                         @endphp
                                         <div>
-                                            <div class="flex items-center justify-between text-xs mb-1">
-                                                <div class="flex items-center gap-1.5 min-w-0 pr-2">
-                                                    <span class="size-2 rounded-full shrink-0" style="background-color: {{ $color }};"></span>
-                                                    <span class="font-medium text-slate-700 dark:text-slate-300 truncate">{{ $c->name }}</span>
+                                            <div class="flex items-center justify-between text-xs mb-1.5">
+                                                <div class="flex items-center gap-2 min-w-0 pr-2">
+                                                    <span class="size-2.5 rounded-full shrink-0 shadow-2xs" style="background-color: {{ $color }};"></span>
+                                                    <span class="font-semibold text-slate-800 dark:text-slate-100 truncate">{{ $c->name }}</span>
                                                 </div>
                                                 <div class="flex items-center gap-1.5 shrink-0">
-                                                    <span class="font-mono font-bold text-slate-900 dark:text-slate-100">{{ $c->assets_count }} Unit</span>
-                                                    <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 w-11 text-right">({{ $pct }}%)</span>
+                                                    <span class="font-mono font-bold text-slate-900 dark:text-white">{{ $c->assets_count }} Unit</span>
+                                                    <span class="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400 w-12 text-right">({{ $pct }}%)</span>
                                                 </div>
                                             </div>
                                             <!-- Progress Bar Proporsional -->
-                                            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                                            <div class="w-full h-2 rounded-full bg-slate-200/80 dark:bg-slate-800 overflow-hidden">
                                                 <div class="h-full rounded-full transition-all duration-500" style="width: {{ $pct }}%; background-color: {{ $color }};"></div>
                                             </div>
                                         </div>
@@ -813,9 +835,9 @@
                             </div>
                         </div>
 
-                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
+                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between font-medium">
                             <span>Dominasi Kategori Terbesar:</span>
-                            <span class="font-semibold text-emerald-600 dark:text-emerald-400">
+                            <span class="font-bold text-emerald-600 dark:text-emerald-400">
                                 {{ $categories->sortByDesc('assets_count')->first()->name ?? '-' }} ({{ $categories->sortByDesc('assets_count')->first()->assets_count ?? 0 }} Unit)
                             </span>
                         </div>
@@ -829,7 +851,7 @@
                                     <i class="ri-hospital-line text-emerald-600 dark:text-emerald-400 text-base"></i>
                                     <span>Sebaran Alat di Ruangan RS Ummi</span>
                                 </h4>
-                                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+                                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                                     {{ $locations->count() }} Ruangan Aktif
                                 </span>
                             </div>
@@ -840,9 +862,9 @@
                             </div>
                         </div>
 
-                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
+                        <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between font-medium">
                             <span>Kepadatan Aset Tertinggi:</span>
-                            <span class="font-semibold text-emerald-600 dark:text-emerald-400">
+                            <span class="font-bold text-emerald-600 dark:text-emerald-400">
                                 {{ $locations->sortByDesc('assets_count')->first()->name ?? '-' }} ({{ $locations->sortByDesc('assets_count')->first()->assets_count ?? 0 }} Unit)
                             </span>
                         </div>

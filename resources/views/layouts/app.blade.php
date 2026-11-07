@@ -388,9 +388,13 @@
             color: #f8fafc !important;
         }
 
-        html.dark .report-label,
+        html.dark .report-label {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
         html.dark .report-sublabel {
-            color: #94a3b8;
+            color: #cbd5e1;
         }
 
         html.dark .tag-cash {
