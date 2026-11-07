@@ -440,11 +440,9 @@
                         <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
                             @forelse ($assets as $asset)
                                 <tr wire:key="asset-row-{{ $asset->id }}" class="h-[64px] hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
-                                    <!-- Kode Aset -->
-                                    <td class="py-3 px-4 font-mono font-semibold whitespace-nowrap">
-                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-[11px]">
-                                            {{ $asset->asset_code }}
-                                        </span>
+                                    <!-- Kode Aset (Bersih Tanpa Background & Border) -->
+                                    <td class="py-3 px-4 font-mono font-semibold whitespace-nowrap text-xs text-slate-800 dark:text-slate-200">
+                                        {{ $asset->asset_code }}
                                     </td>
 
                                     <!-- Nama Alat & Spesifikasi -->
@@ -464,26 +462,24 @@
                                         <div class="text-[11px] text-slate-400 dark:text-slate-500 truncate">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
                                     </td>
 
-                                    <!-- Jumlah Fisik (Kuantitas) -->
-                                    <td class="py-3 px-4 whitespace-nowrap text-center">
-                                        <span class="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1 shadow-2xs">
-                                            <i class="ri-stack-line text-emerald-700 dark:text-emerald-400 text-xs"></i> 1 Unit
-                                        </span>
+                                    <!-- Jumlah Fisik (Bersih Tanpa Kotak Background & Border) -->
+                                    <td class="py-3 px-4 whitespace-nowrap text-center font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                        1 Unit
                                     </td>
 
-                                    <!-- Kondisi -->
+                                    <!-- Kondisi (Titik Status Bersih Tanpa Kotak Background & Border) -->
                                     <td class="py-3 px-4 whitespace-nowrap">
                                         @if ($asset->condition === 'baik')
-                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span> Baik
+                                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                                                <span class="size-1.5 rounded-full bg-emerald-500"></span> Baik
                                             </span>
                                         @elseif ($asset->condition === 'rusak_ringan')
-                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span> Rusak Ringan
+                                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">
+                                                <span class="size-1.5 rounded-full bg-amber-500"></span> Rusak Ringan
                                             </span>
                                         @else
-                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800 inline-flex items-center gap-1">
-                                                <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span> Rusak Berat
+                                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-rose-600 dark:text-rose-400">
+                                                <span class="size-1.5 rounded-full bg-rose-500"></span> Rusak Berat
                                             </span>
                                         @endif
                                     </td>
@@ -890,7 +886,8 @@
                                     <td class="py-3 px-4">{{ $log->vendor_technician ?? 'Internal RS' }}</td>
                                     <td class="py-3 px-4 font-mono font-bold text-slate-900 dark:text-slate-100">Rp {{ number_format($log->cost, 0, ',', '.') }}</td>
                                     <td class="py-3 px-4">
-                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $log->status === 'selesai' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300' }}">
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-semibold capitalize {{ $log->status === 'selesai' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400' }}">
+                                            <span class="size-1.5 rounded-full {{ $log->status === 'selesai' ? 'bg-emerald-500' : 'bg-amber-500' }}"></span>
                                             {{ $log->status }}
                                         </span>
                                     </td>
