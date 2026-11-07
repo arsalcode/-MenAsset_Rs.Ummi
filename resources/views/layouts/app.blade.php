@@ -52,6 +52,17 @@
             color-scheme: dark;
         }
 
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        /* Hilangkan scrollbar horizontal jelek secara permanen */
+        ::-webkit-scrollbar-horizontal {
+            display: none !important;
+            height: 0 !important;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #F8FAFC;
@@ -60,6 +71,7 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             transition: background-color 0.2s ease, color 0.2s ease;
+            overflow-x: hidden;
         }
 
         html.dark body {

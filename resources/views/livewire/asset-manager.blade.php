@@ -190,12 +190,12 @@
 
             <!-- Custom Data Table (Identik .custom-table Alkamart) -->
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                     <table class="w-full text-left border-collapse table-fixed">
                         <!-- Table Header Hijau Lembut (#E9FAF3) Khas Alkamart -->
                         <thead class="bg-[#E9FAF3] dark:bg-slate-800/90 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase tracking-wider">
                             <tr>
-                                <th class="w-36 py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
+                                <th class="w-[14%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
                                     <div class="flex items-center gap-1">
                                         <span>Kode Aset</span>
                                         @if ($sortField === 'asset_code')
@@ -203,7 +203,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-auto py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
+                                <th class="w-[34%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -211,26 +211,26 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-56 py-3.5 px-4">Ruangan RS</th>
-                                <th class="w-24 py-3.5 px-4 text-center">Jumlah</th>
-                                <th class="w-32 py-3.5 px-4">Kondisi</th>
-                                <th class="w-36 py-3.5 px-4 text-right no-print">Aksi</th>
+                                <th class="w-[22%] py-3.5 px-4">Ruangan RS</th>
+                                <th class="w-[10%] py-3.5 px-4 text-center">Jumlah</th>
+                                <th class="w-[10%] py-3.5 px-4">Kondisi</th>
+                                <th class="w-[10%] py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
                         <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
                             @forelse ($assets as $asset)
                                 <tr wire:key="asset-row-{{ $asset->id }}" class="h-[64px] hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
                                     <!-- Kode Aset -->
-                                    <td class="py-3.5 px-4 font-mono font-semibold whitespace-nowrap">
-                                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+                                    <td class="py-3 px-4 font-mono font-semibold whitespace-nowrap">
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-[11px]">
                                             {{ $asset->asset_code }}
                                         </span>
                                     </td>
 
                                     <!-- Nama Alat & Spesifikasi -->
-                                    <td class="py-3.5 px-4">
-                                        <div class="font-bold text-slate-900 dark:text-slate-100 text-[13px]">{{ $asset->name }}</div>
-                                        <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                    <td class="py-3 px-4">
+                                        <div class="font-bold text-slate-900 dark:text-slate-100 text-[13px] truncate">{{ $asset->name }}</div>
+                                        <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
                                             {{ $asset->brand ?? '-' }} {{ $asset->model_type ? '· ' . $asset->model_type : '' }}
                                             @if ($asset->serial_number)
                                                 <span class="font-mono text-slate-400 dark:text-slate-500">· SN: {{ $asset->serial_number }}</span>
@@ -239,37 +239,37 @@
                                     </td>
 
                                     <!-- Ruangan Penempatan -->
-                                    <td class="py-3.5 px-4 whitespace-nowrap">
-                                        <div class="font-semibold text-slate-800 dark:text-slate-200">{{ $asset->location->name ?? '-' }}</div>
-                                        <div class="text-[11px] text-slate-400 dark:text-slate-500">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
+                                    <td class="py-3 px-4">
+                                        <div class="font-semibold text-slate-800 dark:text-slate-200 truncate">{{ $asset->location->name ?? '-' }}</div>
+                                        <div class="text-[11px] text-slate-400 dark:text-slate-500 truncate">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
                                     </td>
 
                                     <!-- Jumlah Fisik (Kuantitas) -->
-                                    <td class="py-3.5 px-4 whitespace-nowrap text-center">
-                                        <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1 shadow-2xs">
+                                    <td class="py-3 px-4 whitespace-nowrap text-center">
+                                        <span class="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 inline-flex items-center gap-1 shadow-2xs">
                                             <i class="ri-stack-line text-emerald-700 dark:text-emerald-400 text-xs"></i> 1 Unit
                                         </span>
                                     </td>
 
                                     <!-- Kondisi -->
-                                    <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <td class="py-3 px-4 whitespace-nowrap">
                                         @if ($asset->condition === 'baik')
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 inline-flex items-center gap-1">
+                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 inline-flex items-center gap-1">
                                                 <span class="size-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span> Baik
                                             </span>
                                         @elseif ($asset->condition === 'rusak_ringan')
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 inline-flex items-center gap-1">
+                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 inline-flex items-center gap-1">
                                                 <span class="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></span> Rusak Ringan
                                             </span>
                                         @else
-                                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800 inline-flex items-center gap-1">
+                                            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800 inline-flex items-center gap-1">
                                                 <span class="size-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></span> Rusak Berat
                                             </span>
                                         @endif
                                     </td>
 
                                     <!-- Aksi Tombol -->
-                                    <td class="py-3.5 px-4 text-right whitespace-nowrap no-print">
+                                    <td class="py-3 px-4 text-right whitespace-nowrap no-print">
                                         <div class="inline-flex items-center gap-1">
                                             <!-- Detail Button -->
                                             <button 
