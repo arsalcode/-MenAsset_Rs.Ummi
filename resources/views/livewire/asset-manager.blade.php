@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <div class="size-16 rounded-lg bg-emerald-800 text-white text-3xl font-bold flex items-center justify-center">
-                    <i class="ri-hospital-fill"></i>
+                    <i data-lucide="hospital" class="size-8"></i>
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">RUMAH SAKIT UMMI BOGOR</h1>
@@ -30,7 +30,7 @@
             class="admin-tab-btn {{ $activeTab === 'tabAssets' ? 'active' : '' }}" 
             title="Kelola Aset"
         >
-            <i class="ri-box-3-line"></i>
+            <i data-lucide="package" class="size-[18px]"></i>
             <span class="tab-label">Kelola Aset</span>
         </button>
 
@@ -40,7 +40,7 @@
             class="admin-tab-btn {{ $activeTab === 'tabMaintenance' ? 'active' : '' }}" 
             title="Servis & Kalibrasi Alat Medis"
         >
-            <i class="ri-error-warning-line"></i>
+            <i data-lucide="triangle-alert" class="size-[18px]"></i>
             <span class="tab-label">Servis & Kalibrasi</span>
             @if ($stats['need_attention'] > 0)
                 <span class="badge-alert-count">{{ $stats['need_attention'] }}</span>
@@ -53,7 +53,7 @@
             class="admin-tab-btn {{ $activeTab === 'tabReports' ? 'active' : '' }}" 
             title="Rekapitulasi Nilai Aset"
         >
-            <i class="ri-bar-chart-grouped-line"></i>
+            <i data-lucide="bar-chart-3" class="size-[18px]"></i>
             <span class="tab-label">Rekap Nilai Aset</span>
         </button>
 
@@ -63,7 +63,7 @@
             class="admin-tab-btn {{ $activeTab === 'tabLogs' ? 'active' : '' }}" 
             title="Riwayat Servis & Kalibrasi"
         >
-            <i class="ri-history-line"></i>
+            <i data-lucide="history" class="size-[18px]"></i>
             <span class="tab-label">Riwayat Servis</span>
         </button>
     </div>
@@ -74,11 +74,11 @@
         @if ($feedbackMessage)
             <div class="p-4 rounded-xl flex items-center justify-between border shadow-xs transition-all {{ $feedbackType === 'danger' ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-200' : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200' }}">
                 <div class="flex items-center gap-3">
-                    <i class="{{ $feedbackType === 'danger' ? 'ri-error-warning-fill text-rose-600 dark:text-rose-400' : 'ri-checkbox-circle-fill text-emerald-600 dark:text-emerald-400' }} text-xl"></i>
+                    <i data-lucide="{{ $feedbackType === 'danger' ? 'alert-circle' : 'check-circle-2' }}" class="size-5 {{ $feedbackType === 'danger' ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400' }}"></i>
                     <span class="text-sm font-semibold">{{ $feedbackMessage }}</span>
                 </div>
                 <button wire:click="$set('feedbackMessage', null)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
-                    <i class="ri-close-line text-lg"></i>
+                    <i data-lucide="x" class="size-4.5"></i>
                 </button>
             </div>
         @endif
@@ -94,7 +94,7 @@
                 <!-- Alert Banner Khusus Tab Servis & Kalibrasi (Kompak & Elegan 1 Baris) -->
                 <div class="mb-4 px-4 py-3 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 flex items-center justify-between gap-3 text-xs shadow-2xs">
                     <div class="flex items-center gap-2.5">
-                        <i class="ri-error-warning-line text-amber-600 dark:text-amber-400 text-lg shrink-0"></i>
+                        <i data-lucide="triangle-alert" class="size-4 text-amber-600 dark:text-amber-400 shrink-0"></i>
                         <span><strong>Perhatian:</strong> Menampilkan alat medis butuh kalibrasi atau perbaikan segera.</span>
                     </div>
                     <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 shrink-0">
@@ -121,7 +121,7 @@
                             <span class="truncate max-w-[150px]">{{ $selectedCategoryName }}</span>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
                                 <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                    <i data-lucide="chevron-down" class="size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -146,7 +146,7 @@
                             >
                                 <span>Semua Kategori</span>
                                 @if ($filterCategory === '')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
 
@@ -161,7 +161,7 @@
                                     <div class="flex items-center gap-1.5 shrink-0">
                                         <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{{ $cat->assets_count }} Unit</span>
                                         @if ((string)$filterCategory === (string)$cat->id)
-                                            <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                            <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                         @endif
                                     </div>
                                 </button>
@@ -183,7 +183,7 @@
                             <span class="truncate max-w-[150px]">{{ $selectedLocationName }}</span>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
                                 <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                    <i data-lucide="chevron-down" class="size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -208,7 +208,7 @@
                             >
                                 <span>Semua Ruangan</span>
                                 @if ($filterLocation === '')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
 
@@ -226,7 +226,7 @@
                                     <div class="flex items-center gap-1.5 shrink-0">
                                         <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{{ $loc->assets_count }} Unit</span>
                                         @if ((string)$filterLocation === (string)$loc->id)
-                                            <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                            <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                         @endif
                                     </div>
                                 </button>
@@ -261,7 +261,7 @@
                             <span class="truncate max-w-[130px]">{{ $selectedConditionLabel }}</span>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
                                 <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i class="ri-arrow-down-s-line text-sm leading-none"></i>
+                                    <i data-lucide="chevron-down" class="size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -286,7 +286,7 @@
                             >
                                 <span>Semua Kondisi</span>
                                 @if ($filterCondition === '')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
 
@@ -301,7 +301,7 @@
                                     <span>Kondisi Baik</span>
                                 </div>
                                 @if ($filterCondition === 'baik')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
 
@@ -316,7 +316,7 @@
                                     <span>Rusak Ringan</span>
                                 </div>
                                 @if ($filterCondition === 'rusak_ringan')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
 
@@ -331,7 +331,7 @@
                                     <span>Rusak Berat</span>
                                 </div>
                                 @if ($filterCondition === 'rusak_berat')
-                                    <i class="ri-check-line text-emerald-600 dark:text-emerald-400 text-sm font-bold"></i>
+                                    <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
                                 @endif
                             </button>
                         </div>
@@ -341,7 +341,7 @@
                 <!-- Group 2 (Tengah): Search Input Fleksibel -->
                 <div class="relative flex-1 min-w-[200px]">
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                        <i class="ri-search-line text-sm"></i>
+                        <i data-lucide="search" class="size-4"></i>
                     </span>
                     <input 
                         type="text" 
@@ -351,7 +351,7 @@
                     />
                     @if ($search)
                         <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            <i class="ri-close-line"></i>
+                            <i data-lucide="x" class="size-4"></i>
                         </button>
                     @endif
                 </div>
@@ -366,7 +366,7 @@
                             title="Segarkan Data"
                             aria-label="Segarkan Data"
                         >
-                            <i class="ri-refresh-line text-[19px] transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
+                            <i data-lucide="rotate-cw" class="size-5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
                         </button>
                         <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah) -->
                         <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -384,7 +384,7 @@
                                 title="Tambah Barang"
                                 aria-label="Tambah Barang"
                             >
-                                <i class="ri-add-circle-line text-[21px]"></i>
+                                <i data-lucide="plus-circle" class="size-5"></i>
                             </button>
                             <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
                             <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -402,7 +402,7 @@
                             title="Hapus"
                             aria-label="Hapus"
                         >
-                            <i class="ri-delete-bin-line text-[19px]"></i>
+                            <i data-lucide="trash-2" class="size-5"></i>
                         </button>
                         <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
                         <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -499,7 +499,7 @@
                                                 title="Lihat Detail & Histori Kalibrasi"
                                                 aria-label="Lihat Detail & Histori Kalibrasi"
                                             >
-                                                <i class="ri-eye-line text-[15px]"></i>
+                                                <i data-lucide="eye" class="size-4"></i>
                                             </button>
 
                                             <!-- Cetak Label QR Button (Hijau Emerald RS Ummi) -->
@@ -509,7 +509,7 @@
                                                 title="Cetak Stiker Label QR Aset"
                                                 aria-label="Cetak Stiker Label QR Aset"
                                             >
-                                                <i class="ri-qr-code-line text-[15px]"></i>
+                                                <i data-lucide="qr-code" class="size-4"></i>
                                             </button>
 
                                             <!-- Sunting Button (Hijau Emerald RS Ummi dengan Ikon Pensil Bersih) -->
@@ -519,7 +519,7 @@
                                                 title="Sunting Data Aset"
                                                 aria-label="Sunting Data Aset"
                                             >
-                                                <i class="ri-pencil-line text-[15px]"></i>
+                                                <i data-lucide="pencil" class="size-4"></i>
                                             </button>
 
                                             <!-- Hapus Button (Merah Rose Tegas) -->
@@ -529,7 +529,7 @@
                                                 title="Hapus Aset"
                                                 aria-label="Hapus Aset"
                                             >
-                                                <i class="ri-delete-bin-line text-[15px]"></i>
+                                                <i data-lucide="trash-2" class="size-4"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -538,7 +538,7 @@
                                 <tr>
                                     <td colspan="6" class="h-[320px] py-12 px-4 text-center text-slate-400 dark:text-slate-500">
                                         <div class="flex flex-col items-center justify-center">
-                                            <i class="ri-inbox-line text-4xl text-slate-300 dark:text-slate-600 mb-2"></i>
+                                            <i data-lucide="inbox" class="size-12 text-slate-300 dark:text-slate-600 mb-2"></i>
                                             <p class="text-sm font-semibold text-slate-600 dark:text-slate-300">Tidak ada aset rumah sakit yang ditemukan.</p>
                                             <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Silakan sesuaikan kata kunci atau bersihkan filter.</p>
                                             <button wire:click="resetFilters" class="mt-3 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline">
@@ -570,7 +570,7 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400">Ringkasan finansial inventaris dan kapitalisasi alat kesehatan RS Ummi.</p>
                     </div>
                     <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs">
-                        <i class="ri-printer-line text-sm"></i>
+                        <i data-lucide="printer" class="size-4"></i>
                         <span>Cetak Laporan Rekapitulasi</span>
                     </button>
                 </div>
@@ -580,14 +580,14 @@
                     <!-- Card 1: Total Saldo / Total Inventaris Aset -->
                     <div class="report-card green">
                         <div class="report-icon">
-                            <i class="ri-wallet-3-line"></i>
+                            <i data-lucide="wallet" class="size-7 text-white"></i>
                         </div>
                         <div class="report-info">
                             <span class="report-label">Total Inventaris Aset RS</span>
                             <h3 class="report-amount">{{ $stats['total'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
                             <div class="saldo-breakdown-tags">
-                                <span class="tag-cash"><i class="ri-checkbox-circle-fill"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
-                                <span class="tag-qris"><i class="ri-tools-fill"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
+                                <span class="tag-cash"><i data-lucide="check-circle-2" class="size-3.5"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
+                                <span class="tag-qris"><i data-lucide="wrench" class="size-3.5"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
                             </div>
                         </div>
                     </div>
@@ -595,7 +595,7 @@
                     <!-- Card 2: Omzet / Aset Siap Operasional -->
                     <div class="report-card green">
                         <div class="report-icon">
-                            <i class="ri-calendar-check-line"></i>
+                            <i data-lucide="calendar-check-2" class="size-7 text-white"></i>
                         </div>
                         <div class="report-info">
                             <span class="report-label">Siap Operasional (Baik)</span>
@@ -607,7 +607,7 @@
                     <!-- Card 3: Laba Bersih / Perlu Kalibrasi -->
                     <div class="report-card green">
                         <div class="report-icon">
-                            <i class="ri-funds-line"></i>
+                            <i data-lucide="activity" class="size-7 text-white"></i>
                         </div>
                         <div class="report-info">
                             <span class="report-label">Perlu Servis / Rusak</span>
@@ -619,7 +619,7 @@
                     <!-- Card 4: Total Tarik Uang / Nilai Kapitalisasi Aset -->
                     <div class="report-card green">
                         <div class="report-icon">
-                            <i class="ri-hand-coin-line"></i>
+                            <i data-lucide="coins" class="size-7 text-white"></i>
                         </div>
                         <div class="report-info">
                             <span class="report-label">Estimasi Nilai Inventaris</span>
@@ -788,7 +788,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                                    <i class="ri-pie-chart-2-line text-emerald-600 dark:text-emerald-400 text-base"></i>
+                                    <i data-lucide="pie-chart" class="size-4 text-emerald-600 dark:text-emerald-400"></i>
                                     <span>Distribusi Aset Menurut Kategori</span>
                                 </h4>
                                 <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
@@ -848,7 +848,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                                    <i class="ri-hospital-line text-emerald-600 dark:text-emerald-400 text-base"></i>
+                                    <i data-lucide="hospital" class="size-4 text-emerald-600 dark:text-emerald-400"></i>
                                     <span>Sebaran Alat di Ruangan RS Ummi</span>
                                 </h4>
                                 <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
@@ -960,8 +960,8 @@
                 <!-- Modal Header Hijau Emerald -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800">
                     <div class="flex items-center gap-2.5">
-                        <div class="size-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-base">
-                            <i class="{{ $selectedAssetId ? 'ri-edit-line' : 'ri-add-circle-line' }}"></i>
+                        <div class="size-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center">
+                            <i data-lucide="{{ $selectedAssetId ? 'pencil' : 'plus-circle' }}" class="size-4 text-white"></i>
                         </div>
                         <div>
                             <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">
@@ -971,7 +971,7 @@
                         </div>
                     </div>
                     <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg">
-                        <i class="ri-close-line text-xl"></i>
+                        <i data-lucide="x" class="size-5"></i>
                     </button>
                 </div>
 
@@ -1095,7 +1095,7 @@
                             Batal
                         </button>
                         <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs">
-                            <i class="ri-save-line text-sm"></i>
+                            <i data-lucide="save" class="size-4"></i>
                             <span wire:loading.remove wire:target="save">Simpan Data Aset</span>
                             <span wire:loading wire:target="save">Menyimpan...</span>
                         </button>
@@ -1132,7 +1132,7 @@
                         @endif
                     </div>
                     <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg transition-colors">
-                        <i class="ri-close-line text-lg"></i>
+                        <i data-lucide="x" class="size-4.5"></i>
                     </button>
                 </div>
 
@@ -1150,12 +1150,12 @@
                                 />
                             @else
                                 <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-2 text-center">
-                                    <i class="ri-image-2-line text-3xl mb-1 text-slate-300 dark:text-slate-600"></i>
+                                    <i data-lucide="image" class="size-8 mb-1 text-slate-300 dark:text-slate-600"></i>
                                     <span class="text-[10px] font-semibold">Foto Belum Tersedia</span>
                                 </div>
                             @endif
                             <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded bg-slate-900/80 backdrop-blur-xs text-[9px] text-white font-medium flex items-center gap-1 shadow-2xs">
-                                <i class="ri-camera-3-fill text-emerald-400"></i>
+                                <i data-lucide="camera" class="size-3 text-emerald-400"></i>
                                 <span>Foto Fisik Alat</span>
                             </div>
                         </div>
@@ -1214,7 +1214,7 @@
                         @php $latestLog = $selectedAsset->maintenanceLogs->first(); @endphp
                         <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-[11px]">
                             <div class="flex items-center gap-1.5 truncate">
-                                <i class="ri-history-line text-emerald-700 dark:text-emerald-400"></i>
+                                <i data-lucide="history" class="size-3.5 text-emerald-700 dark:text-emerald-400"></i>
                                 <span class="text-slate-600 dark:text-slate-300 truncate">
                                     Histori Kalibrasi Terakhir: <strong class="capitalize">{{ str_replace('_', ' ', $latestLog->type) }}</strong> ({{ $latestLog->maintenance_date->format('d M Y') }})
                                 </span>
@@ -1229,7 +1229,7 @@
                 <!-- Popup Footer Action -->
                 <div class="px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900 flex items-center justify-between">
                     <button wire:click="openPrintLabelModal({{ $selectedAsset->id }})" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-white dark:bg-slate-800 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 transition-colors shadow-2xs">
-                        <i class="ri-qr-code-line text-sm"></i>
+                        <i data-lucide="qr-code" class="size-4"></i>
                         <span>Cetak Label QR</span>
                     </button>
                     <button wire:click="closeModal" class="px-4 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition-colors">
@@ -1252,7 +1252,7 @@
                         <p class="text-[11px] text-emerald-800 dark:text-slate-400">{{ $selectedAsset->name }} ({{ $selectedAsset->asset_code }})</p>
                     </div>
                     <button wire:click="$set('isLogModalOpen', false)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                        <i class="ri-close-line text-lg"></i>
+                        <i data-lucide="x" class="size-4.5"></i>
                     </button>
                 </div>
 
@@ -1312,7 +1312,7 @@
                 <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800 flex items-center justify-between">
                     <h3 class="text-sm font-bold text-[#064E3B] dark:text-emerald-400">Stiker Label Inventaris RS</h3>
                     <button wire:click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                        <i class="ri-close-line text-lg"></i>
+                        <i data-lucide="x" class="size-4.5"></i>
                     </button>
                 </div>
 
@@ -1320,8 +1320,8 @@
                     <!-- Template Stiker Fisik RS Ummi (Selalu Background Putih agar Siap Cetak Stiker) -->
                     <div id="printableAssetTag" class="p-4 border-2 border-dashed border-emerald-800 rounded-xl bg-white text-left shadow-xs space-y-3">
                         <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
-                            <div class="size-8 rounded-md bg-emerald-800 text-white flex items-center justify-center text-lg">
-                                <i class="ri-hospital-fill"></i>
+                            <div class="size-8 rounded-md bg-emerald-800 text-white flex items-center justify-center">
+                                <i data-lucide="hospital" class="size-5 text-white"></i>
                             </div>
                             <div>
                                 <h4 class="text-xs font-extrabold text-emerald-900 leading-none">RS UMMI BOGOR</h4>
@@ -1354,7 +1354,7 @@
                 <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-end gap-2">
                     <button wire:click="closeModal" class="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-lg">Tutup</button>
                     <button onclick="window.print()" class="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-xs">
-                        <i class="ri-printer-line"></i>
+                        <i data-lucide="printer" class="size-4"></i>
                         <span>Cetak Stiker</span>
                     </button>
                 </div>
@@ -1368,8 +1368,8 @@
     @if ($isDeleteOpen && $selectedAsset)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 text-center">
-                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3 text-2xl">
-                    <i class="ri-delete-bin-line"></i>
+                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="trash-2" class="size-6"></i>
                 </div>
                 <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Hapus Data Aset Ini?</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
@@ -1393,8 +1393,8 @@
     @if ($isClearAllOpen)
         <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full p-6 text-center">
-                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3 text-2xl">
-                    <i class="ri-delete-bin-line"></i>
+                <div class="size-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="trash-2" class="size-6"></i>
                 </div>
                 <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Kosongkan Semua Produk?</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">

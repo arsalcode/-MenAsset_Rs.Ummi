@@ -21,8 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Modern Vector Icons: Remix Icon 4.5.0 (Identik dengan Alkamart) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Clean Vector Icons: Lucide Icons SVG (Bundled via Vite) -->
 
     <!-- Styles & Scripts via Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -279,11 +278,20 @@
             z-index: 1;
         }
 
-        .report-icon i {
-            font-size: 26px;
+        .report-icon i,
+        .report-icon svg {
+            width: 28px;
+            height: 28px;
             color: #FFFFFF !important;
             margin-right: 6px;
             margin-bottom: 6px;
+        }
+
+        /* Lucide SVG Icons Alignment & Crisp Rendering */
+        svg.lucide {
+            display: inline-block;
+            vertical-align: middle;
+            stroke-width: 2px;
         }
 
         .report-info {
@@ -436,8 +444,8 @@
     <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
         <!-- Nav Left: Brand & Badge -->
         <div class="flex items-center gap-3.5">
-            <div class="flex items-center justify-center size-11 rounded-lg bg-emerald-700 text-white text-2xl shadow-md shadow-emerald-900/20">
-                <i class="ri-hospital-fill"></i>
+            <div class="flex items-center justify-center size-11 rounded-lg bg-emerald-700 text-white shadow-md shadow-emerald-900/20">
+                <i data-lucide="hospital" class="size-6 text-white"></i>
             </div>
             <div>
                 <div class="flex items-center gap-2">
