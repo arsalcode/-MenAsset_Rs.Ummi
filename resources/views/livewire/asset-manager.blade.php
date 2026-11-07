@@ -148,29 +148,43 @@
                     @endif
                 </div>
 
-                <!-- Group 3 (Kanan): Tombol Aksi [+ Tambah Barang] dan [ 🗑️ Hapus ] -->
+                <!-- Group 3 (Kanan): Tombol Aksi Icon Saja (Muncul Tulisan Saat di-Hover) -->
                 <div class="flex items-center gap-2 shrink-0">
                     <!-- Tombol Tambah Barang -->
                     @if ($activeTab === 'tabAssets')
-                        <button 
-                            wire:click="openCreateModal" 
-                            class="h-10 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-xs hover:shadow cursor-pointer shrink-0 whitespace-nowrap"
-                            title="Tambah Barang / Aset Baru"
-                        >
-                            <i class="ri-add-circle-line text-base"></i>
-                            <span>+ Tambah Barang</span>
-                        </button>
+                        <div class="relative group">
+                            <button 
+                                wire:click="openCreateModal" 
+                                class="size-10 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white inline-flex items-center justify-center transition-all shadow-xs hover:shadow cursor-pointer shrink-0"
+                                title="Tambah Barang"
+                                aria-label="Tambah Barang"
+                            >
+                                <i class="ri-add-circle-line text-lg"></i>
+                            </button>
+                            <!-- Tooltip Text saat di-Hover -->
+                            <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30">
+                                Tambah Barang
+                                <span class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900 dark:border-t-slate-800"></span>
+                            </div>
+                        </div>
                     @endif
 
                     <!-- Tombol Hapus -->
-                    <button 
-                        wire:click="handleClearButton" 
-                        class="h-10 px-3.5 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-400 dark:hover:border-rose-700 text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer shrink-0 whitespace-nowrap"
-                        title="Kosongkan Produk atau Bersihkan Filter"
-                    >
-                        <i class="ri-delete-bin-line text-base"></i>
-                        <span>Hapus</span>
-                    </button>
+                    <div class="relative group">
+                        <button 
+                            wire:click="handleClearButton" 
+                            class="size-10 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-400 dark:hover:border-rose-700 inline-flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
+                            title="Hapus"
+                            aria-label="Hapus"
+                        >
+                            <i class="ri-delete-bin-line text-lg"></i>
+                        </button>
+                        <!-- Tooltip Text saat di-Hover -->
+                        <div class="pointer-events-none absolute bottom-full right-0 mb-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30">
+                            Hapus
+                            <span class="absolute top-full right-3.5 border-4 border-transparent border-t-slate-900 dark:border-t-slate-800"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
