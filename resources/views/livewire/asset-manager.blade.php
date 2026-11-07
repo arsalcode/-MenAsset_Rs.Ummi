@@ -101,42 +101,24 @@
                 </div>
             @endif
 
-            <!-- ================= ADMIN ACTION BAR (PERSIS GAMBAR 1 ALKAMART) ================= -->
+            <!-- ================= ADMIN ACTION BAR ================= -->
             <div class="no-print space-y-3">
-                <!-- Baris 1: Stats Mini-Cards & Search Bar (Persis Gambar 1) -->
-                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
-                    <!-- Stats Mini Cards -->
-                    <div class="flex items-center gap-3 shrink-0">
-                        <!-- Mini Card 1: Total Jenis Produk -->
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 shadow-xs min-w-[135px]">
-                            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Total Jenis Produk</span>
-                            <span class="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 block mt-0.5">{{ $stats['total'] }}</span>
-                        </div>
-
-                        <!-- Mini Card 2: Estimasi Nilai Stok -->
-                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 shadow-xs min-w-[170px]">
-                            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block">Estimasi Nilai Stok</span>
-                            <span class="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 block mt-0.5">Rp {{ number_format($stats['total_value'], 0, ',', '.') }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Search Input Fleksibel Mengisi Seluruh Sisa Baris (Persis Gambar 1) -->
-                    <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                            <i class="ri-search-line text-sm"></i>
-                        </span>
-                        <input 
-                            type="text" 
-                            wire:model.live.debounce.300ms="search" 
-                            placeholder="Cari barang admin..." 
-                            class="w-full h-full min-h-[48px] pl-10 pr-9 py-2.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
-                        />
-                        @if ($search)
-                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                                <i class="ri-close-line"></i>
-                            </button>
-                        @endif
-                    </div>
+                <!-- Baris 1: Search Bar Luas -->
+                <div class="relative w-full">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                        <i class="ri-search-line text-sm"></i>
+                    </span>
+                    <input 
+                        type="text" 
+                        wire:model.live.debounce.300ms="search" 
+                        placeholder="Cari barang admin atau alat medis RS Ummi..." 
+                        class="w-full pl-10 pr-9 py-2.5 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
+                    />
+                    @if ($search)
+                        <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    @endif
                 </div>
 
                 <!-- Baris 2: Filter Dropdowns di Kiri & Action Buttons di Kanan (Persis Gambar 1) -->
