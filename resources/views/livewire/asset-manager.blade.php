@@ -357,11 +357,11 @@
                     <div class="relative group z-20 hover:z-50">
                         <button 
                             wire:click="refreshData" 
-                            class="size-10 rounded-xl text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                            class="size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
                             title="Segarkan Data"
                             aria-label="Segarkan Data"
                         >
-                            <i class="ri-refresh-line text-2xl transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
+                            <i class="ri-refresh-line text-[19px] transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
                         </button>
                         <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah) -->
                         <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -375,11 +375,11 @@
                         <div class="relative group z-20 hover:z-50">
                             <button 
                                 wire:click="openCreateModal" 
-                                class="size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                                class="size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
                                 title="Tambah Barang"
                                 aria-label="Tambah Barang"
                             >
-                                <i class="ri-add-circle-line text-2xl"></i>
+                                <i class="ri-add-circle-line text-[21px]"></i>
                             </button>
                             <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
                             <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -393,11 +393,11 @@
                     <div class="relative group z-20 hover:z-50">
                         <button 
                             wire:click="handleClearButton" 
-                            class="size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                            class="size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
                             title="Hapus"
                             aria-label="Hapus"
                         >
-                            <i class="ri-delete-bin-line text-2xl"></i>
+                            <i class="ri-delete-bin-line text-[19px]"></i>
                         </button>
                         <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
                         <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
@@ -415,7 +415,7 @@
                         <!-- Table Header Hijau Lembut (#E9FAF3) Khas Alkamart -->
                         <thead class="bg-[#E9FAF3] dark:bg-slate-800/90 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase tracking-wider">
                             <tr>
-                                <th class="w-[14%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
+                                <th class="w-[13%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
                                     <div class="flex items-center gap-1">
                                         <span>Kode Aset</span>
                                         @if ($sortField === 'asset_code')
@@ -423,7 +423,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-[32%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
+                                <th class="w-[30%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -431,10 +431,10 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-[22%] py-3.5 px-4">Ruangan RS</th>
-                                <th class="w-[10%] py-3.5 px-4 text-center">Jumlah</th>
-                                <th class="w-[10%] py-3.5 px-4">Kondisi</th>
-                                <th class="w-[12%] py-3.5 px-4 text-right no-print">Aksi</th>
+                                <th class="w-[20%] py-3.5 px-4">Ruangan RS</th>
+                                <th class="w-[9%] py-3.5 px-4 text-center">Jumlah</th>
+                                <th class="w-[12%] py-3.5 px-4">Kondisi</th>
+                                <th class="w-[16%] py-3.5 px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
                         <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
@@ -488,47 +488,47 @@
                                         @endif
                                     </td>
 
-                                    <!-- Aksi Tombol: Icon Murni dengan Warna Semantik yang Jelas & Harmonis (Tanpa Background Saat Hover) -->
+                                    <!-- Aksi Tombol: Icon Murni dengan Ukuran Proporsional & Mikrointeraksi Hover (Tanpa Background) -->
                                     <td class="py-3 px-4 text-right whitespace-nowrap no-print">
-                                        <div class="inline-flex items-center justify-end gap-1">
+                                        <div class="inline-flex items-center justify-end gap-1.5">
                                             <!-- Detail Button (Hijau Emerald RS Ummi) -->
                                             <button 
                                                 wire:click="openDetailModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Lihat Detail & Histori Kalibrasi"
                                                 aria-label="Lihat Detail & Histori Kalibrasi"
                                             >
-                                                <i class="ri-eye-line text-lg"></i>
+                                                <i class="ri-eye-line text-[15px]"></i>
                                             </button>
 
-                                            <!-- Cetak Label QR Button (Biru Scan/Teknologi) -->
+                                            <!-- Cetak Label QR Button (Biru Scan/SIMRS) -->
                                             <button 
                                                 wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Cetak Stiker Label QR Aset"
                                                 aria-label="Cetak Stiker Label QR Aset"
                                             >
-                                                <i class="ri-qr-code-line text-lg"></i>
+                                                <i class="ri-qr-code-line text-[15px]"></i>
                                             </button>
 
-                                            <!-- Sunting Button (Kuning/Amber) -->
+                                            <!-- Sunting Button (Amber Hangat dengan Ikon Pensil Bersih) -->
                                             <button 
                                                 wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-amber-500 hover:text-amber-600 dark:text-amber-400 dark:hover:text-amber-300 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Sunting Data Aset"
                                                 aria-label="Sunting Data Aset"
                                             >
-                                                <i class="ri-edit-line text-lg"></i>
+                                                <i class="ri-pencil-line text-[15px]"></i>
                                             </button>
 
-                                            <!-- Hapus Button (Merah/Rose) -->
+                                            <!-- Hapus Button (Merah Rose Tegas) -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-8 rounded-lg text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 transition-colors inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Hapus Aset"
                                                 aria-label="Hapus Aset"
                                             >
-                                                <i class="ri-delete-bin-line text-lg"></i>
+                                                <i class="ri-delete-bin-line text-[15px]"></i>
                                             </button>
                                         </div>
                                     </td>
