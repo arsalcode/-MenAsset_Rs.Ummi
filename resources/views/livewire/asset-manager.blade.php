@@ -500,20 +500,20 @@
                                                 <i class="ri-eye-line text-[15px]"></i>
                                             </button>
 
-                                            <!-- Cetak Label QR Button (Biru Scan/SIMRS) -->
+                                            <!-- Cetak Label QR Button (Hijau Emerald RS Ummi) -->
                                             <button 
                                                 wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Cetak Stiker Label QR Aset"
                                                 aria-label="Cetak Stiker Label QR Aset"
                                             >
                                                 <i class="ri-qr-code-line text-[15px]"></i>
                                             </button>
 
-                                            <!-- Sunting Button (Amber Hangat dengan Ikon Pensil Bersih) -->
+                                            <!-- Sunting Button (Hijau Emerald RS Ummi dengan Ikon Pensil Bersih) -->
                                             <button 
                                                 wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Sunting Data Aset"
                                                 aria-label="Sunting Data Aset"
                                             >
