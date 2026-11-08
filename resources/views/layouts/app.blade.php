@@ -442,7 +442,6 @@
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
 
     <!-- ================= TOP NAVIGATION (Khas Alkamart) ================= -->
-    @unless (request()->routeIs('field'))
     <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
         <!-- Nav Left: Brand & Title -->
         <div class="flex items-center gap-3.5">
@@ -451,34 +450,24 @@
             </div>
             <div>
                 <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
-                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Manajemen Aset & Peralatan Medis</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Manajemen Aset &amp; Peralatan Medis</span>
             </div>
         </div>
 
-        <!-- Nav Right: Mode Lapangan Switcher & Theme Toggle -->
-        <div class="flex items-center gap-2">
-            <!-- Tombol Beralih ke Portal Khusus Lapangan / Petugas HP -->
-            <a 
-                href="{{ route('field') }}" 
-                class="no-print h-9 px-3 rounded-xl border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-xs font-bold inline-flex items-center gap-1.5 transition-colors shadow-2xs"
-                title="Buka Portal Khusus Teknisi / Petugas Lapangan"
-            >
-                <i data-lucide="smartphone" class="size-3.5"></i>
-                <span class="hidden md:inline">Mode Lapangan (HP)</span>
-            </a>
-
-            <!-- Saklar Mode Terang / Gelap (Warna Hijau Emerald Sesuai RS Ummi - Tanpa Kotak Background) -->
+        <!-- Nav Right: Theme Toggle, Flag & Role Switcher (Persis Gambar Mockup User) -->
+        <div class="flex items-center gap-3">
+            <!-- Saklar Mode Terang / Gelap (Warna Hijau Emerald Khas RS Ummi) -->
             <div class="relative group">
                 <button 
                     type="button" 
                     id="themeToggleBtn"
                     onclick="toggleAppTheme()" 
-                    class="no-print p-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none"
+                    class="no-print size-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none shadow-2xs"
                     title="Ganti Mode Tampilan (Terang / Gelap)"
                     aria-label="Ganti Mode Tampilan (Terang / Gelap)"
                 >
                     <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User (Warna Hijau Emerald) -->
-                    <svg class="size-6 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="size-5 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
                         <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
@@ -498,9 +487,39 @@
                     <span class="absolute bottom-full right-3.5 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
                 </div>
             </div>
+
+            <!-- Bendera Indonesia / Language Indicator Bulat (Sesuai Gambar User) -->
+            <div class="flex items-center" title="Bahasa Indonesia (ID)">
+                <div class="size-6 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shadow-2xs flex flex-col shrink-0">
+                    <svg viewBox="0 0 32 32" class="size-full">
+                        <rect width="32" height="16" fill="#E70011"/>
+                        <rect y="16" width="32" height="16" fill="#FFFFFF"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tombol Beralih Role Khas Alkamart (Ganti ke Admin / Ganti ke Lapangan) -->
+            @if (request()->routeIs('field'))
+                <a 
+                    href="{{ route('dashboard') }}" 
+                    class="no-print h-9 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors shadow-2xs"
+                    title="Beralih ke Dashboard Admin"
+                >
+                    <i data-lucide="arrow-left-right" class="size-3.5 text-slate-500 dark:text-slate-400"></i>
+                    <span>Ganti ke Admin</span>
+                </a>
+            @else
+                <a 
+                    href="{{ route('field') }}" 
+                    class="no-print h-9 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors shadow-2xs"
+                    title="Beralih ke Mode Lapangan"
+                >
+                    <i data-lucide="arrow-left-right" class="size-3.5 text-slate-500 dark:text-slate-400"></i>
+                    <span>Ganti ke Lapangan</span>
+                </a>
+            @endif
         </div>
     </header>
-    @endunless
 
     <!-- Main Container -->
     <main class="flex-1 w-full bg-slate-50/50 dark:bg-slate-950 transition-colors duration-200">
