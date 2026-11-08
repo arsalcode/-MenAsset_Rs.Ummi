@@ -450,7 +450,7 @@
             </div>
             <div>
                 <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
-                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Sistem Manajemen Aset & Peralatan Medis</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Manajemen Aset & Peralatan Medis</span>
             </div>
         </div>
 
