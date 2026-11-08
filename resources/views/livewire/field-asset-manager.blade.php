@@ -367,17 +367,60 @@
                             <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pilih ruangan tempat Anda bertugas untuk melihat seluruh alat medis yang terdaftar di ruangan tersebut.</p>
                         </div>
 
-                        <!-- Dropdown Pilihan Ruangan -->
-                        <div class="w-full md:w-72">
-                            <select 
-                                wire:model.live="selectedLocationId" 
-                                class="w-full h-10 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-xl font-semibold text-xs focus:outline-none focus:border-emerald-600 cursor-pointer"
+                        <!-- Dropdown Pilihan Ruangan (Custom Alpine.js Popover matching Admin) -->
+                        @php
+                            $currentSelectedLocation = $locations->firstWhere('id', $selectedLocationId);
+                            $selectedLocationName = $currentSelectedLocation ? $currentSelectedLocation->name . ' (' . $currentSelectedLocation->assets_count . ' alat)' : 'Pilih Ruangan RS';
+                        @endphp
+                        <div x-data="{ open: false }" class="relative w-full md:w-auto" @click.outside="open = false" @keydown.escape.window="open = false">
+                            <button 
+                                type="button" 
+                                @click="open = !open" 
+                                :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
+                                class="w-full md:w-auto h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center justify-between gap-2 select-none shadow-xs {{ $selectedLocationId ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                             >
-                                <option value="">-- Pilih Ruangan Rumah Sakit --</option>
+                                <span class="truncate max-w-[240px]">{{ $selectedLocationName }}</span>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                    <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                        <i data-lucide="chevron-down" class="size-4"></i>
+                                    </span>
+                                </div>
+                            </button>
+
+                            <!-- Custom Popover Menu -->
+                            <div 
+                                x-show="open" 
+                                x-cloak
+                                x-transition:enter="transition ease-out duration-150"
+                                x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-100"
+                                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                                class="absolute right-0 top-full mt-1.5 w-72 max-h-72 overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
+                            >
                                 @foreach ($locations as $loc)
-                                    <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->assets_count }} alat)</option>
+                                    <button 
+                                        type="button" 
+                                        wire:click="$set('selectedLocationId', '{{ $loc->id }}')" 
+                                        @click="open = false" 
+                                        class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$selectedLocationId === (string)$loc->id ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                    >
+                                        <div class="pr-2 min-w-0">
+                                            <span class="block truncate">{{ $loc->name }}</span>
+                                            @if ($loc->building)
+                                                <span class="text-[10px] text-slate-400 dark:text-slate-500 block -mt-0.5">{{ $loc->building }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="flex items-center gap-1.5 shrink-0">
+                                            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{{ $loc->assets_count }} Unit</span>
+                                            @if ((string)$selectedLocationId === (string)$loc->id)
+                                                <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
+                                            @endif
+                                        </div>
+                                    </button>
                                 @endforeach
-                            </select>
+                            </div>
                         </div>
                     </div>
 
@@ -415,27 +458,77 @@
                             </div>
                         </div>
 
-                        <!-- Bar Pencarian Cepat Dalam Ruangan -->
-                        <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                        <!-- Bar Pencarian Cepat Dalam Ruangan & Filter Kondisi (Matching Admin) -->
+                        <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
                             <div class="relative flex-1">
-                                <i data-lucide="search" class="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                                    <i data-lucide="search" class="size-4"></i>
+                                </div>
                                 <input 
                                     type="text" 
                                     wire:model.live.debounce.300ms="search" 
                                     placeholder="Cari nama alat, merek, atau nomor seri di ruangan ini..." 
-                                    class="w-full h-9 pl-9 pr-3 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600"
+                                    class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
                                 />
+                                @if ($search)
+                                    <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer">
+                                        <i data-lucide="x" class="size-4"></i>
+                                    </button>
+                                @endif
                             </div>
 
-                            <select 
-                                wire:model.live="filterCondition" 
-                                class="h-9 px-3 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-600"
-                            >
-                                <option value="">Semua Kondisi</option>
-                                <option value="baik">Kondisi Baik</option>
-                                <option value="rusak_ringan">Rusak Ringan</option>
-                                <option value="rusak_berat">Rusak Berat</option>
-                            </select>
+                            <!-- Dropdown Kondisi (Custom Alpine.js Popover matching Admin) -->
+                            @php
+                                $conditionOptions = [
+                                    '' => 'Semua Kondisi',
+                                    'baik' => 'Kondisi Baik',
+                                    'rusak_ringan' => 'Rusak Ringan',
+                                    'rusak_berat' => 'Rusak Berat'
+                                ];
+                                $selectedConditionLabel = $conditionOptions[$filterCondition] ?? 'Semua Kondisi';
+                            @endphp
+                            <div x-data="{ open: false }" class="relative shrink-0" @click.outside="open = false" @keydown.escape.window="open = false">
+                                <button 
+                                    type="button" 
+                                    @click="open = !open" 
+                                    :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
+                                    class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                                >
+                                    <span class="truncate">{{ $selectedConditionLabel }}</span>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                        <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                            <i data-lucide="chevron-down" class="size-4"></i>
+                                        </span>
+                                    </div>
+                                </button>
+
+                                <!-- Custom Popover Menu -->
+                                <div 
+                                    x-show="open" 
+                                    x-cloak
+                                    x-transition:enter="transition ease-out duration-150"
+                                    x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                    x-transition:leave="transition ease-in duration-100"
+                                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                    x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                                    class="absolute right-0 top-full mt-1.5 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
+                                >
+                                    @foreach ($conditionOptions as $value => $label)
+                                        <button 
+                                            type="button" 
+                                            wire:click="$set('filterCondition', '{{ $value }}')" 
+                                            @click="open = false" 
+                                            class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCondition === (string)$value ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                        >
+                                            <span>{{ $label }}</span>
+                                            @if ((string)$filterCondition === (string)$value)
+                                                <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
+                                            @endif
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     @endif
                 </div>
