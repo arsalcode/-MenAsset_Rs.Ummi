@@ -500,11 +500,11 @@
                 </div>
             </div>
 
-            <!-- Tombol Beralih Role Khas Alkamart (Ganti ke Admin / Ganti ke Lapangan) -->
+            <!-- Tombol Beralih Role Khas Alkamart (Ganti ke Admin / Ganti ke Lapangan - Tanpa Background) -->
             @if (request()->routeIs('field'))
                 <a 
                     href="{{ route('dashboard') }}" 
-                    class="no-print h-9 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors shadow-2xs"
+                    class="no-print h-9 px-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
                     title="Beralih ke Dashboard Admin"
                 >
                     <i data-lucide="arrow-left-right" class="size-3.5 text-slate-500 dark:text-slate-400"></i>
@@ -513,7 +513,7 @@
             @else
                 <a 
                     href="{{ route('field') }}" 
-                    class="no-print h-9 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors shadow-2xs"
+                    class="no-print h-9 px-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-slate-700 dark:text-slate-200 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
                     title="Beralih ke Mode Lapangan"
                 >
                     <i data-lucide="arrow-left-right" class="size-3.5 text-slate-500 dark:text-slate-400"></i>
