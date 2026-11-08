@@ -19,7 +19,7 @@ class FieldAssetManagementTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('RS UMMI BOGOR');
-        $response->assertSee('Portal Lapangan');
+        $response->assertSee('Inspeksi Fisik');
         $response->assertSee('Kamera Pemindai QR Stiker');
     }
 

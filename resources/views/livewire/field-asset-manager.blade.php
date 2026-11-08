@@ -9,12 +9,7 @@
                 <i data-lucide="hospital" class="size-6 text-white"></i>
             </div>
             <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
-                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20 dark:border-emerald-700/40">
-                        Portal Lapangan & Ruangan
-                    </span>
-                </div>
+                <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
                 <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Inspeksi Fisik, Pemindaian QR & Pelaporan Kerusakan Alat Medis</span>
             </div>
         </div>
