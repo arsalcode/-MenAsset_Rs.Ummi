@@ -370,7 +370,7 @@
                                 type="button" 
                                 @click="open = !open" 
                                 :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                                class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $selectedLocationId ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                                class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-200 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs"
                             >
                                 <span class="truncate max-w-[200px]">{{ $selectedLocationName }}</span>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
@@ -488,17 +488,17 @@
                         @endif
                     </div>
 
-                    <!-- Group 3 (Kanan): Tombol Refresh Segarkan Data -->
+                    <!-- Group 3 (Kanan): Tombol Refresh Segarkan Data (Tanpa Kotak Border Persis Admin) -->
                     <div class="flex items-center gap-1 shrink-0">
                         <div class="relative group z-20 hover:z-50">
                             <button 
                                 type="button" 
                                 wire:click="refreshData" 
-                                class="size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0 border border-slate-200 dark:border-slate-200 bg-white dark:bg-slate-900 shadow-xs"
+                                class="size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
                                 title="Segarkan Data"
                                 aria-label="Segarkan Data"
                             >
-                                <i data-lucide="rotate-cw" class="size-4.5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
+                                <i data-lucide="rotate-cw" class="size-5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
                             </button>
                             <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
                                 Segarkan Data
@@ -508,36 +508,42 @@
                     </div>
                 </div>
 
-                <!-- Ringkasan Statistik Ruangan Terpilih -->
+                <!-- Ringkasan Statistik Ruangan Terpilih (Persis Kartu Admin Alkamart) -->
                 @if ($selectedLocationId)
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-                            <div>
-                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Total Alat di Ruangan</span>
-                                <span class="text-lg font-extrabold text-slate-900 dark:text-slate-100">{{ $roomStats['total'] }} Unit</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Card 1: Total Alat di Ruangan -->
+                        <div class="report-card green">
+                            <div class="report-icon">
+                                <i data-lucide="package" class="size-7 text-white"></i>
                             </div>
-                            <div class="size-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
-                                <i data-lucide="package" class="size-5"></i>
-                            </div>
-                        </div>
-
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-                            <div>
-                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Kondisi Baik & Siap Pakai</span>
-                                <span class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">{{ $roomStats['ready'] }} Unit</span>
-                            </div>
-                            <div class="size-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
-                                <i data-lucide="check-circle-2" class="size-5"></i>
+                            <div class="report-info">
+                                <span class="report-label">Total Alat di Ruangan</span>
+                                <h3 class="report-amount">{{ $roomStats['total'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
+                                <span class="report-sublabel">Terdata di {{ $currentSelectedLocation?->name ?? 'Ruangan' }}</span>
                             </div>
                         </div>
 
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
-                            <div>
-                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Perlu Perbaikan / Servis</span>
-                                <span class="text-lg font-extrabold text-rose-600 dark:text-rose-400">{{ $roomStats['maintenance'] }} Unit</span>
+                        <!-- Card 2: Kondisi Baik & Siap Pakai -->
+                        <div class="report-card green">
+                            <div class="report-icon">
+                                <i data-lucide="check-circle-2" class="size-7 text-white"></i>
                             </div>
-                            <div class="size-10 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 flex items-center justify-center">
-                                <i data-lucide="wrench" class="size-5"></i>
+                            <div class="report-info">
+                                <span class="report-label">Kondisi Baik & Siap Pakai</span>
+                                <h3 class="report-amount text-emerald-700 dark:text-emerald-400">{{ $roomStats['ready'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
+                                <span class="report-sublabel">{{ $roomStats['total'] > 0 ? round(($roomStats['ready'] / $roomStats['total']) * 100, 1) : 0 }}% alat laik pakai & prima</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Perlu Perbaikan / Servis -->
+                        <div class="report-card green">
+                            <div class="report-icon">
+                                <i data-lucide="wrench" class="size-7 text-white"></i>
+                            </div>
+                            <div class="report-info">
+                                <span class="report-label">Perlu Perbaikan / Servis</span>
+                                <h3 class="report-amount text-rose-600 dark:text-rose-400">{{ $roomStats['maintenance'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
+                                <span class="report-sublabel">Butuh perhatian teknisi IPSRS</span>
                             </div>
                         </div>
                     </div>
