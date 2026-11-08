@@ -20,8 +20,8 @@ class FieldAssetManagementTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('RS UMMI BOGOR');
-        $response->assertSee('Portal Teknisi');
-        $response->assertSee('Pemindai Stiker QR Alat Medis');
+        $response->assertSee('Portal Lapangan');
+        $response->assertSee('Kamera Pemindai QR Stiker');
     }
 
     public function test_field_tabs_navigation_switches_views(): void
@@ -33,7 +33,7 @@ class FieldAssetManagementTest extends TestCase
             ->assertSee('Semua Ruangan')
             ->call('setTab', 'create')
             ->assertSet('activeTab', 'create')
-            ->assertSee('Input Alat Medis Baru');
+            ->assertSee('Formulir Pendaftaran Alat Medis Lapangan');
     }
 
     public function test_can_auto_generate_asset_code_based_on_category(): void
