@@ -37,6 +37,10 @@ class FieldAssetManager extends Component
     public string $report_type = 'perbaikan';
     public string $report_reporter = 'Petugas Ruangan';
 
+    // Professional Success Pop-up Modal (Konfirmasi Tiket Resmi)
+    public bool $isSuccessModalOpen = false;
+    public ?array $submittedTicket = null;
+
     // Feedback Flash Alert
     public ?string $feedbackMessage = null;
     public string $feedbackType = 'success';
@@ -165,7 +169,7 @@ class FieldAssetManager extends Component
         ]);
 
         // Buat tiket log pemeliharaan untuk Admin/Teknisi IPSRS
-        MaintenanceLog::create([
+        $log = MaintenanceLog::create([
             'asset_id' => $this->selectedAsset->id,
             'type' => $this->report_type,
             'maintenance_date' => now(),
@@ -177,8 +181,35 @@ class FieldAssetManager extends Component
 
         $this->isReportModalOpen = false;
         $this->selectedAsset->refresh();
+
+        // Siapkan data tiket untuk Pop-up Profesional
+        $ticketCode = 'TKT-' . date('Ymd') . '-' . str_pad((string) $log->id, 3, '0', STR_PAD_LEFT);
+        $this->submittedTicket = [
+            'ticket_id' => $ticketCode,
+            'asset_id' => $this->selectedAsset->id,
+            'asset_name' => $this->selectedAsset->name,
+            'asset_code' => $this->selectedAsset->asset_code,
+            'location' => $this->selectedAsset->location->name ?? 'Ruangan RS Ummi',
+            'condition' => $this->report_condition,
+            'notes' => $this->report_notes,
+            'reporter' => $this->report_reporter,
+            'time' => now()->translatedFormat('d M Y, H:i') . ' WIB',
+        ];
+        $this->isSuccessModalOpen = true;
+
         $this->feedbackMessage = "Laporan kerusakan untuk [{$this->selectedAsset->name}] berhasil dikirim ke Admin IPSRS!";
         $this->feedbackType = 'success';
+    }
+
+    public function closeSuccessModal(): void
+    {
+        $this->isSuccessModalOpen = false;
+    }
+
+    public function viewSubmittedTicket(): void
+    {
+        $this->isSuccessModalOpen = false;
+        $this->setTab('reports');
     }
 
     /**

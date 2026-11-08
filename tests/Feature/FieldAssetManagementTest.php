@@ -85,7 +85,11 @@ class FieldAssetManagementTest extends TestCase
             ->set('report_reporter', 'Ns. Ahmad (Ruang IGD)')
             ->call('submitDefectReport')
             ->assertHasNoErrors()
-            ->assertSet('isReportModalOpen', false);
+            ->assertSet('isReportModalOpen', false)
+            ->assertSet('isSuccessModalOpen', true)
+            ->assertSee('Laporan Kerusakan Berhasil Dikirim!')
+            ->call('closeSuccessModal')
+            ->assertSet('isSuccessModalOpen', false);
 
         $asset->refresh();
         $this->assertEquals('rusak_ringan', $asset->condition);

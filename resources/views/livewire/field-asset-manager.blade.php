@@ -796,4 +796,105 @@
             </div>
         </div>
     @endif
+
+    <!-- ========================================================================= -->
+    <!-- MODAL POP-UP PROFESIONAL: KONFIRMASI TIKET KERUSAKAN RESMI TERBIT -->
+    <!-- ========================================================================= -->
+    @if ($isSuccessModalOpen && $submittedTicket)
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200 relative overflow-hidden">
+                <!-- Header Sukses dengan Icon & Animasi -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="size-16 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-900/10 mb-3 ring-8 ring-emerald-50 dark:ring-emerald-950/40">
+                        <i data-lucide="check-circle-2" class="size-9 stroke-[2.5]"></i>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-500/30">
+                        Tiket Resmi Terbit
+                    </span>
+                    <h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-100 mt-2">
+                        Laporan Kerusakan Berhasil Dikirim!
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        Tiket telah diteruskan ke antrean kerja Tim Teknisi IPSRS RS Ummi Bogor.
+                    </p>
+                </div>
+
+                <!-- Kartu Bukti / Struk Tiket Digital -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 space-y-3 text-xs">
+                    <!-- Baris Nomor Tiket & Badge Status -->
+                    <div class="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-700/80 pb-2.5">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">No. Tiket Pengaduan</span>
+                            <span class="font-mono font-extrabold text-emerald-700 dark:text-emerald-400 text-sm tracking-wide">
+                                {{ $submittedTicket['ticket_id'] }}
+                            </span>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 flex items-center gap-1.5">
+                            <span class="size-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span>Menunggu Tindakan</span>
+                        </span>
+                    </div>
+
+                    <!-- Info Alat & Ruangan -->
+                    <div class="grid grid-cols-2 gap-2 text-[11px]">
+                        <div>
+                            <span class="text-slate-400 block text-[10px]">Alat Medis</span>
+                            <strong class="text-slate-800 dark:text-slate-200 block truncate">{{ $submittedTicket['asset_name'] }}</strong>
+                            <span class="font-mono text-[10px] text-slate-500">{{ $submittedTicket['asset_code'] }}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block text-[10px]">Ruangan & Waktu</span>
+                            <strong class="text-slate-800 dark:text-slate-200 block truncate">{{ $submittedTicket['location'] }}</strong>
+                            <span class="text-[10px] text-slate-400">{{ $submittedTicket['time'] }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Tingkat Kerusakan & Gejala Masalah -->
+                    <div class="pt-2 border-t border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="text-slate-400">Tingkat Kerusakan:</span>
+                            <span class="font-bold {{ $submittedTicket['condition'] === 'rusak_berat' ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400' }}">
+                                {{ strtoupper(str_replace('_', ' ', $submittedTicket['condition'])) }}
+                            </span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900/80 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800 text-[11px] text-slate-700 dark:text-slate-300 italic">
+                            "{{ $submittedTicket['notes'] }}"
+                        </div>
+                    </div>
+
+                    <!-- Nama Pelapor -->
+                    <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/80 dark:border-slate-700/80">
+                        <span>Petugas Pelapor:</span>
+                        <strong class="text-slate-700 dark:text-slate-300">{{ $submittedTicket['reporter'] }}</strong>
+                    </div>
+                </div>
+
+                <!-- Alert Pengamanan Pasien -->
+                <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 flex items-start gap-2 text-[11px] text-amber-900 dark:text-amber-200">
+                    <i data-lucide="shield-alert" class="size-4 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5"></i>
+                    <span>Status fisik alat telah otomatis dikunci menjadi <strong>Dalam Pemeliharaan</strong> agar tidak digunakan pada pasien hingga selesai diperbaiki.</span>
+                </div>
+
+                <!-- Tombol Tindakan Pop-up -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                    <button 
+                        type="button" 
+                        wire:click="viewSubmittedTicket" 
+                        class="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-emerald-900/20"
+                    >
+                        <i data-lucide="clipboard-list" class="size-4"></i>
+                        <span>Pantau Tiket Saya</span>
+                    </button>
+
+                    <button 
+                        type="button" 
+                        wire:click="closeSuccessModal" 
+                        class="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                        <span>Selesai & Tutup</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
