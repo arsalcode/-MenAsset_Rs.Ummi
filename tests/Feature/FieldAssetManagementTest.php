@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Livewire\FieldAssetManager;
 use App\Models\Asset;
-use App\Models\Category;
 use App\Models\Location;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Livewire\Livewire;
@@ -28,24 +27,12 @@ class FieldAssetManagementTest extends TestCase
     {
         Livewire::test(FieldAssetManager::class)
             ->assertSet('activeTab', 'scan')
-            ->call('setTab', 'list')
-            ->assertSet('activeTab', 'list')
-            ->assertSee('Semua Ruangan')
-            ->call('setTab', 'create')
-            ->assertSet('activeTab', 'create')
-            ->assertSee('Formulir Pendaftaran Alat Medis Lapangan');
-    }
-
-    public function test_can_auto_generate_asset_code_based_on_category(): void
-    {
-        $category = Category::where('code', 'MED')->first();
-
-        Livewire::test(FieldAssetManager::class)
-            ->set('category_id', $category->id)
-            ->call('generateAssetCode')
-            ->assertSet('asset_code', function ($code) {
-                return str_starts_with($code, 'MED-');
-            });
+            ->call('setTab', 'room')
+            ->assertSet('activeTab', 'room')
+            ->assertSee('Pilih Ruangan Pemeriksaan')
+            ->call('setTab', 'reports')
+            ->assertSet('activeTab', 'reports')
+            ->assertSee('Pusat Pantau Tiket Laporan Kerusakan');
     }
 
     public function test_field_staff_can_scan_existing_qr_code_to_view_detail(): void
@@ -55,42 +42,35 @@ class FieldAssetManagementTest extends TestCase
         Livewire::test(FieldAssetManager::class)
             ->call('handleScannedCode', $asset->asset_code)
             ->assertSet('selectedAssetId', $asset->id)
-            ->assertSet('isDetailOpen', true)
             ->assertSee($asset->name);
     }
 
-    public function test_scanning_unregistered_code_redirects_to_create_form_with_code_prefilled(): void
+    public function test_scanning_unregistered_code_shows_danger_alert(): void
     {
-        $newCode = 'NEW-ALAT-999';
+        $newCode = 'UNKNOWN-ALAT-999';
 
         Livewire::test(FieldAssetManager::class)
             ->call('handleScannedCode', $newCode)
-            ->assertSet('activeTab', 'create')
-            ->assertSet('asset_code', $newCode);
+            ->assertSet('selectedAssetId', null)
+            ->assertSet('feedbackType', 'danger');
     }
 
-    public function test_field_staff_can_create_new_asset_from_mobile_form(): void
+    public function test_field_staff_can_confirm_normal_condition_checklist(): void
     {
-        $category = Category::first();
-        $location = Location::first();
-        $code = 'FLD-' . uniqid();
+        $asset = Asset::first();
 
         Livewire::test(FieldAssetManager::class)
-            ->set('activeTab', 'create')
-            ->set('asset_code', $code)
-            ->set('name', 'Tensimeter Digital Mobile Lapangan')
-            ->set('category_id', $category->id)
-            ->set('location_id', $location->id)
-            ->set('brand', 'Omron')
-            ->set('model_type', 'HEM-7120')
-            ->set('condition', 'baik')
-            ->set('status', 'aktif')
-            ->call('saveAsset')
-            ->assertHasNoErrors();
+            ->call('confirmNormalCondition', $asset->id)
+            ->assertSet('feedbackType', 'success');
 
-        $this->assertDatabaseHas('assets', [
-            'asset_code' => $code,
-            'name' => 'Tensimeter Digital Mobile Lapangan',
+        $asset->refresh();
+        $this->assertEquals('baik', $asset->condition);
+        $this->assertEquals('aktif', $asset->status);
+
+        $this->assertDatabaseHas('maintenance_logs', [
+            'asset_id' => $asset->id,
+            'type' => 'pemeliharaan_rutin',
+            'status' => 'selesai',
         ]);
     }
 
@@ -99,11 +79,10 @@ class FieldAssetManagementTest extends TestCase
         $asset = Asset::first();
 
         Livewire::test(FieldAssetManager::class)
-            ->call('openDetail', $asset->id)
-            ->call('openReportModal')
+            ->call('openReportModal', $asset->id)
             ->set('report_condition', 'rusak_ringan')
             ->set('report_notes', 'Kabel sensor mengalami korsleting dan monitor kedip-kedip.')
-            ->set('report_technician', 'Ns. Ahmad Lapangan')
+            ->set('report_reporter', 'Ns. Ahmad (Ruang IGD)')
             ->call('submitDefectReport')
             ->assertHasNoErrors()
             ->assertSet('isReportModalOpen', false);
@@ -116,7 +95,17 @@ class FieldAssetManagementTest extends TestCase
             'asset_id' => $asset->id,
             'status' => 'dalam_proses',
             'notes' => 'Laporan Lapangan: Kabel sensor mengalami korsleting dan monitor kedip-kedip.',
+            'vendor_technician' => 'Ns. Ahmad (Ruang IGD)',
         ]);
     }
-}
 
+    public function test_field_staff_can_filter_assets_by_room(): void
+    {
+        $location = Location::has('assets')->first() ?? Location::first();
+
+        Livewire::test(FieldAssetManager::class)
+            ->set('activeTab', 'room')
+            ->set('selectedLocationId', (string) $location->id)
+            ->assertSee($location->name);
+    }
+}

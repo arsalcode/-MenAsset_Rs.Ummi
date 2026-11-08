@@ -6,7 +6,6 @@ use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\MaintenanceLog;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,15 +14,18 @@ class FieldAssetManager extends Component
 {
     use WithPagination, WithFileUploads;
 
-    // Active Mobile View: 'scan' (Pemindai QR), 'list' (Katalog Ruangan), 'create' (Input Baru)
+    // Active View Tabs: 'scan' (Scan QR & Cek Alat), 'room' (Ceklis Ruangan), 'reports' (Riwayat Laporan Kerusakan)
     public string $activeTab = 'scan';
 
-    // Search & Filter
+    // Room Checklist Filters
     public string $search = '';
-    public string $filterLocation = '';
+    public string $selectedLocationId = '';
     public string $filterCondition = '';
 
-    // Asset Detail & Bottom Sheet
+    // Scanned / Manual Input Code
+    public string $manualCode = '';
+
+    // Asset Detail Inspection
     public ?int $selectedAssetId = null;
     public ?Asset $selectedAsset = null;
     public bool $isDetailOpen = false;
@@ -33,51 +35,22 @@ class FieldAssetManager extends Component
     public string $report_notes = '';
     public string $report_condition = 'rusak_ringan';
     public string $report_type = 'perbaikan';
-    public string $report_technician = '';
+    public string $report_reporter = 'Petugas Ruangan';
 
-    // Create New Asset Form Fields (Mobile Friendly)
-    public string $asset_code = '';
-    public string $name = '';
-    public string $category_id = '';
-    public string $location_id = '';
-    public string $brand = '';
-    public string $model_type = '';
-    public string $serial_number = '';
-    public string $condition = 'baik';
-    public string $status = 'aktif';
-    public $purchase_cost = 0;
-    public $image = null;
-    public string $notes = '';
-
-    // Feedback Alert
+    // Feedback Flash Alert
     public ?string $feedbackMessage = null;
     public string $feedbackType = 'success';
 
-    protected function rules(): array
+    public function mount(): void
     {
-        return [
-            'asset_code' => ['required', 'string', 'max:50', 'unique:assets,asset_code'],
-            'name' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'location_id' => ['required', 'exists:locations,id'],
-            'brand' => ['nullable', 'string', 'max:100'],
-            'model_type' => ['nullable', 'string', 'max:100'],
-            'serial_number' => ['nullable', 'string', 'max:100'],
-            'purchase_cost' => ['nullable', 'numeric', 'min:0'],
-            'condition' => ['required', 'in:baik,rusak_ringan,rusak_berat'],
-            'status' => ['required', 'in:aktif,pemeliharaan,afkir'],
-            'image' => ['nullable', 'image', 'max:5120'],
-            'notes' => ['nullable', 'string', 'max:1000'],
-        ];
+        // Default pilih ruangan pertama jika ada untuk Ceklis Ruangan
+        if (empty($this->selectedLocationId)) {
+            $firstLoc = Location::has('assets')->first() ?? Location::first();
+            if ($firstLoc) {
+                $this->selectedLocationId = (string) $firstLoc->id;
+            }
+        }
     }
-
-    protected array $messages = [
-        'asset_code.required' => 'Kode aset wajib diisi.',
-        'asset_code.unique' => 'Kode aset ini sudah terdaftar di sistem.',
-        'name.required' => 'Nama alat medis wajib diisi.',
-        'category_id.required' => 'Pilih kategori alat.',
-        'location_id.required' => 'Pilih ruangan penempatan alat.',
-    ];
 
     public function setTab(string $tab): void
     {
@@ -87,56 +60,40 @@ class FieldAssetManager extends Component
     }
 
     /**
-     * Otomatis generate kode aset baru berdasarkan kategori
+     * Tangani hasil pemindaian kamera QR Code atau input manual
      */
-    public function generateAssetCode(): void
+    public function handleScannedCode(?string $code = null): void
     {
-        if (! $this->category_id) {
-            $prefix = 'MED';
-        } else {
-            $cat = Category::find($this->category_id);
-            $prefix = $cat ? $cat->code : 'MED';
+        $targetCode = trim($code ?: $this->manualCode);
+
+        if (empty($targetCode)) {
+            $this->feedbackMessage = 'Silakan masukkan atau scan kode aset terlebih dahulu.';
+            $this->feedbackType = 'warning';
+            return;
         }
 
-        $count = Asset::where('asset_code', 'LIKE', "{$prefix}-%")->count() + 1;
-        $this->asset_code = sprintf('%s-%03d', $prefix, $count);
-    }
-
-    public function updatedCategoryId(): void
-    {
-        if (empty($this->asset_code)) {
-            $this->generateAssetCode();
-        }
-    }
-
-    /**
-     * Tangani hasil scan kamera QR Code
-     */
-    public function handleScannedCode(string $code): void
-    {
-        $cleanCode = trim($code);
-        
-        // Cari berdasarkan kode aset atau nomor seri
         $asset = Asset::with(['category', 'location', 'maintenanceLogs' => fn($q) => $q->latest('maintenance_date')])
-            ->where('asset_code', $cleanCode)
-            ->orWhere('serial_number', $cleanCode)
+            ->where('asset_code', $targetCode)
+            ->orWhere('serial_number', $targetCode)
             ->first();
 
         if ($asset) {
             $this->selectedAssetId = $asset->id;
             $this->selectedAsset = $asset;
-            $this->isDetailOpen = true;
-            $this->feedbackMessage = "Alat medis [{$asset->name}] berhasil terdeteksi!";
+            $this->manualCode = $asset->asset_code;
+            $this->feedbackMessage = "Alat medis [{$asset->name}] berhasil ditemukan!";
             $this->feedbackType = 'success';
         } else {
-            // Jika belum ada, tawarkan pendaftaran instan
-            $this->asset_code = $cleanCode;
-            $this->feedbackMessage = "Kode [{$cleanCode}] belum terdaftar. Formulir pendaftaran disiapkan.";
-            $this->feedbackType = 'warning';
-            $this->activeTab = 'create';
+            $this->selectedAssetId = null;
+            $this->selectedAsset = null;
+            $this->feedbackMessage = "Kode [{$targetCode}] tidak ditemukan dalam inventaris RS Ummi. Pastikan stiker QR resmi dari Admin IPSRS.";
+            $this->feedbackType = 'danger';
         }
     }
 
+    /**
+     * Buka Modal Detail Alat Medis
+     */
     public function openDetail(int $id): void
     {
         $asset = Asset::with(['category', 'location', 'maintenanceLogs' => fn($q) => $q->latest('maintenance_date')])->find($id);
@@ -150,17 +107,32 @@ class FieldAssetManager extends Component
     public function closeDetail(): void
     {
         $this->isDetailOpen = false;
-        $this->selectedAssetId = null;
-        $this->selectedAsset = null;
     }
 
-    public function openReportModal(): void
+    /**
+     * Buka Modal Lapor Kerusakan
+     */
+    public function openReportModal(?int $assetId = null): void
     {
+        if ($assetId) {
+            $asset = Asset::with(['category', 'location'])->find($assetId);
+            if ($asset) {
+                $this->selectedAssetId = $asset->id;
+                $this->selectedAsset = $asset;
+            }
+        }
+
+        if (! $this->selectedAsset) {
+            $this->feedbackMessage = 'Pilih atau scan alat medis terlebih dahulu sebelum melaporkan kerusakan.';
+            $this->feedbackType = 'warning';
+            return;
+        }
+
         $this->isReportModalOpen = true;
         $this->report_notes = '';
         $this->report_condition = 'rusak_ringan';
         $this->report_type = 'perbaikan';
-        $this->report_technician = auth()->user()->name ?? 'Petugas Ruangan';
+        $this->report_reporter = 'Perawat / Petugas Ruangan';
     }
 
     public function closeReportModal(): void
@@ -169,7 +141,7 @@ class FieldAssetManager extends Component
     }
 
     /**
-     * Kirim Laporan Kerusakan dari Lapangan ke Tim IPSRS
+     * Kirim Tiket Laporan Kerusakan ke Meja Kerja Tim IPSRS
      */
     public function submitDefectReport(): void
     {
@@ -180,119 +152,133 @@ class FieldAssetManager extends Component
         $this->validate([
             'report_notes' => ['required', 'string', 'min:3', 'max:500'],
             'report_condition' => ['required', 'in:rusak_ringan,rusak_berat'],
+            'report_reporter' => ['required', 'string', 'max:100'],
         ], [
-            'report_notes.required' => 'Mohon jelaskan gejala kerusakan atau kendala alat.',
+            'report_notes.required' => 'Mohon jelaskan gejala kerusakan atau kendala fisik alat.',
+            'report_reporter.required' => 'Nama pelapor/petugas ruangan wajib diisi.',
         ]);
 
-        // Perbarui kondisi aset
+        // Perbarui kondisi fisik alat menjadi rusak & status menjadi pemeliharaan
         $this->selectedAsset->update([
             'condition' => $this->report_condition,
             'status' => 'pemeliharaan',
         ]);
 
-        // Catat riwayat log servis
+        // Buat tiket log pemeliharaan untuk Admin/Teknisi IPSRS
         MaintenanceLog::create([
             'asset_id' => $this->selectedAsset->id,
             'type' => $this->report_type,
             'maintenance_date' => now(),
             'cost' => 0,
-            'vendor_technician' => $this->report_technician ?: 'Petugas Ruangan RS Ummi',
+            'vendor_technician' => $this->report_reporter,
             'status' => 'dalam_proses',
             'notes' => 'Laporan Lapangan: ' . $this->report_notes,
         ]);
 
         $this->isReportModalOpen = false;
         $this->selectedAsset->refresh();
-        $this->feedbackMessage = 'Laporan kerusakan berhasil dikirim! Status alat diperbarui menjadi Dalam Pemeliharaan.';
+        $this->feedbackMessage = "Laporan kerusakan untuk [{$this->selectedAsset->name}] berhasil dikirim ke Admin IPSRS!";
         $this->feedbackType = 'success';
     }
 
     /**
-     * Update kondisi alat secara cepat (misal setelah dicek berfungsi normal kembali)
+     * Verifikasi Fisik Harian: Konfirmasi Alat Normal & Siap Pakai
      */
-    public function quickSetCondition(string $condition): void
+    public function confirmNormalCondition(int $assetId): void
     {
-        if (! $this->selectedAsset) {
+        $asset = Asset::find($assetId);
+        if (! $asset) {
             return;
         }
 
-        $this->selectedAsset->update([
-            'condition' => $condition,
-            'status' => $condition === 'baik' ? 'aktif' : 'pemeliharaan',
+        // Update status alat menjadi aktif dan kondisi baik
+        $asset->update([
+            'condition' => 'baik',
+            'status' => 'aktif',
         ]);
 
-        $this->selectedAsset->refresh();
-        $this->feedbackMessage = 'Status kondisi alat berhasil diperbarui menjadi ' . strtoupper(str_replace('_', ' ', $condition)) . '!';
+        // Catat inspeksi rutin
+        MaintenanceLog::create([
+            'asset_id' => $asset->id,
+            'type' => 'pemeliharaan_rutin',
+            'maintenance_date' => now(),
+            'cost' => 0,
+            'vendor_technician' => 'Inspeksi Ruangan',
+            'status' => 'selesai',
+            'notes' => 'Ceklis Lapangan: Fisik alat lengkap, normal, dan siap pakai.',
+        ]);
+
+        if ($this->selectedAsset && $this->selectedAsset->id === $assetId) {
+            $this->selectedAsset->refresh();
+        }
+
+        $this->feedbackMessage = "✅ Fisik alat [{$asset->name}] terverifikasi BAIK dan Siap Pakai!";
         $this->feedbackType = 'success';
     }
 
-    /**
-     * Simpan pendaftaran alat medis baru dari lapangan
-     */
-    public function saveAsset(): void
+    public function updatedSelectedLocationId(): void
     {
-        $validated = $this->validate();
+        $this->resetPage();
+    }
 
-        $imagePath = null;
-        if ($this->image) {
-            $imagePath = $this->image->store('assets', 'public');
-        }
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
 
-        $asset = Asset::create([
-            'asset_code' => strtoupper(trim($validated['asset_code'])),
-            'name' => trim($validated['name']),
-            'category_id' => $validated['category_id'],
-            'location_id' => $validated['location_id'],
-            'brand' => $validated['brand'] ?: null,
-            'model_type' => $validated['model_type'] ?: null,
-            'serial_number' => $validated['serial_number'] ?: null,
-            'purchase_date' => now()->toDateString(),
-            'purchase_cost' => $validated['purchase_cost'] ?: 0,
-            'condition' => $validated['condition'],
-            'status' => $validated['status'],
-            'image_path' => $imagePath,
-            'notes' => $validated['notes'] ?: null,
-        ]);
-
-        // Reset form
-        $this->reset(['asset_code', 'name', 'category_id', 'location_id', 'brand', 'model_type', 'serial_number', 'image', 'notes']);
-        $this->condition = 'baik';
-        $this->status = 'aktif';
-        $this->purchase_cost = 0;
-
-        $this->feedbackMessage = "Alat medis [{$asset->name}] berhasil didaftarkan di sistem inventaris!";
-        $this->feedbackType = 'success';
-
-        // Langsung tampilkan detail alat yang baru diinput
-        $this->openDetail($asset->id);
+    public function updatedFilterCondition(): void
+    {
+        $this->resetPage();
     }
 
     public function render()
     {
-        $categories = Category::orderBy('name')->get();
         $locations = Location::withCount('assets')->orderBy('name')->get();
 
-        $assetsQuery = Asset::with(['category', 'location'])
-            ->when($this->search, function ($q) {
-                $term = "%{$this->search}%";
-                $q->where(function ($sub) use ($term) {
-                    $sub->where('name', 'LIKE', $term)
-                        ->orWhere('asset_code', 'LIKE', $term)
-                        ->orWhere('serial_number', 'LIKE', $term)
-                        ->orWhere('brand', 'LIKE', $term);
-                });
-            })
-            ->when($this->filterLocation, fn($q) => $q->where('location_id', $this->filterLocation))
-            ->when($this->filterCondition, fn($q) => $q->where('condition', $this->filterCondition))
-            ->latest('updated_at');
+        // Query untuk Tab 2: Ceklis Ruangan
+        $roomAssets = null;
+        $roomStats = [
+            'total' => 0,
+            'ready' => 0,
+            'maintenance' => 0,
+        ];
 
-        $assets = $assetsQuery->paginate(8);
+        if ($this->selectedLocationId) {
+            $roomQuery = Asset::with(['category', 'location'])
+                ->where('location_id', $this->selectedLocationId)
+                ->when($this->search, function ($q) {
+                    $term = "%{$this->search}%";
+                    $q->where(function ($sub) use ($term) {
+                        $sub->where('name', 'LIKE', $term)
+                            ->orWhere('asset_code', 'LIKE', $term)
+                            ->orWhere('serial_number', 'LIKE', $term)
+                            ->orWhere('brand', 'LIKE', $term);
+                    });
+                })
+                ->when($this->filterCondition, fn($q) => $q->where('condition', $this->filterCondition))
+                ->latest('updated_at');
+
+            $allInRoom = Asset::where('location_id', $this->selectedLocationId)->get();
+            $roomStats['total'] = $allInRoom->count();
+            $roomStats['ready'] = $allInRoom->where('condition', 'baik')->where('status', 'aktif')->count();
+            $roomStats['maintenance'] = $allInRoom->where(fn($a) => $a->condition !== 'baik' || $a->status === 'pemeliharaan')->count();
+
+            $roomAssets = $roomQuery->paginate(12);
+        }
+
+        // Query untuk Tab 3: Riwayat & Status Tiket Laporan Lapangan
+        $recentReports = MaintenanceLog::with(['asset.location', 'asset.category'])
+            ->where('notes', 'LIKE', 'Laporan Lapangan%')
+            ->orWhere('type', 'perbaikan')
+            ->latest('maintenance_date')
+            ->take(20)
+            ->get();
 
         return view('livewire.field-asset-manager', [
-            'categories' => $categories,
             'locations' => $locations,
-            'assets' => $assets,
+            'roomAssets' => $roomAssets,
+            'roomStats' => $roomStats,
+            'recentReports' => $recentReports,
         ]);
     }
 }
-

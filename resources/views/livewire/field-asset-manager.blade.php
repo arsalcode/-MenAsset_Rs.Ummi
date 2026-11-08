@@ -1,5 +1,7 @@
 <div class="w-full min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col">
-    <!-- ================= TOP HEADER PORTAL LAPANGAN ================= -->
+    <!-- ========================================================================= -->
+    <!-- TOP HEADER PORTAL LAPANGAN -->
+    <!-- ========================================================================= -->
     <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
         <!-- Brand & Subtitle -->
         <div class="flex items-center gap-3.5">
@@ -10,33 +12,24 @@
                 <div class="flex items-center gap-2">
                     <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
                     <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20 dark:border-emerald-700/40">
-                        Portal Lapangan & Teknisi
+                        Portal Lapangan & Ruangan
                     </span>
                 </div>
-                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Sistem Inventarisasi, Pemindaian QR & Pemeriksaan Fisik Alat Medis</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Inspeksi Fisik, Pemindaian QR & Pelaporan Kerusakan Alat Medis</span>
             </div>
         </div>
 
-        <!-- Header Actions: Link ke Dashboard Admin & Saklar Tema -->
-        <div class="flex items-center gap-2.5">
-            <a 
-                href="{{ route('dashboard') }}" 
-                class="no-print h-9 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 inline-flex items-center gap-1.5 transition-colors shadow-2xs"
-                title="Beralih ke Dashboard Utama SIMRS"
-            >
-                <i data-lucide="layout-dashboard" class="size-3.5 text-emerald-600 dark:text-emerald-400"></i>
-                <span class="hidden sm:inline">Dashboard Admin SIMRS</span>
-            </a>
-
-            <!-- Saklar Mode Terang / Gelap (Hijau Emerald) -->
+        <!-- Aksi Header: Mode Gelap Hijau & Link ke Dashboard Admin -->
+        <div class="flex items-center gap-3">
+            <!-- Theme Toggle Hijau Emerald -->
             <button 
                 type="button" 
                 onclick="toggleAppTheme()" 
-                class="no-print p-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none"
+                class="p-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800"
                 title="Ganti Mode Tampilan (Terang / Gelap)"
-                aria-label="Ganti Mode Tampilan (Terang / Gelap)"
             >
-                <svg class="size-6 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="size-5 text-emerald-600 dark:text-emerald-400 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
                     <line x1="12" y1="1" x2="12" y2="3"></line>
                     <line x1="12" y1="21" x2="12" y2="23"></line>
                     <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
@@ -45,70 +38,97 @@
                     <line x1="21" y1="12" x2="23" y2="12"></line>
                     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    <circle cx="12" cy="12" r="6" stroke-width="2"></circle>
-                    <path d="M12 6a6 6 0 0 0 6 6 6 6 0 0 1-6-6z" fill="currentColor" stroke="none"></path>
                 </svg>
             </button>
+
+            <!-- Navigasi ke Dashboard Admin -->
+            <a 
+                href="/" 
+                class="px-3.5 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:border-emerald-600 hover:text-emerald-700 dark:hover:border-emerald-500 dark:hover:text-emerald-400 bg-white dark:bg-slate-800 transition-colors flex items-center gap-1.5"
+            >
+                <i data-lucide="layout-dashboard" class="size-4"></i>
+                <span class="hidden sm:inline">Dashboard Admin</span>
+            </a>
         </div>
     </header>
 
-    <!-- ================= SUB-NAV TABS PORTAL LAPANGAN (WEB STYLE) ================= -->
-    <div class="no-print admin-tab-nav">
-        <!-- Tab 1: Pemindai QR & Cek Alat -->
-        <button 
-            type="button" 
-            wire:click="setTab('scan')" 
-            class="admin-tab-btn {{ $activeTab === 'scan' ? 'active' : '' }}" 
-            title="Scan Stiker QR & Verifikasi Fisik"
-        >
-            <i data-lucide="qr-code" class="size-[18px]"></i>
-            <span class="tab-label">Scan QR & Cek Alat</span>
-        </button>
+    <!-- ========================================================================= -->
+    <!-- SUB-NAVIGASI TAB WEB KHUSUS LAPANGAN -->
+    <!-- ========================================================================= -->
+    <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-2 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+                <!-- Tab 1: Scan QR & Cek Alat -->
+                <button 
+                    type="button" 
+                    wire:click="setTab('scan')" 
+                    class="admin-tab-btn {{ $activeTab === 'scan' ? 'active' : '' }}" 
+                    title="Scan Stiker QR & Verifikasi Fisik"
+                >
+                    <i data-lucide="scan" class="size-4"></i>
+                    <span class="tab-label">Scan QR & Cek Alat</span>
+                </button>
 
-        <!-- Tab 2: Katalog Alat per Ruangan -->
-        <button 
-            type="button" 
-            wire:click="setTab('list')" 
-            class="admin-tab-btn {{ $activeTab === 'list' ? 'active' : '' }}" 
-            title="Katalog & Status Alat per Ruangan"
-        >
-            <i data-lucide="package" class="size-[18px]"></i>
-            <span class="tab-label">Katalog Alat Ruangan</span>
-        </button>
+                <!-- Tab 2: Ceklis Ruangan -->
+                <button 
+                    type="button" 
+                    wire:click="setTab('room')" 
+                    class="admin-tab-btn {{ $activeTab === 'room' ? 'active' : '' }}" 
+                    title="Ceklis & Inventaris Ruangan"
+                >
+                    <i data-lucide="door-open" class="size-4"></i>
+                    <span class="tab-label">Ceklis Ruangan</span>
+                </button>
 
-        <!-- Tab 3: Pendaftaran Alat Baru Lapangan -->
-        <button 
-            type="button" 
-            wire:click="setTab('create')" 
-            class="admin-tab-btn {{ $activeTab === 'create' ? 'active' : '' }}" 
-            title="Input & Daftarkan Alat Baru"
-        >
-            <i data-lucide="plus-circle" class="size-[18px]"></i>
-            <span class="tab-label">Input Alat Baru</span>
-        </button>
+                <!-- Tab 3: Tiket Laporan Lapangan -->
+                <button 
+                    type="button" 
+                    wire:click="setTab('reports')" 
+                    class="admin-tab-btn {{ $activeTab === 'reports' ? 'active' : '' }}" 
+                    title="Status Tiket Laporan Kerusakan"
+                >
+                    <i data-lucide="clipboard-list" class="size-4"></i>
+                    <span class="tab-label">Tiket Laporan Lapangan</span>
+                    @if (count($recentReports) > 0)
+                        <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                            {{ count($recentReports) }}
+                        </span>
+                    @endif
+                </button>
+            </div>
+
+            <!-- Petunjuk Peran Lapangan -->
+            <div class="hidden md:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                <span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Mode Pemeriksaan Aktif</span>
+            </div>
+        </div>
     </div>
 
-    <!-- Container Konten Luas (Web Layout Responsif) -->
-    <main class="flex-1 w-full max-w-7xl mx-auto p-6 space-y-6">
-        <!-- Flash Alert Notification -->
+    <!-- ========================================================================= -->
+    <!-- KONTEN UTAMA HALAMAN LAPANGAN -->
+    <!-- ========================================================================= -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+        <!-- Notifikasi Pesan Flash -->
         @if ($feedbackMessage)
-            <div class="p-4 rounded-xl flex items-center justify-between border shadow-xs transition-all {{ $feedbackType === 'danger' ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-200' : ($feedbackType === 'warning' ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-200' : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200') }}">
-                <div class="flex items-center gap-3 text-xs sm:text-sm">
-                    <i data-lucide="{{ $feedbackType === 'danger' ? 'alert-circle' : ($feedbackType === 'warning' ? 'triangle-alert' : 'check-circle-2') }}" class="size-5 shrink-0"></i>
-                    <span class="font-semibold">{{ $feedbackMessage }}</span>
+            <div class="p-3.5 rounded-xl border flex items-center justify-between gap-3 text-xs font-medium transition-all shadow-xs {{ $feedbackType === 'success' ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200' : ($feedbackType === 'warning' ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-200' : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-800 dark:text-rose-200') }}">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="{{ $feedbackType === 'success' ? 'check-circle' : ($feedbackType === 'warning' ? 'alert-triangle' : 'alert-circle') }}" class="size-4 shrink-0"></i>
+                    <span>{{ $feedbackMessage }}</span>
                 </div>
-                <button wire:click="$set('feedbackMessage', null)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
-                    <i data-lucide="x" class="size-4.5"></i>
+                <button wire:click="$set('feedbackMessage', null)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 cursor-pointer">
+                    <i data-lucide="x" class="size-4"></i>
                 </button>
             </div>
         @endif
 
         <!-- ========================================================================= -->
-        <!-- TAB 1: PEMINDAI KAMERA QR CODE & CEK KONDISI (WEB SPLIT LAYOUT) -->
+        <!-- TAB 1: SCAN QR & CEK ALAT MEDIS LANGSUNG (SPLIT VIEW) -->
         <!-- ========================================================================= -->
         @if ($activeTab === 'scan')
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <!-- Kolom Kiri (5 Kolom): Live Camera Viewport -->
+                <!-- Kolom Kiri (5 Kolom): Live Camera QR Scanner Viewport -->
                 <div 
                     x-data="{
                         html5QrCode: null,
@@ -137,7 +157,7 @@
                             ).then(() => {
                                 this.scanning = true;
                             }).catch(err => {
-                                this.scanError = 'Akses kamera tidak diizinkan atau tidak terdeteksi. Silakan aktifkan izin kamera atau gunakan pencarian kode manual.';
+                                this.scanError = 'Akses kamera tidak diizinkan atau tidak terdeteksi. Silakan aktifkan izin kamera atau gunakan pencarian kode manual di sisi kanan.';
                                 this.scanning = false;
                             });
                         },
@@ -161,7 +181,7 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400">Arahkan kamera ke stiker QR fisik yang tertempel pada bodi alat medis.</p>
                     </div>
 
-                    <!-- Area Kamera -->
+                    <!-- Area Kamera Scanner -->
                     <div class="relative w-full aspect-square max-w-[320px] mx-auto rounded-2xl overflow-hidden bg-slate-950 border-2 border-dashed border-emerald-500 flex flex-col items-center justify-center shadow-inner">
                         <div id="qr-reader-web" class="w-full h-full"></div>
 
@@ -176,495 +196,506 @@
                         </div>
                     </div>
 
-                    <!-- Error Alert -->
+                    <!-- Scan Error Alert -->
                     <div x-show="scanError" x-cloak class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-xs text-left flex items-start gap-2">
-                        <i data-lucide="alert-circle" class="size-4 shrink-0 mt-0.5"></i>
+                        <i data-lucide="alert-triangle" class="size-4 shrink-0 mt-0.5"></i>
                         <span x-text="scanError"></span>
                     </div>
 
                     <!-- Tombol Kontrol Kamera -->
-                    <div class="flex gap-2.5">
+                    <div class="flex justify-center gap-2 pt-2">
                         <button 
+                            type="button" 
                             x-show="!scanning" 
                             @click="startCamera()" 
-                            type="button" 
-                            class="flex-1 py-3 px-4 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 transition-all shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 cursor-pointer"
+                            class="px-6 py-2.5 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 transition-all shadow-md shadow-emerald-900/20 flex items-center gap-2 cursor-pointer"
                         >
-                            <i data-lucide="camera" class="size-4"></i>
-                            <span>Nyalakan Kamera Pemindai</span>
+                            <i data-lucide="video" class="size-4"></i>
+                            <span>Nyalakan Kamera</span>
                         </button>
+
                         <button 
+                            type="button" 
                             x-show="scanning" 
                             @click="stopCamera()" 
-                            type="button" 
-                            class="flex-1 py-3 px-4 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                            class="px-6 py-2.5 rounded-xl font-bold text-xs text-white bg-rose-600 hover:bg-rose-700 active:scale-98 transition-all shadow-md shadow-rose-900/20 flex items-center gap-2 cursor-pointer"
                         >
-                            <i data-lucide="camera-off" class="size-4"></i>
+                            <i data-lucide="video-off" class="size-4"></i>
                             <span>Matikan Kamera</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Kolom Kanan (7 Kolom): Input Manual & Petunjuk Lapangan -->
+                <!-- Kolom Kanan (7 Kolom): Input Manual & Hasil Informasi Alat -->
                 <div class="lg:col-span-7 space-y-4">
-                    <!-- Form Cek Manual Cepat -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
-                        <div>
-                            <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                                <i data-lucide="search" class="size-4 text-emerald-600"></i>
-                                <span>Cek Kode Aset / Nomor Seri Manual</span>
-                            </h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gunakan opsi ini jika stiker QR tergores, kotor, atau kamera tidak dapat digunakan.</p>
-                        </div>
-
-                        <form 
-                            x-data="{ manualInput: '' }" 
-                            @submit.prevent="if (manualInput.trim()) { $wire.handleScannedCode(manualInput); manualInput = ''; }" 
-                            class="flex flex-col sm:flex-row gap-2.5"
-                        >
-                            <input 
-                                type="text" 
-                                x-model="manualInput" 
-                                placeholder="Contoh: MED-001 atau nomor seri SN-88..." 
-                                class="flex-1 h-11 px-4 text-xs font-mono font-bold uppercase bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600"
-                            />
-                            <button 
-                                type="submit" 
-                                class="h-11 px-6 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 transition-colors shrink-0 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-                            >
-                                <i data-lucide="search" class="size-4"></i>
-                                <span>Periksa Alat</span>
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Panduan Operasional Petugas Ruangan -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-3.5">
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="info" class="size-4 text-emerald-600"></i>
-                            <span>Panduan Alur Operasional Lapangan:</span>
+                    <!-- Form Input Manual Kode Aset -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
+                            <i data-lucide="search" class="size-4 text-emerald-600"></i>
+                            <span>Cari / Ketik Kode Stiker Manual</span>
                         </h4>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600 dark:text-slate-300">
-                            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1">
-                                <div class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                                    <span class="size-5 rounded-full bg-emerald-700 text-white text-[10px] flex items-center justify-center font-bold">1</span>
-                                    <span>Pindai / Scan</span>
-                                </div>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">Dekatkan kamera ke stiker QR bodi alat medis RS Ummi.</p>
+                        <form wire:submit.prevent="handleScannedCode" class="flex gap-2">
+                            <div class="relative flex-1">
+                                <i data-lucide="barcode" class="size-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input 
+                                    type="text" 
+                                    wire:model="manualCode" 
+                                    placeholder="Ketik Kode Aset (contoh: MED-001) atau gunakan USB Barcode Gun..." 
+                                    class="w-full h-11 pl-10 pr-3 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 uppercase font-mono tracking-wider focus:outline-none focus:border-emerald-600"
+                                />
                             </div>
+                            <button 
+                                type="submit" 
+                                class="px-5 h-11 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                            >
+                                <i data-lucide="arrow-right" class="size-4"></i>
+                                <span>Periksa</span>
+                            </button>
+                        </form>
 
-                            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1">
-                                <div class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                                    <span class="size-5 rounded-full bg-emerald-700 text-white text-[10px] flex items-center justify-center font-bold">2</span>
-                                    <span>Verifikasi Status</span>
-                                </div>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">Pastikan alat berstatus laik pakai dan kalibrasi BPFK masih berlaku.</p>
-                            </div>
-
-                            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1">
-                                <div class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                                    <span class="size-5 rounded-full bg-emerald-700 text-white text-[10px] flex items-center justify-center font-bold">3</span>
-                                    <span>Lapor / Update</span>
-                                </div>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">Bila ada kendala, tekan tombol Lapor Kerusakan ke tim teknisi IPSRS.</p>
-                            </div>
+                        <!-- Tombol Demo Kode Cepat -->
+                        <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 flex-wrap">
+                            <span class="text-[11px] text-slate-400 font-medium">Contoh Kode Demo:</span>
+                            @foreach (['MED-001', 'MED-002', 'MED-003', 'NON-001'] as $demoCode)
+                                <button 
+                                    type="button" 
+                                    wire:click="handleScannedCode('{{ $demoCode }}')" 
+                                    class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 hover:text-emerald-800 dark:hover:bg-emerald-950 dark:hover:text-emerald-300 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+                                >
+                                    {{ $demoCode }}
+                                </button>
+                            @endforeach
                         </div>
                     </div>
+
+                    <!-- Kartu Hasil Pemindaian Alat Medis -->
+                    @if ($selectedAsset)
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border-2 border-emerald-500/80 p-5 shadow-sm space-y-4">
+                            <div class="flex items-start justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-600/30">
+                                            {{ $selectedAsset->asset_code }}
+                                        </span>
+                                        <span class="px-2 py-0.5 rounded-full text-[11px] font-bold {{ $selectedAsset->condition === 'baik' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300' }}">
+                                            {{ strtoupper(str_replace('_', ' ', $selectedAsset->condition)) }}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 mt-1.5">{{ $selectedAsset->name }}</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 flex items-center gap-2">
+                                        <span><i data-lucide="map-pin" class="size-3.5 inline text-emerald-600"></i> {{ $selectedAsset->location->name ?? 'Belum ada ruangan' }}</span>
+                                        <span>&bull;</span>
+                                        <span>{{ $selectedAsset->category->name ?? 'Kategori Umum' }}</span>
+                                    </p>
+                                </div>
+
+                                @if ($selectedAsset->image_path)
+                                    <img src="{{ asset('storage/' . $selectedAsset->image_path) }}" alt="{{ $selectedAsset->name }}" class="size-16 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shadow-xs shrink-0" />
+                                @endif
+                            </div>
+
+                            <!-- Ringkasan Spesifikasi & Kalibrasi -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                                <div class="bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Merek / Brand</span>
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">{{ $selectedAsset->brand ?: '-' }}</span>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Nomor Seri (SN)</span>
+                                    <span class="font-mono font-bold text-slate-800 dark:text-slate-200">{{ $selectedAsset->serial_number ?: '-' }}</span>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/60 col-span-2 sm:col-span-1">
+                                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Status Operasional</span>
+                                    <span class="font-bold {{ $selectedAsset->status === 'aktif' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400' }}">
+                                        {{ $selectedAsset->status === 'aktif' ? 'Siap Pakai' : 'Dalam Pemeliharaan' }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Tindakan Langsung untuk Petugas Lapangan -->
+                            <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2.5 border-t border-slate-100 dark:border-slate-800">
+                                <button 
+                                    type="button" 
+                                    wire:click="confirmNormalCondition({{ $selectedAsset->id }})" 
+                                    class="w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                                    title="Konfirmasi alat telah dicek secara fisik dan berfungsi normal"
+                                >
+                                    <i data-lucide="check-circle" class="size-4"></i>
+                                    <span>Konfirmasi Fisik: Kondisi Normal</span>
+                                </button>
+
+                                <div class="flex items-center gap-2 w-full sm:w-auto">
+                                    <button 
+                                        type="button" 
+                                        wire:click="openReportModal({{ $selectedAsset->id }})" 
+                                        class="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl font-bold text-xs text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                                        title="Lapor kerusakan ke Admin IPSRS"
+                                    >
+                                        <i data-lucide="alert-triangle" class="size-4"></i>
+                                        <span>Lapor Rusak</span>
+                                    </button>
+
+                                    <button 
+                                        type="button" 
+                                        wire:click="openDetail({{ $selectedAsset->id }})" 
+                                        class="px-3 py-2.5 rounded-xl font-bold text-xs text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                                        title="Lihat riwayat servis & kalibrasi lengkap"
+                                    >
+                                        <i data-lucide="file-text" class="size-4"></i>
+                                        <span>Detail</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Tampilan Petunjuk Standby -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 p-8 text-center text-slate-400 space-y-2">
+                            <i data-lucide="scan-line" class="size-10 mx-auto text-slate-300 dark:text-slate-700"></i>
+                            <h4 class="text-sm font-bold text-slate-600 dark:text-slate-300">Belum Ada Alat yang Dipindai</h4>
+                            <p class="text-xs text-slate-400 max-w-sm mx-auto">Nyalakan kamera di sebelah kiri untuk scan stiker QR pada alat medis, atau ketik kode manual di kotak atas.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
         <!-- ========================================================================= -->
-        <!-- TAB 2: KATALOG ALAT RUANGAN (RESPONSIVE WEB GRID) -->
+        <!-- TAB 2: CEKLIS & INVENTARIS RUANGAN -->
         <!-- ========================================================================= -->
-        @elseif ($activeTab === 'list')
-            <div class="space-y-4">
-                <!-- Action Filter Bar Web -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-                    <!-- Ruangan & Kondisi Filters -->
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <!-- Dropdown Ruangan -->
-                        <select 
-                            wire:model.live="filterLocation" 
-                            class="h-10 px-3.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-600 shadow-xs"
-                        >
-                            <option value="">Semua Ruangan RS Ummi</option>
-                            @foreach ($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->assets_count }} Unit)</option>
-                            @endforeach
-                        </select>
+        @elseif ($activeTab === 'room')
+            <div class="space-y-6">
+                <!-- Filter Pilihan Ruangan & Pencarian -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-4">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                                <i data-lucide="door-open" class="size-5 text-emerald-600"></i>
+                                <span>Pilih Ruangan Pemeriksaan</span>
+                            </h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pilih ruangan tempat Anda bertugas untuk melihat seluruh alat medis yang terdaftar di ruangan tersebut.</p>
+                        </div>
 
-                        <!-- Dropdown Kondisi -->
-                        <select 
-                            wire:model.live="filterCondition" 
-                            class="h-10 px-3.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-600 shadow-xs"
-                        >
-                            <option value="">Semua Kondisi</option>
-                            <option value="baik">Kondisi Baik (Laik Pakai)</option>
-                            <option value="rusak_ringan">Rusak Ringan (Perlu Kalibrasi)</option>
-                            <option value="rusak_berat">Rusak Berat (Tidak Berfungsi)</option>
-                        </select>
+                        <!-- Dropdown Pilihan Ruangan -->
+                        <div class="w-full md:w-72">
+                            <select 
+                                wire:model.live="selectedLocationId" 
+                                class="w-full h-10 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-xl font-semibold text-xs focus:outline-none focus:border-emerald-600 cursor-pointer"
+                            >
+                                <option value="">-- Pilih Ruangan Rumah Sakit --</option>
+                                @foreach ($locations as $loc)
+                                    <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->assets_count }} alat)</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Search Input -->
-                    <div class="relative min-w-[260px] md:w-80">
-                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                            <i data-lucide="search" class="size-4"></i>
-                        </span>
-                        <input 
-                            type="text" 
-                            wire:model.live.debounce.300ms="search" 
-                            placeholder="Cari kode, nama alat, merk, SN..." 
-                            class="w-full h-10 pl-10 pr-9 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-emerald-600"
-                        />
-                        @if ($search)
-                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
-                                <i data-lucide="x" class="size-4"></i>
-                            </button>
-                        @endif
-                    </div>
+                    <!-- Ringkasan Statistik Ruangan Terpilih -->
+                    @if ($selectedLocationId)
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                                <div>
+                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Total Alat di Ruangan</span>
+                                    <span class="text-lg font-extrabold text-slate-900 dark:text-slate-100">{{ $roomStats['total'] }} Unit</span>
+                                </div>
+                                <div class="size-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+                                    <i data-lucide="package" class="size-5"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                                <div>
+                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Kondisi Baik & Siap Pakai</span>
+                                    <span class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">{{ $roomStats['ready'] }} Unit</span>
+                                </div>
+                                <div class="size-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+                                    <i data-lucide="check-circle-2" class="size-5"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                                <div>
+                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Perlu Perbaikan / Servis</span>
+                                    <span class="text-lg font-extrabold text-rose-600 dark:text-rose-400">{{ $roomStats['maintenance'] }} Unit</span>
+                                </div>
+                                <div class="size-9 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 flex items-center justify-center">
+                                    <i data-lucide="wrench" class="size-5"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bar Pencarian Cepat Dalam Ruangan -->
+                        <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                            <div class="relative flex-1">
+                                <i data-lucide="search" class="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input 
+                                    type="text" 
+                                    wire:model.live.debounce.300ms="search" 
+                                    placeholder="Cari nama alat, merek, atau nomor seri di ruangan ini..." 
+                                    class="w-full h-9 pl-9 pr-3 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600"
+                                />
+                            </div>
+
+                            <select 
+                                wire:model.live="filterCondition" 
+                                class="h-9 px-3 text-xs border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-lg focus:outline-none focus:border-emerald-600"
+                            >
+                                <option value="">Semua Kondisi</option>
+                                <option value="baik">Kondisi Baik</option>
+                                <option value="rusak_ringan">Rusak Ringan</option>
+                                <option value="rusak_berat">Rusak Berat</option>
+                            </select>
+                        </div>
+                    @endif
                 </div>
 
-                <!-- Grid Kartu Alat Medis Web (3-4 Kolom pada Desktop) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-                    @forelse ($assets as $asset)
-                        <div 
-                            wire:key="web-field-asset-{{ $asset->id }}"
-                            wire:click="openDetail({{ $asset->id }})" 
-                            class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs hover:border-emerald-500 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
-                        >
-                            <!-- Top: Foto Fisik Thumbnail -->
-                            <div class="relative h-40 bg-slate-100 dark:bg-slate-800 overflow-hidden flex items-center justify-center border-b border-slate-100 dark:border-slate-800">
-                                @if ($asset->image_url)
-                                    <img src="{{ $asset->image_url }}" alt="{{ $asset->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                @else
-                                    <div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
-                                        <i data-lucide="stethoscope" class="size-10 mb-1"></i>
-                                        <span class="text-[10px] font-semibold">Foto Belum Ada</span>
-                                    </div>
-                                @endif
-
-                                <!-- Badge Kode Aset Pojok Kiri Atas -->
-                                <span class="absolute top-2.5 left-2.5 font-mono text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-900/85 backdrop-blur-xs text-white shadow-xs">
-                                    {{ $asset->asset_code }}
-                                </span>
-
-                                <!-- Badge Status Kondisi Pojok Kanan Atas -->
-                                <div class="absolute top-2.5 right-2.5">
-                                    @if ($asset->condition === 'baik')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white shadow-xs">
-                                            Baik
+                <!-- Daftar Kartu Alat Medis Ruangan (4 Kolom Grid) -->
+                @if ($roomAssets && count($roomAssets) > 0)
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        @foreach ($roomAssets as $asset)
+                            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-xs hover:border-emerald-500/60 transition-all flex flex-col justify-between space-y-3">
+                                <div>
+                                    <!-- Header Kartu: Kode & Badge Status -->
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                            {{ $asset->asset_code }}
                                         </span>
-                                    @elseif ($asset->condition === 'rusak_ringan')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500 text-white shadow-xs">
-                                            Rusak Ringan
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $asset->condition === 'baik' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300' }}">
+                                            {{ strtoupper(str_replace('_', ' ', $asset->condition)) }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Nama & Merek Alat -->
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 mt-2 line-clamp-2" title="{{ $asset->name }}">
+                                        {{ $asset->name }}
+                                    </h4>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                        {{ $asset->brand ?: 'Tanpa Merek' }} {{ $asset->model_type ? '• ' . $asset->model_type : '' }}
+                                    </p>
+
+                                    @if ($asset->serial_number)
+                                        <p class="text-[10px] font-mono text-slate-400 mt-1">
+                                            SN: {{ $asset->serial_number }}
+                                        </p>
+                                    @endif
+                                </div>
+
+                                <!-- Aksi Cepat Lapangan -->
+                                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-1.5">
+                                    <button 
+                                        type="button" 
+                                        wire:click="confirmNormalCondition({{ $asset->id }})" 
+                                        class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 transition-colors flex items-center gap-1 cursor-pointer"
+                                        title="Verifikasi fisik alat normal & siap pakai"
+                                    >
+                                        <i data-lucide="check" class="size-3.5"></i>
+                                        <span>Ceklis OK</span>
+                                    </button>
+
+                                    <div class="flex items-center gap-1">
+                                        <button 
+                                            type="button" 
+                                            wire:click="openReportModal({{ $asset->id }})" 
+                                            class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 transition-colors flex items-center gap-1 cursor-pointer"
+                                            title="Lapor kerusakan"
+                                        >
+                                            <i data-lucide="alert-triangle" class="size-3.5"></i>
+                                            <span>Lapor</span>
+                                        </button>
+
+                                        <button 
+                                            type="button" 
+                                            wire:click="openDetail({{ $asset->id }})" 
+                                            class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                                            title="Detail alat"
+                                        >
+                                            <i data-lucide="info" class="size-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pt-2">
+                        {{ $roomAssets->links() }}
+                    </div>
+                @elseif ($selectedLocationId)
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center text-slate-400 space-y-2">
+                        <i data-lucide="inbox" class="size-10 mx-auto text-slate-300 dark:text-slate-700"></i>
+                        <p class="text-xs font-semibold text-slate-600 dark:text-slate-300">Tidak ada alat medis yang sesuai dengan kriteria di ruangan ini.</p>
+                    </div>
+                @else
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 p-8 text-center text-slate-400 space-y-2">
+                        <i data-lucide="door-open" class="size-10 mx-auto text-slate-300 dark:text-slate-700"></i>
+                        <p class="text-xs font-semibold text-slate-600 dark:text-slate-300">Silakan pilih ruangan terlebih dahulu pada dropdown di atas.</p>
+                    </div>
+                @endif
+            </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: STATUS & RIWAYAT TIKET LAPORAN LAPANGAN -->
+        <!-- ========================================================================= -->
+        @elseif ($activeTab === 'reports')
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-6">
+                <div class="border-b border-slate-100 dark:border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                            <i data-lucide="clipboard-list" class="size-5 text-emerald-600"></i>
+                            <span>Pusat Pantau Tiket Laporan Kerusakan</span>
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pantau status penanganan alat medis yang dilaporkan rusak oleh tim lapangan ke teknisi IPSRS.</p>
+                    </div>
+
+                    <button 
+                        type="button" 
+                        wire:click="setTab('scan')" 
+                        class="px-4 py-2 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 transition-colors flex items-center gap-1.5 cursor-pointer self-start sm:self-auto shadow-xs"
+                    >
+                        <i data-lucide="plus" class="size-4"></i>
+                        <span>Buat Laporan Baru (Scan QR)</span>
+                    </button>
+                </div>
+
+                <!-- Daftar Tiket Laporan -->
+                @if (count($recentReports) > 0)
+                    <div class="space-y-3">
+                        @foreach ($recentReports as $report)
+                            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors bg-slate-50/50 dark:bg-slate-800/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
+                                            {{ $report->asset->asset_code ?? 'ASET' }}
+                                        </span>
+                                        <span class="text-xs font-bold text-slate-900 dark:text-slate-100">
+                                            {{ $report->asset->name ?? 'Alat Medis' }}
+                                        </span>
+                                        <span class="text-[11px] text-slate-400">&bull;</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                            <i data-lucide="map-pin" class="size-3 text-emerald-600"></i>
+                                            {{ $report->asset->location->name ?? 'Ruangan' }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Catatan Gejala Kerusakan -->
+                                    <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                                        {{ $report->notes }}
+                                    </p>
+
+                                    <!-- Pelapor & Waktu -->
+                                    <div class="text-[11px] text-slate-400 flex items-center gap-3">
+                                        <span>Dilaporkan oleh: <strong class="text-slate-600 dark:text-slate-300">{{ $report->vendor_technician }}</strong></span>
+                                        <span>&bull;</span>
+                                        <span>{{ \Carbon\Carbon::parse($report->maintenance_date)->translatedFormat('d M Y, H:i') }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Status Tiket -->
+                                <div class="shrink-0 flex items-center gap-2">
+                                    @if ($report->status === 'dalam_proses')
+                                        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center gap-1.5">
+                                            <span class="size-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                            <span>Sedang Ditangani IPSRS</span>
+                                        </span>
+                                    @elseif ($report->status === 'selesai')
+                                        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5">
+                                            <i data-lucide="check" class="size-3.5"></i>
+                                            <span>Selesai - Siap Pakai</span>
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500 text-white shadow-xs">
-                                            Rusak Berat
+                                        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                            {{ ucfirst($report->status) }}
                                         </span>
                                     @endif
                                 </div>
                             </div>
-
-                            <!-- Body Card: Identitas & Ruangan -->
-                            <div class="p-4 flex-1 flex flex-col justify-between space-y-2.5">
-                                <div>
-                                    <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide block truncate">
-                                        {{ $asset->category->name ?? '-' }}
-                                    </span>
-                                    <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-2 mt-0.5 leading-snug">
-                                        {{ $asset->name }}
-                                    </h4>
-                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 truncate">
-                                        {{ $asset->brand ?? '-' }} {{ $asset->model_type ? '· ' . $asset->model_type : '' }}
-                                    </p>
-                                </div>
-
-                                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] flex items-center justify-between">
-                                    <span class="text-slate-500 truncate">{{ $asset->location->name ?? '-' }}</span>
-                                    <span class="font-bold text-emerald-600 dark:text-emerald-400 shrink-0 group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
-                                        <span>Periksa</span>
-                                        <i data-lucide="chevron-right" class="size-3.5"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full p-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">
-                            <i data-lucide="inbox" class="size-12 text-slate-300 dark:text-slate-600 mx-auto"></i>
-                            <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Tidak ada alat medis yang sesuai dengan kriteria</h4>
-                            <p class="text-xs text-slate-500">Silakan ganti kata kunci pencarian atau bersihkan filter ruangan.</p>
-                            <button 
-                                wire:click="$set('search', ''); $set('filterLocation', ''); $set('filterCondition', '')" 
-                                class="px-4 py-2 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 rounded-xl transition-colors cursor-pointer"
-                            >
-                                Bersihkan Filter Pencarian
-                            </button>
-                        </div>
-                    @endforelse
-                </div>
-
-                <!-- Pagination Footer -->
-                <div class="pt-2">
-                    {{ $assets->links() }}
-                </div>
-            </div>
-
-        <!-- ========================================================================= -->
-        <!-- TAB 3: PENDAFTARAN ALAT BARU LAPANGAN (WEB 2-COLUMN FORM) -->
-        <!-- ========================================================================= -->
-        @elseif ($activeTab === 'create')
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs max-w-4xl mx-auto space-y-6">
-                <div class="border-b border-slate-100 dark:border-slate-800 pb-4 flex items-center justify-between">
-                    <div>
-                        <h2 class="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                            <i data-lucide="plus-circle" class="size-5 text-emerald-600"></i>
-                            <span>Formulir Pendaftaran Alat Medis Lapangan</span>
-                        </h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Daftarkan inventaris baru langsung dari ruang tindakan atau kamar pasien.</p>
+                        @endforeach
                     </div>
-                </div>
-
-                <form wire:submit.prevent="saveAsset" class="space-y-4 text-xs">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Foto Fisik Alat (Dukungan Kamera) -->
-                        <div class="md:col-span-2">
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Foto Fisik Alat Medis</label>
-                            <div class="flex items-center gap-4">
-                                <label class="flex-1 cursor-pointer">
-                                    <div class="w-full py-3 px-4 rounded-xl border-2 border-dashed border-emerald-500/60 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center justify-center gap-2 hover:bg-emerald-100/50 transition-colors text-center">
-                                        <i data-lucide="camera" class="size-4"></i>
-                                        <span>Ambil Foto Langsung dari Kamera / Pilih File</span>
-                                    </div>
-                                    <input type="file" wire:model="image" accept="image/*" capture="environment" class="hidden" />
-                                </label>
-
-                                @if ($image)
-                                    <img src="{{ $image->temporaryUrl() }}" class="size-14 rounded-xl object-cover border-2 border-emerald-500 shrink-0 shadow-xs" />
-                                @endif
-                            </div>
-                            <span class="text-[11px] text-slate-400 block mt-1">Mendukung kamera HP langsung atau unggah foto JPG/PNG.</span>
-                            @error('image') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Kategori Alat -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kategori Aset <span class="text-rose-500">*</span></label>
-                            <select wire:model.live="category_id" class="w-full h-10 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-xl focus:outline-none focus:border-emerald-600">
-                                <option value="">Pilih Kategori...</option>
-                                @foreach ($categories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('category_id') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Kode Aset & Tombol Generate -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1">
-                                <label class="font-semibold text-slate-700 dark:text-slate-300">Kode Aset RS <span class="text-rose-500">*</span></label>
-                                <button type="button" wire:click="generateAssetCode" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
-                                    Auto-Generate Kode
-                                </button>
-                            </div>
-                            <input type="text" wire:model="asset_code" placeholder="Contoh: MED-016" class="w-full h-10 px-3 font-mono uppercase bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600" />
-                            @error('asset_code') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Nama Alat -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Alat Medis <span class="text-rose-500">*</span></label>
-                            <input type="text" wire:model="name" placeholder="Contoh: Infusion Pump Terumo LM-700" class="w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600" />
-                            @error('name') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Ruangan Penempatan -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ruangan Penempatan RS <span class="text-rose-500">*</span></label>
-                            <select wire:model="location_id" class="w-full h-10 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-xl focus:outline-none focus:border-emerald-600">
-                                <option value="">Pilih Ruangan...</option>
-                                @foreach ($locations as $loc)
-                                    <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->building }})</option>
-                                @endforeach
-                            </select>
-                            @error('location_id') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Merk -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Merk / Brand</label>
-                            <input type="text" wire:model="brand" placeholder="Contoh: GE Healthcare, Mindray, Siemens" class="w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600" />
-                        </div>
-
-                        <!-- Tipe / Model -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tipe / Model</label>
-                            <input type="text" wire:model="model_type" placeholder="Contoh: BeneHeart D3" class="w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600" />
-                        </div>
-
-                        <!-- Nomor Seri -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nomor Seri (Serial Number)</label>
-                            <input type="text" wire:model="serial_number" placeholder="Contoh: SN-DF-99210-XC" class="w-full h-10 px-3 font-mono bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600" />
-                        </div>
-
-                        <!-- Kondisi Awal -->
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kondisi Awal Alat <span class="text-rose-500">*</span></label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button 
-                                    type="button" 
-                                    wire:click="$set('condition', 'baik')" 
-                                    class="py-2.5 rounded-xl border text-center font-bold text-xs transition-colors {{ $condition === 'baik' ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300' }}"
-                                >
-                                    Baik
-                                </button>
-                                <button 
-                                    type="button" 
-                                    wire:click="$set('condition', 'rusak_ringan')" 
-                                    class="py-2.5 rounded-xl border text-center font-bold text-xs transition-colors {{ $condition === 'rusak_ringan' ? 'bg-amber-500 text-white border-amber-500 shadow-xs' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300' }}"
-                                >
-                                    Rusak Ringan
-                                </button>
-                                <button 
-                                    type="button" 
-                                    wire:click="$set('condition', 'rusak_berat')" 
-                                    class="py-2.5 rounded-xl border text-center font-bold text-xs transition-colors {{ $condition === 'rusak_berat' ? 'bg-rose-600 text-white border-rose-600 shadow-xs' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300' }}"
-                                >
-                                    Rusak Berat
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Catatan Lapangan -->
-                        <div class="md:col-span-2">
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Catatan Tambahan Spesifikasi / Kondisi Fisik</label>
-                            <textarea wire:model="notes" rows="2" placeholder="Catatan khusus teknis atau nomor inventaris ruangan..." class="w-full p-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600"></textarea>
-                        </div>
+                @else
+                    <div class="p-8 text-center text-slate-400 space-y-2">
+                        <i data-lucide="check-circle-2" class="size-10 mx-auto text-emerald-500"></i>
+                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Tidak Ada Laporan Kerusakan</h4>
+                        <p class="text-xs text-slate-400">Semua alat medis saat ini dalam kondisi baik atau laporan sebelumnya telah selesai ditangani.</p>
                     </div>
-
-                    <!-- Tombol Simpan Aset -->
-                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
-                        <button 
-                            type="submit" 
-                            class="w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 transition-all shadow-md shadow-emerald-900/20 flex items-center justify-center gap-2 cursor-pointer"
-                        >
-                            <i data-lucide="save" class="size-4"></i>
-                            <span wire:loading.remove wire:target="saveAsset">Simpan Alat Medis ke SIMRS</span>
-                            <span wire:loading wire:target="saveAsset">Menyimpan Data...</span>
-                        </button>
-                    </div>
-                </form>
+                @endif
             </div>
         @endif
+
     </main>
 
     <!-- ========================================================================= -->
     <!-- MODAL DETAIL / PEMERIKSAAN ALAT MEDIS -->
     <!-- ========================================================================= -->
     @if ($isDetailOpen && $selectedAsset)
-        <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg w-full overflow-hidden">
-                <!-- Header Modal -->
-                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-[#E9FAF3] dark:bg-slate-800 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-800 text-white shadow-2xs">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+                <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <div>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-600/30">
                             {{ $selectedAsset->asset_code }}
                         </span>
-                        @if ($selectedAsset->condition === 'baik')
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300">
-                                Kondisi Baik
-                            </span>
-                        @elseif ($selectedAsset->condition === 'rusak_ringan')
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300">
-                                Butuh Kalibrasi / Rusak Ringan
-                            </span>
-                        @else
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300">
-                                Rusak Berat (Mogok)
-                            </span>
-                        @endif
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 mt-1">{{ $selectedAsset->name }}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">{{ $selectedAsset->location->name ?? 'Tanpa Ruangan' }}</p>
                     </div>
-                    <button wire:click="closeDetail" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg">
-                        <i data-lucide="x" class="size-4.5"></i>
+                    <button wire:click="closeDetail" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 cursor-pointer">
+                        <i data-lucide="x" class="size-5"></i>
                     </button>
                 </div>
 
-                <!-- Body Modal -->
-                <div class="p-6 space-y-4 text-xs">
-                    <!-- Foto & Identitas -->
-                    <div class="flex gap-4 items-start">
-                        <div class="size-24 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 flex items-center justify-center">
-                            @if ($selectedAsset->image_url)
-                                <img src="{{ $selectedAsset->image_url }}" alt="{{ $selectedAsset->name }}" class="w-full h-full object-cover" />
-                            @else
-                                <i data-lucide="stethoscope" class="size-10 text-slate-300 dark:text-slate-600"></i>
-                            @endif
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">
-                                {{ $selectedAsset->category->name ?? '-' }}
-                            </span>
-                            <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug mt-0.5">
-                                {{ $selectedAsset->name }}
-                            </h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 truncate">
-                                {{ $selectedAsset->brand ?? '-' }} {{ $selectedAsset->model_type ? '· ' . $selectedAsset->model_type : '' }}
-                            </p>
-                            <p class="text-[11px] font-mono text-slate-400 mt-0.5 truncate">
-                                SN: {{ $selectedAsset->serial_number ?? '-' }}
-                            </p>
-                        </div>
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Kategori</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200">{{ $selectedAsset->category->name ?? '-' }}</span>
                     </div>
-
-                    <!-- Parameter Ruangan & PIC -->
-                    <div class="grid grid-cols-2 gap-2.5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-[11px]">
-                        <div>
-                            <span class="text-[10px] text-slate-400 block uppercase font-medium">Ruangan & Gedung</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">{{ $selectedAsset->location->name ?? '-' }}</span>
-                            <span class="text-[10px] text-slate-400 block truncate">{{ $selectedAsset->location->building ?? '' }}</span>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 block uppercase font-medium">Penanggung Jawab (PIC)</span>
-                            <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">{{ $selectedAsset->location->pic_name ?? '-' }}</span>
-                            <span class="text-[10px] text-emerald-600 block font-medium">IPSRS RS Ummi</span>
-                        </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Kondisi Fisik</span>
+                        <span class="font-bold {{ $selectedAsset->condition === 'baik' ? 'text-emerald-600' : 'text-rose-600' }}">
+                            {{ strtoupper(str_replace('_', ' ', $selectedAsset->condition)) }}
+                        </span>
                     </div>
-
-                    <!-- Tindakan Cepat Lapangan -->
-                    <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block">Tindakan Cepat Lapangan:</span>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <!-- Tombol Lapor Rusak -->
-                            <button 
-                                wire:click="openReportModal" 
-                                type="button" 
-                                class="py-2.5 px-3 rounded-xl font-bold text-xs text-amber-900 dark:text-amber-200 bg-amber-100 hover:bg-amber-200 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-800 flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
-                            >
-                                <i data-lucide="triangle-alert" class="size-4 text-amber-600"></i>
-                                <span>Lapor Kerusakan Alat</span>
-                            </button>
-
-                            <!-- Tombol Nyatakan Baik -->
-                            <button 
-                                wire:click="quickSetCondition('baik')" 
-                                type="button" 
-                                class="py-2.5 px-3 rounded-xl font-bold text-xs text-emerald-800 dark:text-emerald-200 bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800 flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
-                            >
-                                <i data-lucide="check-circle-2" class="size-4 text-emerald-600"></i>
-                                <span>Tandai Laik Pakai (Baik)</span>
-                            </button>
-                        </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Merek / Seri</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200">{{ $selectedAsset->brand ?: '-' }} ({{ $selectedAsset->serial_number ?: 'SN -' }})</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Status Operasional</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200">{{ ucfirst($selectedAsset->status) }}</span>
                     </div>
                 </div>
 
-                <!-- Footer Modal -->
-                <div class="px-6 py-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+                <!-- Riwayat Servis / Kalibrasi Terakhir -->
+                <div>
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Riwayat Pemeriksaan Terakhir</h5>
+                    @if ($selectedAsset->maintenanceLogs && count($selectedAsset->maintenanceLogs) > 0)
+                        <div class="max-h-36 overflow-y-auto space-y-2 pr-1">
+                            @foreach ($selectedAsset->maintenanceLogs->take(3) as $log)
+                                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-[11px]">
+                                    <div class="flex items-center justify-between font-semibold">
+                                        <span class="capitalize text-slate-800 dark:text-slate-200">{{ str_replace('_', ' ', $log->type) }}</span>
+                                        <span class="text-slate-400">{{ \Carbon\Carbon::parse($log->maintenance_date)->format('d/m/Y') }}</span>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-slate-400 mt-0.5">{{ $log->notes }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-xs text-slate-400 italic">Belum ada catatan riwayat pemeliharaan.</p>
+                    @endif
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                     <button 
+                        type="button" 
+                        wire:click="openReportModal({{ $selectedAsset->id }})" 
+                        class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+                    >
+                        <i data-lucide="alert-triangle" class="size-4"></i>
+                        <span>Lapor Rusak</span>
+                    </button>
+                    <button 
+                        type="button" 
                         wire:click="closeDetail" 
-                        class="px-4 py-2 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-200 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors"
+                        class="px-4 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 transition-colors cursor-pointer"
                     >
                         Tutup
                     </button>
@@ -677,45 +708,88 @@
     <!-- MODAL LAPOR KERUSAKAN KE TIM IPSRS -->
     <!-- ========================================================================= -->
     @if ($isReportModalOpen && $selectedAsset)
-        <div class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-md w-full p-6 space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Kirim Laporan Kerusakan Alat</h3>
-                        <p class="text-[11px] text-slate-500">{{ $selectedAsset->name }} ({{ $selectedAsset->asset_code }})</p>
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="size-9 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="alert-triangle" class="size-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Lapor Kerusakan Alat Medis</h3>
+                            <p class="text-[11px] text-slate-500">Tiket diteruskan ke Tim Teknisi IPSRS</p>
+                        </div>
                     </div>
-                    <button wire:click="closeReportModal" class="text-slate-400 hover:text-slate-600">
-                        <i data-lucide="x" class="size-4"></i>
+                    <button wire:click="closeReportModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 cursor-pointer">
+                        <i data-lucide="x" class="size-5"></i>
                     </button>
                 </div>
 
+                <!-- Info Alat Medis -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-bold text-emerald-700 dark:text-emerald-400">{{ $selectedAsset->asset_code }}</span>
+                        <span class="text-slate-500">{{ $selectedAsset->location->name ?? 'Ruangan' }}</span>
+                    </div>
+                    <div class="font-bold text-slate-800 dark:text-slate-200">{{ $selectedAsset->name }}</div>
+                </div>
+
                 <form wire:submit.prevent="submitDefectReport" class="space-y-3.5 text-xs">
+                    <!-- Tingkat Kerusakan -->
                     <div>
-                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tingkat Kerusakan Alat</label>
-                        <select wire:model="report_condition" class="w-full h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100">
-                            <option value="rusak_ringan">Rusak Ringan (Alat Masih Nyala / Butuh Kalibrasi)</option>
-                            <option value="rusak_berat">Rusak Berat (Alat Mati Total / Tidak Berfungsi)</option>
-                        </select>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tingkat Kendala / Kerusakan <span class="text-rose-500">*</span></label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer {{ $report_condition === 'rusak_ringan' ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 font-bold' : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400' }}">
+                                <input type="radio" wire:model.live="report_condition" value="rusak_ringan" class="text-amber-600" />
+                                <span>Rusak Ringan</span>
+                            </label>
+
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border cursor-pointer {{ $report_condition === 'rusak_berat' ? 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200 font-bold' : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400' }}">
+                                <input type="radio" wire:model.live="report_condition" value="rusak_berat" class="text-rose-600" />
+                                <span>Rusak Berat</span>
+                            </label>
+                        </div>
                     </div>
 
+                    <!-- Gejala Kerusakan -->
                     <div>
-                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Gejala Kerusakan / Catatan Temuan <span class="text-rose-500">*</span></label>
-                        <textarea wire:model="report_notes" rows="3" placeholder="Contoh: Tekanan pompa tidak stabil, kabel sensor putus, atau layar LCD kedip-kedip..." class="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-600"></textarea>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Gejala Kerusakan / Masalah Fisik <span class="text-rose-500">*</span></label>
+                        <textarea 
+                            wire:model="report_notes" 
+                            rows="3" 
+                            placeholder="Contoh: Layar monitor kedip-kedip, kabel sensor oksigen korslet, baterai tidak mau mengisi..." 
+                            class="w-full p-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-rose-600"
+                        ></textarea>
                         @error('report_notes') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
                     </div>
 
+                    <!-- Nama Pelapor -->
                     <div>
-                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Petugas Pelapor di Ruangan</label>
-                        <input type="text" wire:model="report_technician" placeholder="Nama perawat atau teknisi penemu kerusakan" class="w-full h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100" />
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Petugas / Perawat Pelapor <span class="text-rose-500">*</span></label>
+                        <input 
+                            type="text" 
+                            wire:model="report_reporter" 
+                            placeholder="Contoh: Ns. Rahma (ICU)" 
+                            class="w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:outline-none focus:border-rose-600"
+                        />
+                        @error('report_reporter') <span class="text-rose-500 text-[11px] block mt-1">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="flex items-center gap-2.5 pt-2">
-                        <button type="button" wire:click="closeReportModal" class="flex-1 py-2.5 rounded-xl font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800">
+                    <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                        <button 
+                            type="button" 
+                            wire:click="closeReportModal" 
+                            class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                        >
                             Batal
                         </button>
-                        <button type="submit" class="flex-1 py-2.5 rounded-xl font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="send" class="size-3.5"></i>
-                            <span>Kirim Laporan ke IPSRS</span>
+                        <button 
+                            type="submit" 
+                            class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 active:scale-98 transition-all flex items-center gap-1.5 cursor-pointer shadow-md shadow-rose-900/20"
+                        >
+                            <i data-lucide="send" class="size-4"></i>
+                            <span wire:loading.remove wire:target="submitDefectReport">Kirim Laporan ke IPSRS</span>
+                            <span wire:loading wire:target="submitDefectReport">Mengirim...</span>
                         </button>
                     </div>
                 </form>
