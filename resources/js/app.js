@@ -1,10 +1,12 @@
 import './bootstrap';
 import Chart from 'chart.js/auto';
 import { createIcons, icons } from 'lucide';
+import { Html5Qrcode } from 'html5-qrcode';
 
 window.Chart = Chart;
 window.createIcons = createIcons;
 window.lucideIcons = icons;
+window.Html5Qrcode = Html5Qrcode;
 
 export function renderLucide() {
     try {

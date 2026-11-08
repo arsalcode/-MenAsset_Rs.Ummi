@@ -441,6 +441,7 @@
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
 
     <!-- ================= TOP NAVIGATION (Khas Alkamart) ================= -->
+    @unless (request()->routeIs('field'))
     <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
         <!-- Nav Left: Brand & Title -->
         <div class="flex items-center gap-3.5">
@@ -453,8 +454,18 @@
             </div>
         </div>
 
-        <!-- Nav Right: Theme Toggle Icon Only -->
-        <div class="flex items-center">
+        <!-- Nav Right: Mode Lapangan Switcher & Theme Toggle -->
+        <div class="flex items-center gap-2">
+            <!-- Tombol Beralih ke Portal Khusus Lapangan / Petugas HP -->
+            <a 
+                href="{{ route('field') }}" 
+                class="no-print h-9 px-3 rounded-xl border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100/70 dark:hover:bg-emerald-900/50 text-xs font-bold inline-flex items-center gap-1.5 transition-colors shadow-2xs"
+                title="Buka Portal Khusus Teknisi / Petugas Lapangan"
+            >
+                <i data-lucide="smartphone" class="size-3.5"></i>
+                <span class="hidden md:inline">Mode Lapangan (HP)</span>
+            </a>
+
             <!-- Saklar Mode Terang / Gelap (Warna Hijau Emerald Sesuai RS Ummi - Tanpa Kotak Background) -->
             <div class="relative group">
                 <button 
@@ -488,6 +499,7 @@
             </div>
         </div>
     </header>
+    @endunless
 
     <!-- Main Container -->
     <main class="flex-1 w-full bg-slate-50/50 dark:bg-slate-950 transition-colors duration-200">
