@@ -33,6 +33,7 @@
         }
 
         :root {
+            --livewire-progress-bar-color: #047857;
             --primary: #047857;         /* Emerald 700 */
             --primary-light: #10B981;   /* Emerald 500 */
             --primary-dark: #064E3B;    /* Emerald 900 */
