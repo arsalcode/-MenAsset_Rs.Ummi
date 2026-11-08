@@ -1,122 +1,133 @@
-# 📋 Panduan Cara Menjalankan Aplikasi
-## Sistem Manajemen Aset & Peralatan Medis (RS Ummi Bogor)
+# SIM Aset & Peralatan Medis - RS Ummi Bogor
 
-Dokumen ini berisi panduan lengkap langkah demi langkah untuk menginstalasi dan menjalankan aplikasi **Sistem Manajemen Aset & Peralatan Medis RS Ummi Bogor** di lingkungan lokal (Localhost).
-
----
-
-## 💻 1. Kebutuhan Sistem (Prerequisites)
-
-Sebelum menjalankan aplikasi, pastikan perangkat Anda telah terpasang:
-* **PHP**: Versi 8.2 ke atas (Direkomendasikan PHP 8.3 / 8.4 / 8.5)
-* **Web Server & Database**: MySQL Server (menggunakan **Laragon** atau **XAMPP**)
-* **Composer**: Versi 2.x
-* **Node.js**: Versi 18+ & **NPM**
-* **Git**
+Sistem informasi manajemen inventaris dan siklus hidup alat medis untuk unit IPSRS (Instalasi Pemeliharaan Sarana Rumah Sakit) dan SIMRS RS Ummi Bogor. Aplikasi dirancang menggunakan pendekatan *reactive monolith* berbasis Laravel 13 dan Livewire 4, memungkinkan interaksi data real-time pada dasbor operasional tanpa overhead manajemen state API eksternal.
 
 ---
 
-## 🚀 2. Langkah-Langkah Menjalankan Aplikasi
+## Spesifikasi Lingkungan (Environment Requirements)
 
-Ikuti urutan perintah di bawah ini melalui Terminal / Command Prompt:
+Pastikan lingkungan kerja memenuhi kebutuhan berikut sebelum instalasi:
 
-### Langkah 1: Clone Repositori
+* **PHP**: `>= 8.2` (ekstensi aktif: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`)
+* **Database**: MySQL `>= 5.7` / MariaDB `>= 10.3`
+* **Dependency Manager**: Composer `>= 2.2`
+* **Runtime Frontend**: Node.js `>= 18.x` & NPM
+* **Local Web Stack**: Laragon / XAMPP / Docker / Native CLI
+
+---
+
+## Panduan Instalasi Lokal (Quick Setup)
+
+Jalankan rangkaian perintah berikut secara berurutan pada terminal:
+
+### 1. Clone Repositori
 ```bash
 git clone https://github.com/arsalcode/-MenAsset_Rs.Ummi.git
 cd -MenAsset_Rs.Ummi
 ```
 
-### Langkah 2: Salin File Environment
-Salin template konfigurasi `.env.example` menjadi `.env`:
+### 2. Konfigurasi Environment
+Salin template konfigurasi environment:
 ```bash
 cp .env.example .env
 ```
-*(Di Windows PowerShell atau CMD jika perintah `cp` tidak tersedia: `copy .env.example .env`)*
 
-### Langkah 3: Konfigurasi Database MySQL
-1. Buka MySQL di Laragon / XAMPP (pastikan service MySQL sudah aktif / **Start**).
-2. Buat database baru dengan nama:
-   ```sql
-   CREATE DATABASE menasset_rs_ummi;
-   ```
-3. Konfigurasi pada file `.env` sudah disesuaikan secara default:
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=menasset_rs_ummi
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
-   *(Sesuaikan `DB_USERNAME` dan `DB_PASSWORD` jika MySQL Anda menggunakan kata sandi khusus).*
+Pastikan variabel koneksi database pada `.env` telah disesuaikan dengan server MySQL lokal Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=menasset_rs_ummi
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-### Langkah 4: Install Dependency PHP & Generate App Key
+> **Catatan Database**: Buat skema database terlebih dahulu via MySQL client / phpMyAdmin / Heidisql jika belum ada:
+> ```sql
+> CREATE DATABASE menasset_rs_ummi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+> ```
+
+### 3. Install Dependensi & Generate Application Key
 ```bash
 composer install
 php artisan key:generate
 ```
 
-### Langkah 5: Jalankan Migrasi & Seeder Database
-Perintah ini akan membuat struktur tabel beserta data awal realistis peralatan medis RS Ummi:
+### 4. Eksekusi Migrasi & Data Seeder
+Jalankan migrasi skema tabel relasional beserta seeder inventaris awal:
 ```bash
 php artisan migrate --seed
 ```
 
-### Langkah 6: Install Dependency Frontend & Compile Aset
+### 5. Kompilasi Aset Frontend
+Install pustaka frontend dan bangun bundle produksi (Tailwind CSS v4 + Vite):
 ```bash
 npm install
 npm run build
 ```
 
-### Langkah 7: Jalankan Web Server Laravel
+### 6. Menjalankan Server Lokal
 ```bash
 php artisan serve
 ```
 
-Server development sekarang sudah berjalan! Silakan buka browser Anda di:
-👉 **`http://localhost:8000`**
+Aplikasi aktif dan dapat diakses pada browser: `http://127.0.0.1:8000`
 
 ---
 
-## 🌐 3. URL Akses & Halaman Aplikasi
+## Titik Akses & Modul Sistem
 
-Aplikasi memiliki dua portal utama yang saling terintegrasi:
+Sistem memisahkan alur kerja administratif dan inspeksi teknis lapangan:
 
-| Portal | URL Akses | Deskripsi |
+| Modul | Endpoint | Deskripsi Fungsi |
 | :--- | :--- | :--- |
-| **Portal Admin SIMRS / IPSRS** | `http://localhost:8000/` | Kelola seluruh aset medis, CRUD lengkap, multi-filter real-time, ringkasan statistik, dan histori servis/kalibrasi. |
-| **Portal Petugas Lapangan** | `http://localhost:8000/lapangan` | Portal mobile-friendly untuk teknisi/perawat lapangan: pemindai stiker QR, ceklis per ruangan, dan tiket pelaporan kerusakan. |
+| **Portal Admin SIMRS / IPSRS** | `/` | Dasbor utama manajemen aset: operasi CRUD, live search debounce, multi-filter klasifikasi, rekap metrik finansial/kondisi, dan histori log pemeliharaan. |
+| **Portal Lapangan & Teknisi** | `/lapangan` | Interface responsif untuk staf ruangan: verifikasi nomor stiker aset / scanner QR, ceklis inventaris per ruangan, serta pengajuan tiket kendala alat medis. |
 
-> **Akun Default Demo (Seeder):**  
-> * **Email**: `admin@rsummi.com`  
-> * **Password**: `password123`
+### Kredensial Default (Seeded Account)
+* **Email**: `admin@rsummi.com`
+* **Password**: `password123`
 
 ---
 
-## 🧪 4. Menjalankan Pengujian Otomatis (Automated Tests)
+## Skema Database & Relasi (ERD Overview)
 
-Aplikasi telah dilengkapi unit test dan feature test (16 test suites, 56 assertions - 100% Pass) untuk menguji seluruh fungsi CRUD, filter, dan komponen Livewire:
+Sistem menggunakan 4 tabel inti yang dinormalisasi dengan integritas *foreign key constraint*:
+
+```
+[categories] ──(1:N)──< [assets] >──(N:1)── [locations]
+                           │
+                         (1:N)
+                           │
+                           v
+                  [maintenance_logs]
+```
+
+* **`categories`**: Klasifikasi aset (`MED` untuk Alat Medis, `LAB` untuk Laboratorium, `RAD` untuk Radiologi, dll).
+* **`locations`**: Metadata ruangan, penomoran lantai/gedung, dan nama penanggung jawab (PIC).
+* **`assets`**: Master data aset, nomor seri, tanggal & nilai perolehan, status operasional, serta kondisi fisik.
+* **`maintenance_logs`**: Riwayat uji fungsi, kalibrasi berkala BPFK, dan perbaikan teknisi (dikonfigurasi *cascade on delete* terhadap aset terkait).
+
+---
+
+## Pengujian Otomatis (Automated Testing)
+
+Verifikasi fungsionalitas mencakup unit test dan feature test untuk menjamin keandalan logika bisnis (CRUD aset, filtering, pagination, transaksi mutasi data, dan responsivitas komponen Livewire):
 
 ```bash
 php artisan test
 ```
 
----
-
-## ⌨️ 5. Perintah Tambahan yang Berguna
-
-| Perintah | Fungsi |
-| :--- | :--- |
-| `php artisan serve` | Menjalankan server aplikasi |
-| `php artisan migrate:fresh --seed` | Mengosongkan dan mengisi ulang database demo |
-| `npm run dev` | Menjalankan Vite development server (hot-reload) |
-| `npm run build` | Melakukan build produksi Tailwind CSS |
+**Ringkasan Hasil Pengujian:**
+* **Total Suite**: 16 Test Cases
+* **Assertions**: 56 Assertions
+* **Status**: 100% Passed
+* **Mekanisme**: Menggunakan trait `DatabaseTransactions` untuk memastikan integritas data testing tanpa merusak state database seeder.
 
 ---
 
-## 🛠️ Ringkasan Tech Stack
-* **Framework Backend**: Laravel 13 (PHP 8.5)
-* **Frontend Interactivity**: Laravel Livewire 4 (Reaktif tanpa reload halaman)
-* **Styling**: Tailwind CSS v4 + Lucide Icons
-* **Database**: MySQL (Integritas Relasi FK & Cascade Rules)
-* **Pengujian**: PHPUnit 12 (16 Tests, 56 Assertions)
+## Catatan Arsitektur & Rekayasa Kode
+
+1. **State Management Tanpa Page Reload**: Menggunakan Laravel Livewire 4 untuk mengisolasi mutasi komponen dasbor secara asinkronus via AJAX transport bawaan, menghilangkan kebutuhan state store frontend terpisah (Redux/Pinia).
+2. **Optimasi Query Pencarian**: Fitur live search mengimplementasikan query scoping dinamis dengan sanitasi input untuk mencegah degradasi performa pada tabel berukuran besar.
+3. **Responsivitas Multi-Perangkat**: Seluruh antarmuka dioptimalkan menggunakan utilitas Tailwind CSS v4 untuk mendukung transisi tampilan dari layar monitor workstation administrasi hingga smartphone teknisi lapangan.
