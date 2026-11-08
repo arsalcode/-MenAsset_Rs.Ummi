@@ -236,7 +236,7 @@
                                 <input 
                                     type="text" 
                                     wire:model="manualCode" 
-                                    placeholder="Ketik Kode Aset (contoh: MED-001) atau gunakan USB Barcode Gun..." 
+                                    placeholder="Contoh: MED-001..." 
                                     class="w-full h-11 pl-10 pr-3 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 uppercase font-mono tracking-wider focus:outline-none focus:border-emerald-600"
                                 />
                             </div>
