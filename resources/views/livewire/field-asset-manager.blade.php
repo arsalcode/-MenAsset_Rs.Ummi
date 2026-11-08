@@ -372,14 +372,14 @@
                             $currentSelectedLocation = $locations->firstWhere('id', $selectedLocationId);
                             $selectedLocationName = $currentSelectedLocation ? $currentSelectedLocation->name . ' (' . $currentSelectedLocation->assets_count . ' alat)' : 'Pilih Ruangan RS';
                         @endphp
-                        <div x-data="{ open: false }" class="relative w-full md:w-auto" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <div x-data="{ open: false }" class="relative shrink-0" @click.outside="open = false" @keydown.escape.window="open = false">
                             <button 
                                 type="button" 
                                 @click="open = !open" 
                                 :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                                class="w-full md:w-auto h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center justify-between gap-2 select-none shadow-xs {{ $selectedLocationId ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                                class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $selectedLocationId ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                             >
-                                <span class="truncate max-w-[240px]">{{ $selectedLocationName }}</span>
+                                <span class="truncate max-w-[200px]">{{ $selectedLocationName }}</span>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
                                     <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
                                         <i data-lucide="chevron-down" class="size-4"></i>
