@@ -442,9 +442,9 @@
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
 
     <!-- ================= TOP NAVIGATION (Khas Alkamart) ================= -->
-    <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
+    <header class="relative h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
         <!-- Nav Left: Brand & Title -->
-        <div class="flex items-center gap-3.5">
+        <div class="flex items-center gap-3.5 z-10">
             <div class="flex items-center justify-center size-11 rounded-lg bg-emerald-700 text-white shadow-md shadow-emerald-900/20">
                 <i data-lucide="hospital" class="size-6 text-white"></i>
             </div>
@@ -454,20 +454,19 @@
             </div>
         </div>
 
-        <!-- Nav Right: Theme Toggle, Flag & Role Switcher (Persis Gambar Mockup User) -->
-        <div class="flex items-center gap-3">
-            <!-- Saklar Mode Terang / Gelap (Warna Hijau Emerald Khas RS Ummi) -->
+        <!-- Nav Center: Saklar Mode Terang / Gelap (Lampu di Tengah - Murni Ikon Tanpa Background) -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
             <div class="relative group">
                 <button 
                     type="button" 
                     id="themeToggleBtn"
                     onclick="toggleAppTheme()" 
-                    class="no-print size-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none shadow-2xs"
+                    class="no-print p-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 flex items-center justify-center transition-colors cursor-pointer select-none"
                     title="Ganti Mode Tampilan (Terang / Gelap)"
                     aria-label="Ganti Mode Tampilan (Terang / Gelap)"
                 >
                     <!-- SVG Sun & Moon Dual Icon Sesuai Gambar User (Warna Hijau Emerald) -->
-                    <svg class="size-5 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="size-6 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
                         <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
@@ -481,13 +480,16 @@
                     </svg>
                 </button>
                 <!-- Tooltip Floating Text yang Muncul Saat di-Hover -->
-                <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
                     <span class="dark:hidden">Mode Gelap</span>
                     <span class="hidden dark:inline">Mode Terang</span>
-                    <span class="absolute bottom-full right-3.5 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
                 </div>
             </div>
+        </div>
 
+        <!-- Nav Right: Flag & Role Switcher (Sesuai Gambar Mockup User) -->
+        <div class="flex items-center gap-3 z-10">
             <!-- Bendera Indonesia / Language Indicator Bulat (Sesuai Gambar User) -->
             <div class="flex items-center" title="Bahasa Indonesia (ID)">
                 <div class="size-6 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 shadow-2xs flex flex-col shrink-0">
