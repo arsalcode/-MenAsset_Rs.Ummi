@@ -585,10 +585,7 @@
                         <div class="report-info">
                             <span class="report-label">Total Inventaris Aset RS</span>
                             <h3 class="report-amount">{{ $stats['total'] }} <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Unit</span></h3>
-                            <div class="saldo-breakdown-tags">
-                                <span class="tag-cash"><i data-lucide="check-circle-2" class="size-3.5"></i> Baik: <strong>{{ $stats['good'] }}</strong></span>
-                                <span class="tag-qris"><i data-lucide="wrench" class="size-3.5"></i> Servis: <strong>{{ $stats['need_attention'] }}</strong></span>
-                            </div>
+                            <span class="report-sublabel">Seluruh aset & peralatan medis</span>
                         </div>
                     </div>
 
