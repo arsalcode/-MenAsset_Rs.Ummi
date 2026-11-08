@@ -160,6 +160,13 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
 
+        @media (max-width: 640px) {
+            .admin-tab-nav {
+                padding: 8px 12px;
+                gap: 6px;
+            }
+        }
+
         .admin-tab-btn {
             height: 38px;
             padding: 0 10px;
@@ -442,13 +449,13 @@
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
 
     <!-- ================= TOP NAVIGATION (Khas Alkamart) ================= -->
-    <header class="relative h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
-        <!-- Nav Left: Brand & Title -->
-        <div class="flex items-center gap-3.5 z-10">
-            <div class="flex items-center justify-center size-11 rounded-lg bg-emerald-700 text-white shadow-md shadow-emerald-900/20">
-                <i data-lucide="hospital" class="size-6 text-white"></i>
+    <header class="relative h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-50 shadow-xs transition-colors duration-200">
+        <!-- Nav Left: Brand & Title (Teks disembunyikan di HP agar tidak menabrak lampu di tengah) -->
+        <div class="flex items-center gap-2.5 sm:gap-3.5 z-10">
+            <div class="flex items-center justify-center size-10 sm:size-11 rounded-lg bg-emerald-700 text-white shadow-md shadow-emerald-900/20 shrink-0">
+                <i data-lucide="hospital" class="size-5 sm:size-6 text-white"></i>
             </div>
-            <div>
+            <div class="hidden sm:block">
                 <span class="text-lg font-extrabold text-emerald-800 dark:text-emerald-400 tracking-tight block">RS UMMI BOGOR</span>
                 <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-0.5">Manajemen Aset &amp; Peralatan Medis</span>
             </div>

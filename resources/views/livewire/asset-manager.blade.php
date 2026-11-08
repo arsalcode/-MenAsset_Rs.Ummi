@@ -68,8 +68,8 @@
         </button>
     </div>
 
-    <!-- Container Konten Utama -->
-    <div class="p-6 space-y-6">
+    <!-- Container Konten Utama (Responsif di HP) -->
+    <div class="p-3 sm:p-5 md:p-6 space-y-4 sm:space-y-6">
         <!-- Flash Alert Notification -->
         @if ($feedbackMessage)
             <div class="p-4 rounded-xl flex items-center justify-between border shadow-xs transition-all {{ $feedbackType === 'danger' ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60 text-rose-800 dark:text-rose-200' : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200' }}">
@@ -103,10 +103,10 @@
                 </div>
             @endif
 
-            <!-- ================= ADMIN ACTION BAR (SEJAJAR 1 BARIS) ================= -->
-            <div class="no-print mb-4 flex flex-col xl:flex-row xl:items-center gap-2.5">
+            <!-- ================= ADMIN ACTION BAR (SEJAJAR 1 BARIS / RESPONSIF HP) ================= -->
+            <div class="no-print mb-4 flex flex-col xl:flex-row xl:items-center gap-2 sm:gap-2.5">
                 <!-- Group 1 (Kiri): 3 Dropdown Filter Modern (Custom Alpine.js Popover) -->
-                <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
+                <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                     <!-- Dropdown Kategori -->
                     @php
                         $selectedCategoryName = $categories->firstWhere('id', $filterCategory)?->name ?? 'Semua Kategori';
@@ -116,12 +116,12 @@
                             type="button" 
                             @click="open = !open" 
                             :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                            class="h-8.5 sm:h-10 pl-3 sm:pl-3.5 pr-7 sm:pr-8 text-[11px] sm:text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-1.5 sm:gap-2 select-none shadow-xs {{ $filterCategory ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
-                            <span class="truncate max-w-[150px]">{{ $selectedCategoryName }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i data-lucide="chevron-down" class="size-4"></i>
+                            <span class="truncate max-w-[120px] sm:max-w-[150px]">{{ $selectedCategoryName }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 sm:pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-3.5 sm:size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i data-lucide="chevron-down" class="size-3.5 sm:size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -178,12 +178,12 @@
                             type="button" 
                             @click="open = !open" 
                             :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                            class="h-8.5 sm:h-10 pl-3 sm:pl-3.5 pr-7 sm:pr-8 text-[11px] sm:text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-1.5 sm:gap-2 select-none shadow-xs {{ $filterLocation ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
-                            <span class="truncate max-w-[150px]">{{ $selectedLocationName }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i data-lucide="chevron-down" class="size-4"></i>
+                            <span class="truncate max-w-[120px] sm:max-w-[150px]">{{ $selectedLocationName }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 sm:pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-3.5 sm:size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i data-lucide="chevron-down" class="size-3.5 sm:size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -249,19 +249,19 @@
                             type="button" 
                             @click="open = !open" 
                             :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                            class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                            class="h-8.5 sm:h-10 pl-3 sm:pl-3.5 pr-7 sm:pr-8 text-[11px] sm:text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-1.5 sm:gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
                         >
                             @if ($filterCondition === 'baik')
-                                <span class="size-2 rounded-full bg-emerald-500"></span>
+                                <span class="size-1.5 sm:size-2 rounded-full bg-emerald-500"></span>
                             @elseif ($filterCondition === 'rusak_ringan')
-                                <span class="size-2 rounded-full bg-amber-500"></span>
+                                <span class="size-1.5 sm:size-2 rounded-full bg-amber-500"></span>
                             @elseif ($filterCondition === 'rusak_berat')
-                                <span class="size-2 rounded-full bg-rose-500"></span>
+                                <span class="size-1.5 sm:size-2 rounded-full bg-rose-500"></span>
                             @endif
-                            <span class="truncate max-w-[130px]">{{ $selectedConditionLabel }}</span>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                                <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                    <i data-lucide="chevron-down" class="size-4"></i>
+                            <span class="truncate max-w-[100px] sm:max-w-[130px]">{{ $selectedConditionLabel }}</span>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 sm:pr-3 text-slate-400 dark:text-slate-400">
+                                <span class="size-3.5 sm:size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                    <i data-lucide="chevron-down" class="size-3.5 sm:size-4"></i>
                                 </span>
                             </div>
                         </button>
@@ -338,89 +338,92 @@
                     </div>
                 </div>
 
-                <!-- Group 2 (Tengah): Search Input Fleksibel -->
-                <div class="relative flex-1 min-w-[200px]">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
-                        <i data-lucide="search" class="size-4"></i>
-                    </span>
-                    <input 
-                        type="text" 
-                        wire:model.live.debounce.300ms="search" 
-                        placeholder="Cari barang admin atau alat medis RS Ummi..." 
-                        class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
-                    />
-                    @if ($search)
-                        <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            <i data-lucide="x" class="size-4"></i>
-                        </button>
-                    @endif
-                </div>
-
-                <!-- Group 3 (Kanan): Tombol Aksi Icon Murni Tanpa Kotak Background (Muncul Tulisan Saat di-Hover) -->
-                <div class="flex items-center gap-1 shrink-0">
-                    <!-- Tombol Refresh / Segarkan Data -->
-                    <div class="relative group z-20 hover:z-50">
-                        <button 
-                            wire:click="refreshData" 
-                            class="size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
-                            title="Segarkan Data"
-                            aria-label="Segarkan Data"
-                        >
-                            <i data-lucide="rotate-cw" class="size-5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
-                        </button>
-                        <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah) -->
-                        <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
-                            Segarkan Data
-                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
-                        </div>
+                <!-- Group 2 (Tengah & Kanan): Search Input Fleksibel + Tombol Aksi Icon Murni (Responsif di HP) -->
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-1 w-full xl:w-auto">
+                    <!-- Search Input (Width & Height Mengecil di HP) -->
+                    <div class="relative flex-1 min-w-0">
+                        <span class="absolute inset-y-0 left-0 pl-2.5 sm:pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                            <i data-lucide="search" class="size-3.5 sm:size-4"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            wire:model.live.debounce.300ms="search" 
+                            placeholder="Cari barang atau alat medis..." 
+                            class="w-full h-8.5 sm:h-10 pl-8 sm:pl-10 pr-7 sm:pr-9 py-1.5 sm:py-2 text-[11px] sm:text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
+                        />
+                        @if ($search)
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-2.5 sm:pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                <i data-lucide="x" class="size-3.5 sm:size-4"></i>
+                            </button>
+                        @endif
                     </div>
 
-                    <!-- Tombol Tambah Barang -->
-                    @if ($activeTab === 'tabAssets')
+                    <!-- Tombol Aksi Icon Murni (Mengecil Proporsional di HP) -->
+                    <div class="flex items-center gap-0.5 sm:gap-1 shrink-0">
+                        <!-- Tombol Refresh / Segarkan Data -->
                         <div class="relative group z-20 hover:z-50">
                             <button 
-                                wire:click="openCreateModal" 
-                                class="size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
-                                title="Tambah Barang"
-                                aria-label="Tambah Barang"
+                                wire:click="refreshData" 
+                                class="size-8 sm:size-9 md:size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
+                                title="Segarkan Data"
+                                aria-label="Segarkan Data"
                             >
-                                <i data-lucide="plus-circle" class="size-5"></i>
+                                <i data-lucide="rotate-cw" class="size-4 sm:size-4.5 md:size-5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
                             </button>
-                            <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
+                            <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah) -->
                             <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
-                                Tambah Barang
+                                Segarkan Data
                                 <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
                             </div>
                         </div>
-                    @endif
 
-                    <!-- Tombol Hapus -->
-                    <div class="relative group z-20 hover:z-50">
-                        <button 
-                            wire:click="handleClearButton" 
-                            class="size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
-                            title="Hapus"
-                            aria-label="Hapus"
-                        >
-                            <i data-lucide="trash-2" class="size-5"></i>
-                        </button>
-                        <!-- Tooltip Text saat di-Hover (Mengarah ke Bawah agar Tidak Tertutup Header/Tab Nav) -->
-                        <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
-                            Hapus
-                            <span class="absolute bottom-full right-3.5 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                        <!-- Tombol Tambah Barang -->
+                        @if ($activeTab === 'tabAssets')
+                            <div class="relative group z-20 hover:z-50">
+                                <button 
+                                    wire:click="openCreateModal" 
+                                    class="size-8 sm:size-9 md:size-10 rounded-xl text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
+                                    title="Tambah Barang"
+                                    aria-label="Tambah Barang"
+                                >
+                                    <i data-lucide="plus-circle" class="size-4 sm:size-4.5 md:size-5"></i>
+                                </button>
+                                <!-- Tooltip Text saat di-Hover -->
+                                <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                                    Tambah Barang
+                                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Tombol Hapus -->
+                        <div class="relative group z-20 hover:z-50">
+                            <button 
+                                wire:click="handleClearButton" 
+                                class="size-8 sm:size-9 md:size-10 rounded-xl text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0"
+                                title="Hapus"
+                                aria-label="Hapus"
+                            >
+                                <i data-lucide="trash-2" class="size-4 sm:size-4.5 md:size-5"></i>
+                            </button>
+                            <!-- Tooltip Text saat di-Hover -->
+                            <div class="pointer-events-none absolute top-full right-0 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                                Hapus
+                                <span class="absolute bottom-full right-3.5 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Custom Data Table (Identik .custom-table Alkamart) -->
+            <!-- Custom Data Table (Identik .custom-table Alkamart / Responsif di HP) -->
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
-                <div class="overflow-x-auto scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                    <table class="w-full text-left border-collapse table-fixed">
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-[700px] text-left border-collapse table-fixed">
                         <!-- Table Header Hijau Lembut (#E9FAF3) Khas Alkamart -->
                         <thead class="bg-[#E9FAF3] dark:bg-slate-800/90 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase tracking-wider">
                             <tr>
-                                <th class="w-[13%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
+                                <th class="w-[14%] min-w-[95px] py-2.5 px-3 sm:py-3.5 sm:px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('asset_code')">
                                     <div class="flex items-center gap-1">
                                         <span>Kode Aset</span>
                                         @if ($sortField === 'asset_code')
@@ -428,7 +431,7 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-[30%] py-3.5 px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
+                                <th class="w-[28%] min-w-[170px] py-2.5 px-3 sm:py-3.5 sm:px-4 cursor-pointer hover:text-emerald-950 dark:hover:text-emerald-300" wire:click="sortBy('name')">
                                     <div class="flex items-center gap-1">
                                         <span>Nama Alat Medis</span>
                                         @if ($sortField === 'name')
@@ -436,24 +439,24 @@
                                         @endif
                                     </div>
                                 </th>
-                                <th class="w-[20%] py-3.5 px-4">Ruangan RS</th>
-                                <th class="w-[9%] py-3.5 px-4 text-center">Jumlah</th>
-                                <th class="w-[12%] py-3.5 px-4">Kondisi</th>
-                                <th class="w-[16%] py-3.5 px-4 text-right no-print">Aksi</th>
+                                <th class="w-[20%] min-w-[130px] py-2.5 px-3 sm:py-3.5 sm:px-4">Ruangan RS</th>
+                                <th class="w-[10%] min-w-[70px] py-2.5 px-3 sm:py-3.5 sm:px-4 text-center">Jumlah</th>
+                                <th class="w-[12%] min-w-[85px] py-2.5 px-3 sm:py-3.5 sm:px-4">Kondisi</th>
+                                <th class="w-[16%] min-w-[120px] py-2.5 px-3 sm:py-3.5 sm:px-4 text-right no-print">Aksi</th>
                             </tr>
                         </thead>
                         <tbody wire:loading.class="opacity-60" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-opacity duration-200">
                             @forelse ($assets as $asset)
-                                <tr wire:key="asset-row-{{ $asset->id }}" class="h-[64px] hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
+                                <tr wire:key="asset-row-{{ $asset->id }}" class="h-[56px] sm:h-[64px] hover:bg-[#F8FAF8] dark:hover:bg-slate-800/60 transition-colors">
                                     <!-- Kode Aset (Bersih Tanpa Background & Border) -->
-                                    <td class="py-3 px-4 font-mono font-semibold whitespace-nowrap text-xs text-slate-800 dark:text-slate-200">
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4 font-mono font-semibold whitespace-nowrap text-xs text-slate-800 dark:text-slate-200">
                                         {{ $asset->asset_code }}
                                     </td>
 
                                     <!-- Nama Alat & Spesifikasi -->
-                                    <td class="py-3 px-4">
-                                        <div class="font-bold text-slate-900 dark:text-slate-100 text-[13px] truncate">{{ $asset->name }}</div>
-                                        <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4">
+                                        <div class="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-[13px] truncate">{{ $asset->name }}</div>
+                                        <div class="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
                                             {{ $asset->brand ?? '-' }} {{ $asset->model_type ? '· ' . $asset->model_type : '' }}
                                             @if ($asset->serial_number)
                                                 <span class="font-mono text-slate-400 dark:text-slate-500">· SN: {{ $asset->serial_number }}</span>
@@ -462,18 +465,18 @@
                                     </td>
 
                                     <!-- Ruangan Penempatan -->
-                                    <td class="py-3 px-4">
-                                        <div class="font-semibold text-slate-800 dark:text-slate-200 truncate">{{ $asset->location->name ?? '-' }}</div>
-                                        <div class="text-[11px] text-slate-400 dark:text-slate-500 truncate">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4">
+                                        <div class="font-semibold text-slate-800 dark:text-slate-200 truncate text-xs">{{ $asset->location->name ?? '-' }}</div>
+                                        <div class="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 truncate">{{ $asset->location->building ?? '' }} · {{ $asset->location->floor ?? '' }}</div>
                                     </td>
 
                                     <!-- Jumlah Fisik (Bersih Tanpa Kotak Background & Border) -->
-                                    <td class="py-3 px-4 whitespace-nowrap text-center font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4 whitespace-nowrap text-center font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
                                         1 Unit
                                     </td>
 
                                     <!-- Kondisi (Titik Status Bersih Tanpa Kotak Background & Border) -->
-                                    <td class="py-3 px-4 whitespace-nowrap">
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4 whitespace-nowrap">
                                         @if ($asset->condition === 'baik')
                                             <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
                                                 <span class="size-1.5 rounded-full bg-emerald-500"></span> Baik
@@ -490,46 +493,46 @@
                                     </td>
 
                                     <!-- Aksi Tombol: Icon Murni dengan Ukuran Proporsional & Mikrointeraksi Hover (Tanpa Background) -->
-                                    <td class="py-3 px-4 text-right whitespace-nowrap no-print">
-                                        <div class="inline-flex items-center justify-end gap-1.5">
+                                    <td class="py-2.5 px-3 sm:py-3 sm:px-4 text-right whitespace-nowrap no-print">
+                                        <div class="inline-flex items-center justify-end gap-1 sm:gap-1.5">
                                             <!-- Detail Button (Hijau Emerald RS Ummi) -->
                                             <button 
                                                 wire:click="openDetailModal({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-6.5 sm:size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Lihat Detail & Histori Kalibrasi"
                                                 aria-label="Lihat Detail & Histori Kalibrasi"
                                             >
-                                                <i data-lucide="eye" class="size-4"></i>
+                                                <i data-lucide="eye" class="size-3.5 sm:size-4"></i>
                                             </button>
 
                                             <!-- Cetak Label QR Button (Hijau Emerald RS Ummi) -->
                                             <button 
                                                 wire:click="openPrintLabelModal({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-6.5 sm:size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Cetak Stiker Label QR Aset"
                                                 aria-label="Cetak Stiker Label QR Aset"
                                             >
-                                                <i data-lucide="qr-code" class="size-4"></i>
+                                                <i data-lucide="qr-code" class="size-3.5 sm:size-4"></i>
                                             </button>
 
                                             <!-- Sunting Button (Hijau Emerald RS Ummi dengan Ikon Pensil Bersih) -->
                                             <button 
                                                 wire:click="openEditModal({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-6.5 sm:size-7 rounded-lg text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Sunting Data Aset"
                                                 aria-label="Sunting Data Aset"
                                             >
-                                                <i data-lucide="pencil" class="size-4"></i>
+                                                <i data-lucide="pencil" class="size-3.5 sm:size-4"></i>
                                             </button>
 
                                             <!-- Hapus Button (Merah Rose Tegas) -->
                                             <button 
                                                 wire:click="confirmDelete({{ $asset->id }})" 
-                                                class="size-7 rounded-lg text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
+                                                class="size-6.5 sm:size-7 rounded-lg text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 transition-all hover:scale-115 active:scale-90 inline-flex items-center justify-center cursor-pointer"
                                                 title="Hapus Aset"
                                                 aria-label="Hapus Aset"
                                             >
-                                                <i data-lucide="trash-2" class="size-4"></i>
+                                                <i data-lucide="trash-2" class="size-3.5 sm:size-4"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -882,8 +885,9 @@
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-[#E9FAF3] dark:bg-slate-800 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase">
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[700px] text-left border-collapse text-xs">
+                            <thead class="bg-[#E9FAF3] dark:bg-slate-800 border-b border-[#c7f0db] dark:border-slate-700 text-xs font-bold text-[#064E3B] dark:text-emerald-400 uppercase">
                             <tr>
                                 <th class="py-3.5 px-4">Tanggal Servis</th>
                                 <th class="py-3.5 px-4">Alat & Kode Aset</th>
@@ -923,6 +927,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         @endif
