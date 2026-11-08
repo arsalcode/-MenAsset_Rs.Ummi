@@ -105,8 +105,8 @@ Aplikasi ini dikembangkan sebagai pemenuhan **Tugas Seleksi Magang Posisi IT Ful
 
 ```bash
 # 1. Clone repositori ini
-git clone https://github.com/arsalcode/MenAsset_Rs.Ummi.git
-cd MenAsset_Rs.Ummi
+git clone https://github.com/arsalcode/-MenAsset_Rs.Ummi.git
+cd -MenAsset_Rs.Ummi
 
 # 2. Salin environment
 cp .env.example .env
