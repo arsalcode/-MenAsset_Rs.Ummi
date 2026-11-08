@@ -29,7 +29,7 @@ class FieldAssetManagementTest extends TestCase
             ->assertSet('activeTab', 'scan')
             ->call('setTab', 'room')
             ->assertSet('activeTab', 'room')
-            ->assertSee('Pilih Ruangan Pemeriksaan')
+            ->assertSee('Total Alat di Ruangan')
             ->call('setTab', 'reports')
             ->assertSet('activeTab', 'reports')
             ->assertSee('Pusat Pantau Tiket Laporan Kerusakan');

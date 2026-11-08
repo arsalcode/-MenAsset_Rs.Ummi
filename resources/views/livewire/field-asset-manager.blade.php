@@ -355,18 +355,11 @@
         <!-- TAB 2: CEKLIS & INVENTARIS RUANGAN -->
         <!-- ========================================================================= -->
         @elseif ($activeTab === 'room')
-            <div class="space-y-6">
-                <!-- Filter Pilihan Ruangan & Pencarian -->
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-4">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <h2 class="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                                <i data-lucide="door-open" class="size-5 text-emerald-600"></i>
-                                <span>Pilih Ruangan Pemeriksaan</span>
-                            </h2>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pilih ruangan tempat Anda bertugas untuk melihat seluruh alat medis yang terdaftar di ruangan tersebut.</p>
-                        </div>
-
+            <div class="space-y-4">
+                <!-- Action Bar Ruangan (Sejajar 1 Baris Persis Admin) -->
+                <div class="no-print flex flex-col xl:flex-row xl:items-center gap-2.5">
+                    <!-- Group 1 (Kiri): Dropdown Ruangan & Dropdown Kondisi -->
+                    <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                         <!-- Dropdown Pilihan Ruangan (Custom Alpine.js Popover matching Admin) -->
                         @php
                             $currentSelectedLocation = $locations->firstWhere('id', $selectedLocationId);
@@ -397,7 +390,7 @@
                                 x-transition:leave="transition ease-in duration-100"
                                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
-                                class="absolute right-0 top-full mt-1.5 w-72 max-h-72 overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
+                                class="absolute left-0 top-full mt-1.5 w-72 max-h-72 overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
                             >
                                 @foreach ($locations as $loc)
                                     <button 
@@ -422,116 +415,133 @@
                                 @endforeach
                             </div>
                         </div>
+
+                        <!-- Dropdown Kondisi (Custom Alpine.js Popover matching Admin) -->
+                        @php
+                            $conditionOptions = [
+                                '' => 'Semua Kondisi',
+                                'baik' => 'Kondisi Baik',
+                                'rusak_ringan' => 'Rusak Ringan',
+                                'rusak_berat' => 'Rusak Berat'
+                            ];
+                            $selectedConditionLabel = $conditionOptions[$filterCondition] ?? 'Semua Kondisi';
+                        @endphp
+                        <div x-data="{ open: false }" class="relative shrink-0" @click.outside="open = false" @keydown.escape.window="open = false">
+                            <button 
+                                type="button" 
+                                @click="open = !open" 
+                                :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
+                                class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
+                            >
+                                <span class="truncate">{{ $selectedConditionLabel }}</span>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
+                                    <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
+                                        <i data-lucide="chevron-down" class="size-4"></i>
+                                    </span>
+                                </div>
+                            </button>
+
+                            <!-- Custom Popover Menu -->
+                            <div 
+                                x-show="open" 
+                                x-cloak
+                                x-transition:enter="transition ease-out duration-150"
+                                x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-100"
+                                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                                class="absolute left-0 top-full mt-1.5 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
+                            >
+                                @foreach ($conditionOptions as $value => $label)
+                                    <button 
+                                        type="button" 
+                                        wire:click="$set('filterCondition', '{{ $value }}')" 
+                                        @click="open = false" 
+                                        class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCondition === (string)$value ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
+                                    >
+                                        <span>{{ $label }}</span>
+                                        @if ((string)$filterCondition === (string)$value)
+                                            <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Ringkasan Statistik Ruangan Terpilih -->
-                    @if ($selectedLocationId)
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
-                                <div>
-                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Total Alat di Ruangan</span>
-                                    <span class="text-lg font-extrabold text-slate-900 dark:text-slate-100">{{ $roomStats['total'] }} Unit</span>
-                                </div>
-                                <div class="size-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
-                                    <i data-lucide="package" class="size-5"></i>
-                                </div>
-                            </div>
+                    <!-- Group 2 (Tengah): Search Input Fleksibel Sejajar -->
+                    <div class="relative flex-1 min-w-[200px]">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                            <i data-lucide="search" class="size-4"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            wire:model.live.debounce.300ms="search" 
+                            placeholder="Cari nama alat, merek, atau nomor seri di ruangan ini..." 
+                            class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
+                        />
+                        @if ($search)
+                            <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer">
+                                <i data-lucide="x" class="size-4"></i>
+                            </button>
+                        @endif
+                    </div>
 
-                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
-                                <div>
-                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Kondisi Baik & Siap Pakai</span>
-                                    <span class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">{{ $roomStats['ready'] }} Unit</span>
-                                </div>
-                                <div class="size-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
-                                    <i data-lucide="check-circle-2" class="size-5"></i>
-                                </div>
-                            </div>
-
-                            <div class="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
-                                <div>
-                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Perlu Perbaikan / Servis</span>
-                                    <span class="text-lg font-extrabold text-rose-600 dark:text-rose-400">{{ $roomStats['maintenance'] }} Unit</span>
-                                </div>
-                                <div class="size-9 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 flex items-center justify-center">
-                                    <i data-lucide="wrench" class="size-5"></i>
-                                </div>
+                    <!-- Group 3 (Kanan): Tombol Refresh Segarkan Data -->
+                    <div class="flex items-center gap-1 shrink-0">
+                        <div class="relative group z-20 hover:z-50">
+                            <button 
+                                type="button" 
+                                wire:click="refreshData" 
+                                class="size-10 rounded-xl text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 inline-flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shrink-0 border border-slate-200 dark:border-slate-200 bg-white dark:bg-slate-900 shadow-xs"
+                                title="Segarkan Data"
+                                aria-label="Segarkan Data"
+                            >
+                                <i data-lucide="rotate-cw" class="size-4.5 transition-transform duration-500" wire:loading.class="animate-spin" wire:target="refreshData"></i>
+                            </button>
+                            <div class="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 text-[11px] font-semibold text-white bg-slate-900 dark:bg-slate-800 rounded-lg shadow-lg whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-200 z-50">
+                                Segarkan Data
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-900 dark:border-b-slate-800"></span>
                             </div>
                         </div>
-
-                        <!-- Bar Pencarian Cepat Dalam Ruangan & Filter Kondisi (Matching Admin) -->
-                        <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
-                            <div class="relative flex-1">
-                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                                    <i data-lucide="search" class="size-4"></i>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    wire:model.live.debounce.300ms="search" 
-                                    placeholder="Cari nama alat, merek, atau nomor seri di ruangan ini..." 
-                                    class="w-full h-10 pl-10 pr-9 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
-                                />
-                                @if ($search)
-                                    <button wire:click="$set('search', '')" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer">
-                                        <i data-lucide="x" class="size-4"></i>
-                                    </button>
-                                @endif
-                            </div>
-
-                            <!-- Dropdown Kondisi (Custom Alpine.js Popover matching Admin) -->
-                            @php
-                                $conditionOptions = [
-                                    '' => 'Semua Kondisi',
-                                    'baik' => 'Kondisi Baik',
-                                    'rusak_ringan' => 'Rusak Ringan',
-                                    'rusak_berat' => 'Rusak Berat'
-                                ];
-                                $selectedConditionLabel = $conditionOptions[$filterCondition] ?? 'Semua Kondisi';
-                            @endphp
-                            <div x-data="{ open: false }" class="relative shrink-0" @click.outside="open = false" @keydown.escape.window="open = false">
-                                <button 
-                                    type="button" 
-                                    @click="open = !open" 
-                                    :class="open ? 'ring-2 ring-emerald-500/50 border-emerald-500 dark:border-emerald-200' : ''"
-                                    class="h-10 pl-3.5 pr-8 text-xs font-semibold rounded-xl border transition-all cursor-pointer inline-flex items-center gap-2 select-none shadow-xs {{ $filterCondition ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-500/50 text-emerald-800 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800' }}"
-                                >
-                                    <span class="truncate">{{ $selectedConditionLabel }}</span>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 dark:text-slate-400">
-                                        <span class="size-4 inline-flex items-center justify-center transition-transform duration-200 origin-center" :class="open ? 'rotate-180' : ''">
-                                            <i data-lucide="chevron-down" class="size-4"></i>
-                                        </span>
-                                    </div>
-                                </button>
-
-                                <!-- Custom Popover Menu -->
-                                <div 
-                                    x-show="open" 
-                                    x-cloak
-                                    x-transition:enter="transition ease-out duration-150"
-                                    x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
-                                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                                    x-transition:leave="transition ease-in duration-100"
-                                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                                    x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
-                                    class="absolute right-0 top-full mt-1.5 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-slate-950/60 p-1.5 z-50 space-y-0.5"
-                                >
-                                    @foreach ($conditionOptions as $value => $label)
-                                        <button 
-                                            type="button" 
-                                            wire:click="$set('filterCondition', '{{ $value }}')" 
-                                            @click="open = false" 
-                                            class="w-full px-3 py-2 text-xs font-medium rounded-xl text-left flex items-center justify-between transition-colors {{ (string)$filterCondition === (string)$value ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100' }}"
-                                        >
-                                            <span>{{ $label }}</span>
-                                            @if ((string)$filterCondition === (string)$value)
-                                                <i data-lucide="check" class="size-4 text-emerald-600 dark:text-emerald-400 font-bold"></i>
-                                            @endif
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    </div>
                 </div>
+
+                <!-- Ringkasan Statistik Ruangan Terpilih -->
+                @if ($selectedLocationId)
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Total Alat di Ruangan</span>
+                                <span class="text-lg font-extrabold text-slate-900 dark:text-slate-100">{{ $roomStats['total'] }} Unit</span>
+                            </div>
+                            <div class="size-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+                                <i data-lucide="package" class="size-5"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Kondisi Baik & Siap Pakai</span>
+                                <span class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">{{ $roomStats['ready'] }} Unit</span>
+                            </div>
+                            <div class="size-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+                                <i data-lucide="check-circle-2" class="size-5"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block font-medium">Perlu Perbaikan / Servis</span>
+                                <span class="text-lg font-extrabold text-rose-600 dark:text-rose-400">{{ $roomStats['maintenance'] }} Unit</span>
+                            </div>
+                            <div class="size-10 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 flex items-center justify-center">
+                                <i data-lucide="wrench" class="size-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
                 <!-- Daftar Kartu Alat Medis Ruangan (4 Kolom Grid) -->
                 @if ($roomAssets && count($roomAssets) > 0)

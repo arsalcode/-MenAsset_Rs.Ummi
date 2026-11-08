@@ -262,6 +262,15 @@ class FieldAssetManager extends Component
         $this->resetPage();
     }
 
+    public function refreshData(): void
+    {
+        $this->search = '';
+        $this->filterCondition = '';
+        $this->resetPage();
+        $this->feedbackMessage = 'Data inventaris ruangan berhasil disegarkan.';
+        $this->feedbackType = 'info';
+    }
+
     public function render()
     {
         $locations = Location::withCount('assets')->orderBy('name')->get();
