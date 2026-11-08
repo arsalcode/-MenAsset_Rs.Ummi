@@ -91,12 +91,6 @@
                     @endif
                 </button>
             </div>
-
-            <!-- Petunjuk Peran Lapangan -->
-            <div class="hidden md:flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Mode Pemeriksaan Aktif</span>
-            </div>
         </div>
     </div>
 
