@@ -224,25 +224,22 @@
                 <!-- Kolom Kanan (7 Kolom): Input Manual & Hasil Informasi Alat -->
                 <div class="lg:col-span-7 space-y-4">
                     <!-- Form Input Manual Kode Aset -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
-                            <i data-lucide="search" class="size-4 text-emerald-600"></i>
-                            <span>Cari / Ketik Kode Stiker Manual</span>
-                        </h4>
-
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs">
                         <form wire:submit.prevent="handleScannedCode" class="flex gap-2">
                             <div class="relative flex-1">
-                                <i data-lucide="barcode" class="size-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                                    <i data-lucide="search" class="size-4"></i>
+                                </div>
                                 <input 
                                     type="text" 
                                     wire:model="manualCode" 
                                     placeholder="Contoh: MED-001..." 
-                                    class="w-full h-11 pl-10 pr-3 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 uppercase font-mono tracking-wider focus:outline-none focus:border-emerald-600"
+                                    class="w-full h-10 pl-10 pr-3.5 py-2 text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-900 border border-slate-200 dark:border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-500 dark:focus:border-emerald-200 transition-all font-mono uppercase text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-xs"
                                 />
                             </div>
                             <button 
                                 type="submit" 
-                                class="px-5 h-11 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                                class="px-5 h-10 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-800 active:scale-98 transition-all shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs"
                             >
                                 <i data-lucide="arrow-right" class="size-4"></i>
                                 <span>Periksa</span>
@@ -251,7 +248,7 @@
 
                         <!-- Tombol Demo Kode Cepat -->
                         <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 flex-wrap">
-                            <span class="text-[11px] text-slate-400 font-medium">Contoh Kode Demo:</span>
+                            <span class="text-[11px] text-slate-400 font-medium">Contoh Kode:</span>
                             @foreach (['MED-001', 'MED-002', 'MED-003', 'NON-001'] as $demoCode)
                                 <button 
                                     type="button" 
