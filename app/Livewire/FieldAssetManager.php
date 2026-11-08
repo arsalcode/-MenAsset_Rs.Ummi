@@ -267,8 +267,7 @@ class FieldAssetManager extends Component
         $this->search = '';
         $this->filterCondition = '';
         $this->resetPage();
-        $this->feedbackMessage = 'Data inventaris ruangan berhasil disegarkan.';
-        $this->feedbackType = 'info';
+        $this->feedbackMessage = null;
     }
 
     public function render()

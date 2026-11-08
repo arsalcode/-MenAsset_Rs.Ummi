@@ -354,8 +354,7 @@ class AssetManager extends Component
     public function refreshData(): void
     {
         $this->resetFilters();
-        $this->feedbackMessage = 'Data inventaris aset rumah sakit berhasil dimuat ulang.';
-        $this->feedbackType = 'info';
+        $this->feedbackMessage = null;
     }
 
     public function resetFilters(): void
